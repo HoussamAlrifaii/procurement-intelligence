@@ -1,0 +1,25 @@
+# Python
+.venv/
+__pycache__/
+*.pyc
+.pytest_cache/
+.ipynb_checkpoints/
+
+# Secrets: never commit real keys
+.env
+
+# Data: re-created by the pipeline, too large for Git
+data/raw/*
+data/processed/*
+!data/raw/.gitkeep
+!data/processed/.gitkeep
+*.duckdb
+*.duckdb.wal
+
+# Power BI caches (the .pbip project files themselves ARE committed)
+**/.pbi/cache.abf
+**/.pbi/localSettings.json
+
+# OS / editor
+.DS_Store
+Thumbs.db
