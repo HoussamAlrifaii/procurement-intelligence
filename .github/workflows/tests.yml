@@ -1,6 +1,3 @@
-# 📖 READ ONLY: GitHub Actions runs this on every push and pull request.
-# It installs the project on a clean Linux machine and runs the checks + tests,
-# proving the project works outside your own laptop.
 name: Tests
 on: [push, pull_request]
 

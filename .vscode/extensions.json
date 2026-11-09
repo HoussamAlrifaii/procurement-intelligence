@@ -1,7 +1,6 @@
 {
   "recommendations": [
     "ms-python.python",
-    "ms-toolsai.jupyter",
-    "anthropic.claude-code"
+    "ms-toolsai.jupyter"
   ]
 }

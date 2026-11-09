@@ -18,7 +18,7 @@ into answers:
 
 ## Tech stack
 
-Python · pandas · DuckDB (SQL) · scikit-learn · Power BI · Claude API ·
+Python · pandas · DuckDB (SQL) · scikit-learn · Power BI · LLM API ·
 FastAPI · Streamlit · Docker · GitHub Actions
 
 ## Quick start (Python 3.12)
