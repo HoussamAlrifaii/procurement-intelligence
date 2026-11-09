@@ -1,0 +1,5 @@
+"ID_NOTICE_CAN","YEAR","ISO_COUNTRY_CODE","CAE_NAME","TYPE_OF_CONTRACT","CPV","CANCELLED","AWARD_VALUE_EURO","NUMBER_OFFERS","WIN_NAME"
+2022000001,2022,"DE","Example City Council","S","48000000",0,120000.50,1,"Example Software Ltd"
+2022000002,2022,"DE","Example City Council","U","30200000",0,45000,4,"Example Hardware Ltd"
+2022000003,2022,"FR","Example Regional Hospital","W","45000000",0,,,""
+2021000004,2021,"PL","Example Ministry","S","72000000",1,99000,2,"Example Consulting Ltd"

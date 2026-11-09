@@ -23,13 +23,14 @@
 
 | Source | Coverage | Role |
 |---|---|---|
-| TED (EU) contract award notices | EU/EEA, multiple years | Primary dataset; expected to record the number of bids received (the ML target) |
-| World Bank contract awards | Developing countries, global | Global coverage; vendor and price analysis |
+| TED (EU) contract award notices | 33 countries, 2019–2022: 4.3M award rows, 1.1M notices | Primary dataset; `number_offers` (the ML target) is filled for 67% of rows |
+| World Bank contract awards | 130+ borrower countries, contracts signed 2019–2022: 143k rows | Global coverage; vendor and price analysis |
 
 Expected field types: numeric (values, bid counts), categorical (country, CPV
 sector code, procedure type), dates, free text (titles, descriptions) and
-entities (buyer and vendor names). **Phase 1 verifies which fields actually
-exist and how complete they are before any analysis depends on them.**
+entities (buyer and vendor names). Phase 1 verified the fields against the
+downloaded files; see [`reports/data_profile.md`](../reports/data_profile.md)
+and the [Phase 1 documentation](phases/PHASE_1_DATA_PIPELINE.md).
 
 Known challenges: inconsistent company names (entity resolution), missing
 values, currency and outlier errors, and data volume (development starts on a
@@ -52,7 +53,7 @@ ML target: `single_bid = 1 if number_of_bids == 1 else 0`.
 | Phase | Scope | Output |
 |---|---|---|
 | **0. Setup** ✅ | Repository, environment, CI | Reproducible project skeleton |
-| **1. Data sourcing + pipeline** | Download, field verification, DuckDB load, quality checks | One-command data pipeline |
+| **1. Data sourcing + pipeline** ✅ | Download, field verification, DuckDB load, quality checks | One-command data pipeline |
 | **2. Cleaning + EDA** | Vendor-name matching, missing values, outliers | EDA notebook and cleaned tables |
 | **3. SQL analysis** | Star schema; competition and concentration queries | SQL layer |
 | **4. Power BI** | Four-page dashboard | Dashboard (.pbip), screenshots, PDF |
@@ -65,8 +66,8 @@ ML target: `single_bid = 1 if number_of_bids == 1 else 0`.
 
 | Automation | Phase |
 |---|---|
-| One-command pipeline (download → clean → load → build tables) | 1–3 |
-| Data quality checks that stop the pipeline on invalid data | 1 |
+| One-command pipeline (download → clean → load → build tables) | 1 ✅ (raw layer), 2–3 |
+| Data quality checks that stop the pipeline on invalid data | 1 ✅ |
 | CI: environment checks + tests on every push (GitHub Actions) | 0 ✅ |
 | Scheduled monthly data refresh (GitHub Actions) | 8 |
 | Automated red-flag summary after each refresh | 8 |

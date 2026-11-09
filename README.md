@@ -13,8 +13,8 @@ into answers:
 | Suspicious patterns are hidden in millions of records | SQL analysis + Power BI dashboard of competition, vendor concentration and unusual prices | Auditors, journalists |
 | Small businesses can't find or price opportunities | AI assistant matching a company to relevant tenders, past winners and prices | Small and medium businesses |
 
-> 🚧 **Status: in development.** Phase 0 (project setup) is complete.
-> See the [project plan](docs/PROJECT_PLAN.md) for the roadmap.
+> 🚧 **Status: in development.** Phases 0–1 complete: project setup and a
+> reproducible raw data pipeline. See the [project plan](docs/PROJECT_PLAN.md).
 
 ## Tech stack
 
@@ -29,7 +29,12 @@ source .venv/bin/activate        # Windows: .venv\Scripts\Activate.ps1
 pip install -r requirements.txt
 python -m procurement.check_setup
 python -m pytest -q
+python -m procurement.pipeline    # download and load 2019-2022 (~490 MB download)
 ```
+
+The pipeline writes a DuckDB database to `data/procurement.duckdb` and a data
+profile to [`reports/data_profile.md`](reports/data_profile.md). Details:
+[Phase 1 documentation](docs/phases/PHASE_1_DATA_PIPELINE.md).
 
 ## Project structure
 
@@ -45,7 +50,10 @@ tests/         Automated tests
 
 ## Data sources
 
-- [TED: Tenders Electronic Daily](https://ted.europa.eu): EU contract award notices.
-- [World Bank contract awards](https://finances.worldbank.org): global coverage.
+- [TED (Tenders Electronic Daily) CSV subset](https://data.europa.eu/data/datasets/ted-csv):
+  EU contract award notices, 2019–2022.
+- [World Bank: Contract Awards in Investment Project Financing](https://financesone.worldbank.org/x/DS00005):
+  contracts in World Bank-financed projects, signed 2019–2022.
 
-Exact fields, coverage and licence terms are verified in Phase 1 and documented there.
+Both are published as open data by their respective institutions. Each data
+source's own terms of use apply.
