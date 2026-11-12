@@ -46,7 +46,7 @@ dim_category — fact_contract_award — dim_country
                  dim_date
 ```
 
-ML target: `single_bid = 1 if number_of_bids == 1 else 0`.
+ML target: `is_single_bid` = 1 if one offer, 0 if two or more (awarded contracts with a valid offer count; competitive procedures only, see Phase 2).
 
 ## 4. Roadmap
 
@@ -54,7 +54,7 @@ ML target: `single_bid = 1 if number_of_bids == 1 else 0`.
 |---|---|---|
 | **0. Setup** ✅ | Repository, environment, CI | Reproducible project skeleton |
 | **1. Data sourcing + pipeline** ✅ | Download, field verification, DuckDB load, quality checks | One-command data pipeline |
-| **2. Cleaning + EDA** | Vendor-name matching, missing values, outliers | EDA notebook and cleaned tables |
+| **2. Cleaning + EDA** ✅ | Vendor-name standardisation, missing values, outliers | EDA notebook and cleaned tables |
 | **3. SQL analysis** | Star schema; competition and concentration queries | SQL layer |
 | **4. Power BI** | Four-page dashboard | Dashboard (.pbip), screenshots, PDF |
 | **5. Machine learning** | Single-bid risk classifier, price anomaly detection, SHAP explanations | Evaluated models |
@@ -66,7 +66,7 @@ ML target: `single_bid = 1 if number_of_bids == 1 else 0`.
 
 | Automation | Phase |
 |---|---|
-| One-command pipeline (download → clean → load → build tables) | 1 ✅ (raw layer), 2–3 |
+| One-command pipeline (download → clean → load → build tables) | 1–2 ✅ (raw + clean layers), 3 |
 | Data quality checks that stop the pipeline on invalid data | 1 ✅ |
 | CI: environment checks + tests on every push (GitHub Actions) | 0 ✅ |
 | Scheduled monthly data refresh (GitHub Actions) | 8 |

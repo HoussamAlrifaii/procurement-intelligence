@@ -1,4 +1,4 @@
-"""Run the data pipeline: download -> Parquet -> DuckDB raw views -> quality checks -> profile.
+"""Run the data pipeline: download -> Parquet -> raw views -> quality checks -> profile -> clean layer.
 
 Usage (from the project root):
     python -m procurement.pipeline                     # default years 2019-2022
@@ -15,6 +15,7 @@ import time
 import duckdb
 
 from procurement import config
+from procurement.clean import build_clean_layer
 from procurement.download import download_sources, ted_zip_path, world_bank_csv_path
 from procurement.load import load_ted, load_world_bank
 from procurement.profile import write_profile_report
@@ -60,27 +61,31 @@ def main(argv=None):
     if arguments.skip_download:
         sources = local_source_paths(years)
     else:
-        sources = run_step(f"1/4 Downloading sources for {years}", download_sources, years)
+        sources = run_step(f"1/5 Downloading sources for {years}", download_sources, years)
 
     with duckdb.connect(str(config.DATABASE_PATH)) as connection:
-        ted_rows = run_step("2/4 Loading TED", load_ted, connection,
+        ted_rows = run_step("2/5 Loading TED", load_ted, connection,
                             sources["ted_zips"], config.PROCESSED_DATA_DIR)
         world_bank_rows = run_step("    Loading World Bank", load_world_bank, connection,
                                    sources["world_bank_csv"], config.PROCESSED_DATA_DIR, years)
         print(f"  {config.TED_TABLE}: {ted_rows:,} rows")
         print(f"  {config.WORLD_BANK_TABLE}: {world_bank_rows:,} rows")
 
-        results = run_step("3/4 Running quality checks", run_quality_checks, connection, years)
+        results = run_step("3/5 Running quality checks", run_quality_checks, connection, years)
         print_results(results)
 
-        report = run_step("4/4 Writing data profile", write_profile_report, connection,
+        report = run_step("4/5 Writing data profile", write_profile_report, connection,
                           [config.TED_TABLE, config.WORLD_BANK_TABLE])
         print(f"  {report.relative_to(config.PROJECT_ROOT)}")
 
-    blocking = [result.name for result in results if result.blocks_pipeline]
-    if blocking:
-        print(f"\nPipeline FAILED: critical quality rules failed: {blocking}")
-        sys.exit(1)
+        # Stop before cleaning if the raw data cannot be trusted.
+        blocking = [result.name for result in results if result.blocks_pipeline]
+        if blocking:
+            print(f"\nPipeline FAILED: critical quality rules failed: {blocking}")
+            sys.exit(1)
+
+        run_step("5/5 Building clean layer", build_clean_layer, connection)
+
     print("\nPipeline finished. Database:", config.DATABASE_PATH.relative_to(config.PROJECT_ROOT))
 
 

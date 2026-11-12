@@ -1,0 +1,6 @@
+As of Date,Fiscal Year,Region,Borrower Country / Economy,Borrower Country / Economy Code,Project ID,Project Name,Project Global Practice,Procurement Category,Procurement Method,WB Contract Number,Contract Description,Borrower Contract Reference Number,Contract Signing Date,Supplier ID,Supplier,Supplier Country / Economy,Supplier Country / Economy Code,Supplier Contract Amount (USD),Review type,Contract signed - Calendar year
+11/09/2026,2022,Example Region,Exampleland,EX,P1,Example Project,Transport,Works,Request for Bids,9001,Road works,R-1,03/15/2022,1,Example Builder Sp. z o.o.,Poland,PL,1000.00,Post,2022
+11/09/2026,2022,Example Region,Exampleland,EX,P1,Example Project,Transport,Works,Request for Bids,9001,Road works,R-1,03/15/2022,2,Example Partner Ltd,France,FR,1000.00,Post,2022
+11/09/2026,2022,Example Region,Exampleland,EX,P1,Example Project,Transport,Goods,Request for Quotations,9002,Equipment,R-2,04/01/2022,3,Example Supplier A,Kenya,KE,300.00,Post,2022
+11/09/2026,2022,Example Region,Exampleland,EX,P1,Example Project,Transport,Goods,Request for Quotations,9002,Equipment,R-2,04/01/2022,4,Example Supplier B,Kenya,KE,700.00,Post,2022
+11/09/2026,2022,Example Region,Exampleland,EX,P1,Example Project,Health,Consultant Services,Direct Selection,9003,Advice,R-3,05/02/2022,5,Example Consultant,Kenya,KE,50.00,Post,2022
