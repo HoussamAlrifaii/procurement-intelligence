@@ -13,8 +13,20 @@ into answers:
 | Suspicious patterns are hidden in millions of records | SQL analysis + Power BI dashboard of competition, vendor concentration and unusual prices | Auditors, journalists |
 | Small businesses can't find or price opportunities | AI assistant matching a company to relevant tenders, past winners and prices | Small and medium businesses |
 
-> 🚧 **Status: in development.** Phases 0–1 complete: project setup and a
-> reproducible raw data pipeline. See the [project plan](docs/PROJECT_PLAN.md).
+> 🚧 **Status: in development.** Phases 0–2 complete: project setup, a
+> reproducible data pipeline, cleaning and exploratory analysis.
+> See the [project plan](docs/PROJECT_PLAN.md).
+
+## Highlights so far
+
+From 3.56 million EU contract awards (2019–2022) and 143k World Bank contracts
+([full analysis](notebooks/02_eda.ipynb)):
+
+- **32% of awarded EU contracts received a single offer**, ranging from 60% in Slovenia to 6% in Iceland.
+- Procedures without a call for competition are single-bid **86%** of the time; competitive procedures **31%**.
+- Single bidding falls with contract size: **38%** under EUR 10k, **14%** above EUR 10M.
+- **678 companies** won both EU tenders and World Bank contracts.
+- Correcting repeated joint-venture amounts removes **USD 4.4 bn** of double counting from World Bank totals.
 
 ## Tech stack
 
@@ -32,9 +44,11 @@ python -m pytest -q
 python -m procurement.pipeline    # download and load 2019-2022 (~490 MB download)
 ```
 
-The pipeline writes a DuckDB database to `data/procurement.duckdb` and a data
-profile to [`reports/data_profile.md`](reports/data_profile.md). Details:
-[Phase 1 documentation](docs/phases/PHASE_1_DATA_PIPELINE.md).
+The pipeline writes a DuckDB database to `data/procurement.duckdb`, a data
+profile to [`reports/data_profile.md`](reports/data_profile.md) and the clean
+tables `ted_awards` and `world_bank_awards`. Details:
+[Phase 1](docs/phases/PHASE_1_DATA_PIPELINE.md) ·
+[Phase 2](docs/phases/PHASE_2_CLEANING_EDA.md).
 
 ## Project structure
 
@@ -42,6 +56,7 @@ profile to [`reports/data_profile.md`](reports/data_profile.md). Details:
 procurement/   Python package (pipeline, models, app code)
 sql/           SQL queries, kept as .sql files
 notebooks/     Exploratory analysis
+reference/     Small lookup tables (e.g. CPV sector names)
 data/          Downloaded and processed data (not committed; re-created by code)
 reports/       Generated reports and figures
 docs/          Project plan and one explanation file per phase

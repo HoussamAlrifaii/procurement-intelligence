@@ -1,0 +1,9 @@
+"ID_NOTICE_CAN","YEAR","DT_DISPATCH","DT_AWARD","ISO_COUNTRY_CODE","CAE_NAME","CAE_TYPE","MAIN_ACTIVITY","TYPE_OF_CONTRACT","TOP_TYPE","CRIT_CODE","B_FRA_AGREEMENT","B_EU_FUNDS","B_GPA","B_ELECTRONIC_AUCTION","LOTS_NUMBER","CPV","ID_LOT","AWARD_EST_VALUE_EURO","AWARD_VALUE_EURO","NUMBER_OFFERS","NUMBER_TENDERS_SME","INFO_ON_NON_AWARD","WIN_NAME","WIN_COUNTRY_CODE","B_CONTRACTOR_SME","TITLE","ID_AWARD","CANCELLED"
+1,2022,"14/02/22","08/02/22","DE","Example City","3","General public services","U","OPE","L","N","Y","Y","N",2,"48000000","1",60000,50000,1,1,"","Example Software GmbH","DE","Y","Lot one",101,0
+1,2022,"14/02/22","08/02/22","DE","Example City","3","General public services","U","OPE","L","N","Y","Y","N",2,"48000000","2",60000,50000,1,1,"","Example Software GmbH","DE","Y","Lot one",101,0
+1,2022,"14/02/22","09/02/22","DE","Example City","3","General public services","U","OPE","M","N","Y","Y","N",2,"48000000","3",,50,4,2,"","EXAMPLE SOFTWARE, S.A.---Example Partner Ltd","ES---FR","N---Y","Lot two",102,0
+2,2022,"20/03/22",,"FR","Example Hospital","6","Health","S","NOC","","N","N","N","N",1,"85000000","1",,,,,"PROCUREMENT_UNSUCCESSFUL","","","","",103,0
+3,2022,"21/03/22","01/03/22","PL","Example Ministry","1","Defence","W","RES","L","Y","N","Y","N",1,"45000000","1",,2000000000,999,,"","Example Builder Sp. z o.o.","PL","N","Works",104,0
+3,2022,"21/03/22",,"PL","Example Ministry","1","Defence","W","RES","L","Y","N","Y","N",1,"45000000","9",,,,,"","","","","",,0
+4,2022,"22/03/22","02/03/22","IT","Example Region","R","Environment","S","OPE","M","N","N","N","N",1,"90000000","1",,10000,2,1,"","Example Cleaning S.p.A.","IT","Y","",105,1
+5,2022,"23/03/22","03/03/22","IT","Example Region","R","Environment","S","OPE","M","N","N","N","N",1,"90000000","1",,10000,0,,"","Example Cleaning S.p.A.","IT","Y","",106,0

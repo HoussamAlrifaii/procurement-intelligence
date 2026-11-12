@@ -19,6 +19,10 @@ SQL_DIR = PROJECT_ROOT / "sql"
 LOAD_SQL_DIR = SQL_DIR / "load"
 QUALITY_SQL_DIR = SQL_DIR / "quality"
 PROFILE_SQL_DIR = SQL_DIR / "profile"
+CLEAN_SQL_DIR = SQL_DIR / "clean"
+
+REFERENCE_DIR = PROJECT_ROOT / "reference"      # small lookup tables committed to the repository
+CPV_DIVISIONS_PATH = REFERENCE_DIR / "cpv_divisions.csv"
 
 REPORTS_DIR = PROJECT_ROOT / "reports"
 PROFILE_REPORT_PATH = REPORTS_DIR / "data_profile.md"
@@ -48,6 +52,11 @@ WORLD_BANK_FILE_NAME = "world_bank_contract_awards.csv"
 # to eForms notices changed how award data is published.
 DEFAULT_YEARS = [2019, 2020, 2021, 2022]
 
-# DuckDB table names for the raw layer.
+# DuckDB view names: raw layer (text, as published) and clean layer (typed, cleaned).
 TED_TABLE = "raw_ted_awards"
 WORLD_BANK_TABLE = "raw_world_bank_awards"
+TED_CLEAN_VIEW = "ted_awards"
+WORLD_BANK_CLEAN_VIEW = "world_bank_awards"
+
+TED_CLEAN_PATH = PROCESSED_DATA_DIR / "ted_awards_clean.parquet"
+WORLD_BANK_CLEAN_PATH = PROCESSED_DATA_DIR / "world_bank_awards_clean.parquet"
