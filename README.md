@@ -13,8 +13,9 @@ into answers:
 | Suspicious patterns are hidden in millions of records | SQL analysis + Power BI dashboard of competition, vendor concentration and unusual prices | Auditors, journalists |
 | Small businesses can't find or price opportunities | AI assistant matching a company to relevant tenders, past winners and prices | Small and medium businesses |
 
-> 🚧 **Status: in development.** Phases 0–2 complete: project setup, a
-> reproducible data pipeline, cleaning and exploratory analysis.
+> 🚧 **Status: in development.** Phases 0–3 complete: project setup, a
+> reproducible data pipeline, cleaning and exploratory analysis, star schema
+> and SQL analysis.
 > See the [project plan](docs/PROJECT_PLAN.md).
 
 ## Highlights so far
@@ -25,7 +26,9 @@ From 3.56 million EU contract awards (2019–2022) and 143k World Bank contracts
 - **32% of awarded EU contracts received a single offer**, ranging from 60% in Slovenia to 6% in Iceland.
 - Procedures without a call for competition are single-bid **86%** of the time; competitive procedures **31%**.
 - Single bidding falls with contract size: **38%** under EUR 10k, **14%** above EUR 10M.
-- **678 companies** won both EU tenders and World Bank contracts.
+- **672 companies** won both EU tenders and World Bank contracts.
+- Single bidding rose in **22 of 33** countries between 2019 and 2022 ([SQL analysis](notebooks/03_sql_analysis.ipynb)).
+- **13.1%** of large buyers have highly concentrated spending (HHI ≥ 2,500).
 - Correcting repeated joint-venture amounts removes **USD 4.4 bn** of double counting from World Bank totals.
 
 ## Tech stack
@@ -45,10 +48,12 @@ python -m procurement.pipeline    # download and load 2019-2022 (~490 MB downloa
 ```
 
 The pipeline writes a DuckDB database to `data/procurement.duckdb`, a data
-profile to [`reports/data_profile.md`](reports/data_profile.md) and the clean
-tables `ted_awards` and `world_bank_awards`. Details:
+profile to [`reports/data_profile.md`](reports/data_profile.md), the clean
+tables `ted_awards` and `world_bank_awards`, and a star schema (two fact tables,
+five dimensions) in `data/marts/` for analysis and Power BI. Details:
 [Phase 1](docs/phases/PHASE_1_DATA_PIPELINE.md) ·
-[Phase 2](docs/phases/PHASE_2_CLEANING_EDA.md).
+[Phase 2](docs/phases/PHASE_2_CLEANING_EDA.md) ·
+[Phase 3](docs/phases/PHASE_3_SQL_ANALYSIS.md).
 
 ## Project structure
 

@@ -44,7 +44,7 @@ TED records the number of offers.
 | 5 | `award_status` | `awarded`, `not_awarded_unsuccessful` (no valid offers) or `not_awarded_discontinued` | 677,416 not awarded |
 | 6 | Clean `number_offers` | 0 offers on an award and the value 999 (a placeholder) are not plausible counts, so they become unknown | 1,879 values (165 zeros, 1,714 placeholders) |
 | 7 | `is_single_bid` | 1 = one offer, 0 = two or more, NULL = unknown or not awarded | 2,814,318 labelled |
-| 8 | `award_value_quality` | `too_low` (< EUR 100), `too_high` (≥ EUR 1 bn), `missing` or `plausible`; values are flagged, never deleted | 261,753 awarded contracts flagged |
+| 8 | `award_value_quality` | `too_low` (< EUR 100), `too_high` (≥ EUR 1 bn), `placeholder` (only 9s, e.g. 999,999,999), `missing` or `plausible`; values are flagged, never deleted | 262,356 awarded contracts flagged |
 | 9 | Several winners | Names joined with `---`: keep the first (as the codebook describes) and record `winner_count` | 239,554 awards |
 | 10 | Readable labels | Contract type, procedure, criterion and buyer type from the codebook; sector names from the CPV list | all |
 
@@ -75,7 +75,7 @@ remove accents, replace punctuation with spaces, remove legal-form words
 | SIEMENS HEALTHCARE, S.L.U. | siemens healthcare |
 | Siemens Healthcare, s.r.o. | siemens healthcare |
 
-This reduces distinct winner names from 720,095 to 462,893 (−36%).
+This reduces distinct winner names from 720,095 to 480,403 (−33.3%). Letters of every alphabet are kept, so Bulgarian (Cyrillic) and Greek names are standardised too.
 **Option chosen:** a transparent rule rather than fuzzy matching. Fuzzy
 matching would catch spelling mistakes, but risks merging unrelated companies
 and is hard to explain or audit. It can be added later if Phase 3 needs it.
@@ -94,7 +94,7 @@ INNER JOIN world_bank_suppliers USING (name_std, country);
 ```
 
 Requiring the same country prevents merging unrelated companies with similar
-names. Result: 678 companies won contracts in both markets in 2019–2022, a
+names. Result: 672 companies won contracts in both markets in 2019–2022, a
 conservative lower bound.
 
 ## 6. Key EDA findings
