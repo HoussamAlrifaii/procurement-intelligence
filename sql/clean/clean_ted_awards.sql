@@ -16,7 +16,8 @@
 --     award (999 is a placeholder), so they become unknown (NULL).
 --  7. ML label is_single_bid: 1 = one offer, 0 = two or more, NULL = unknown
 --     or not awarded.
---  8. Flag implausible award values instead of deleting them.
+--  8. Flag implausible award values instead of deleting them, including
+--     placeholder values made only of 9s (999,999 ... 999,999,999).
 --  9. Several winners in one row are joined with '---': keep the first one
 --     and count how many there were.
 -- 10. Add readable labels for codes, using the TED codebook and the CPV list.
@@ -100,6 +101,7 @@ COPY (
         END AS is_single_bid,
         CASE                                                                             -- rule 8
             WHEN award_value_eur IS NULL THEN 'missing'
+            WHEN REGEXP_MATCHES(CAST(CAST(award_value_eur AS BIGINT) AS VARCHAR), '^9{{6,}}$') THEN 'placeholder'
             WHEN award_value_eur < 100 THEN 'too_low'
             WHEN award_value_eur >= 1e9 THEN 'too_high'
             ELSE 'plausible'

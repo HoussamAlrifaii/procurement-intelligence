@@ -39,7 +39,7 @@ def test_one_row_per_award_without_cancelled_or_lot_only_rows(connection):
     award_ids = connection.sql(f"SELECT award_id FROM {config.TED_CLEAN_VIEW} ORDER BY 1").fetchall()
     # 101 appears twice in the raw data (two lots) -> once; 105 is cancelled;
     # the row without an award ID is a lot description only.
-    assert [row[0] for row in award_ids] == [101, 102, 103, 104, 106]
+    assert [row[0] for row in award_ids] == [101, 102, 103, 104, 106, 107]
 
 
 def test_single_bid_label(connection):
@@ -56,6 +56,7 @@ def test_award_status_and_value_flags(connection):
     assert ted_award(connection, 102)["award_value_quality"] == "too_low"
     assert ted_award(connection, 104)["award_value_quality"] == "too_high"
     assert ted_award(connection, 103)["award_value_quality"] == "missing"
+    assert ted_award(connection, 107)["award_value_quality"] == "placeholder"   # 999,999,999
 
 
 def test_types_and_labels(connection):
@@ -102,3 +103,11 @@ def test_world_bank_types_and_flags(connection):
     assert str(row[0]) == "2022-05-02"
     assert row[1] == "too_low"
     assert row[2] == "example consultant"
+
+
+def test_standardize_name_keeps_non_latin_alphabets(connection):
+    names = connection.sql(
+        "SELECT standardize_name('„Софийска вода“ АД'), standardize_name('ΔΙΑΓΝΩΣΤΙΚΗ - ΑΝΑΛΥΤΙΚΗ ΑΕ')"
+    ).fetchone()
+    # Bulgarian and Greek names must not be wiped out; their legal forms (АД, ΑΕ) are removed.
+    assert names == ("софииска вода", "διαγνωστικη αναλυτικη")

@@ -20,9 +20,15 @@ LOAD_SQL_DIR = SQL_DIR / "load"
 QUALITY_SQL_DIR = SQL_DIR / "quality"
 PROFILE_SQL_DIR = SQL_DIR / "profile"
 CLEAN_SQL_DIR = SQL_DIR / "clean"
+MARTS_SQL_DIR = SQL_DIR / "marts"
+ANALYSIS_SQL_DIR = SQL_DIR / "analysis"
 
 REFERENCE_DIR = PROJECT_ROOT / "reference"      # small lookup tables committed to the repository
 CPV_DIVISIONS_PATH = REFERENCE_DIR / "cpv_divisions.csv"
+COUNTRIES_PATH = REFERENCE_DIR / "countries.csv"
+
+MARTS_DIR = DATA_DIR / "marts"          # star-schema tables (Parquet) for Power BI
+ANALYSIS_OUTPUT_DIR = DATA_DIR / "analysis"  # results of the sql/analysis queries (CSV)
 
 REPORTS_DIR = PROJECT_ROOT / "reports"
 PROFILE_REPORT_PATH = REPORTS_DIR / "data_profile.md"

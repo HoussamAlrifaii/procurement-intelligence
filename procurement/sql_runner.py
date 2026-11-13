@@ -26,6 +26,10 @@ def read_sql(path, **parameters):
     (file paths, table names, years), never with external input.
     """
     template = Path(path).read_text()
+    if not parameters:
+        # Files without placeholders are returned unchanged, so SQL that itself
+        # contains braces (e.g. the regex class \p{L}) is not misread as a placeholder.
+        return template
     return template.format(**parameters)
 
 

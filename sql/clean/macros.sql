@@ -2,7 +2,9 @@
 --
 -- Steps: keep only the first name when several winners are joined with '---',
 -- lowercase, remove accents, turn punctuation into spaces, drop common legal
--- form words (GmbH, Ltd, S.A., Sp. z o.o. ...), collapse spaces.
+-- form words (GmbH, Ltd, S.A., Sp. z o.o., ЕООД, ΑΕ ...), collapse spaces.
+-- Letters of every alphabet are kept (\p{L} = any letter, \p{N} = any digit),
+-- so Bulgarian (Cyrillic) and Greek names are standardised too.
 --   'Siemens Healthcare Sp. z o.o.'  -> 'siemens healthcare'
 --   'SIEMENS HEALTHCARE, S.L.U.'     -> 'siemens healthcare'
 -- The legal-form removal runs twice so that neighbouring forms such as
@@ -15,7 +17,7 @@
 CREATE OR REPLACE MACRO remove_legal_forms(padded_name) AS
     REGEXP_REPLACE(
         padded_name,
-        ' (sp z o o|s r o|s r l|s l u|s p a|s a s|s a|s l|a s|d o o|b v|n v|gmbh|mbh|ag|kg|ohg|ug|ltd|limited|plc|llc|llp|inc|corp|corporation|co|sa|srl|spa|sas|sarl|sl|slu|bv|nv|oy|oyj|ab|as|aps|kft|zrt|nyrt|uab|ou|sia|ooo|eood|ood|ad|doo|se|spzoo) ',
+        ' (sp z o o|s r o|s r l|s l u|s p a|s a s|s a|s l|a s|d o o|b v|n v|gmbh|mbh|ag|kg|ohg|ug|ltd|limited|plc|llc|llp|inc|corp|corporation|co|sa|srl|spa|sas|sarl|sl|slu|bv|nv|oy|oyj|ab|as|aps|kft|zrt|nyrt|uab|ou|sia|ooo|eood|ood|ad|doo|se|spzoo|еоод|оод|ад|еад|ет|αε|επε|ικε|οε|εε) ',
         ' ', 'g'
     );
 
@@ -26,7 +28,7 @@ CREATE OR REPLACE MACRO standardize_name(name) AS
                 remove_legal_forms(remove_legal_forms(
                     ' ' || REGEXP_REPLACE(
                         STRIP_ACCENTS(LOWER(SPLIT_PART(name, '---', 1))),
-                        '[^a-z0-9]+', ' ', 'g'
+                        '[^\p{L}\p{N}]+', ' ', 'g'
                     ) || ' '
                 )),
                 ' +', ' ', 'g'
