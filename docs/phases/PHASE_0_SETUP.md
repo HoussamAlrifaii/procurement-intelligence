@@ -11,7 +11,7 @@ defined place, runs identically on any machine, and is tested automatically.
 | `procurement/config.py` | Single source of truth for paths and settings |
 | `procurement/check_setup.py` | Environment verification (Python version, packages, folders, DuckDB) |
 | `tests/` | Automated tests (pytest) |
-| `.github/workflows/tests.yml` | CI: runs the environment check and tests on every push and pull request |
+| `.github/workflows/tests.yml` | CI workflow: runs the environment check and tests on every push and pull request when GitHub Actions is enabled (currently disabled for this repository; tests are run locally) |
 | `requirements.txt` | Pinned dependencies |
 | `.gitignore` | Excludes data, secrets and local tooling files |
 | `.env.example` | Template for secret settings (real values live in a git-ignored `.env`) |
