@@ -84,3 +84,15 @@ def test_every_analysis_query_runs(connection):
     for name in list_analyses():
         result = run_analysis(connection, name)
         assert result is not None, name
+
+
+def test_spend_value_excludes_framework_agreements(connection):
+    rows = dict(connection.sql("SELECT award_id, spend_value_eur FROM fact_award").fetchall())
+    assert rows[101] == 50000        # plausible, not a framework agreement
+    assert rows[104] is None         # framework agreement (and too high)
+
+
+def test_value_band(connection):
+    bands = dict(connection.sql("SELECT award_id, value_band FROM fact_award").fetchall())
+    assert bands[101] == "10k-100k"
+    assert bands[102] == "Unknown"   # too_low value

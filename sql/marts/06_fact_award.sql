@@ -30,7 +30,31 @@ COPY (
         awards.award_value_eur,
         awards.award_value_quality,
         CASE WHEN awards.award_value_quality = 'plausible'
-             THEN awards.award_value_eur END                         AS award_value_eur_plausible
+             THEN awards.award_value_eur END                         AS award_value_eur_plausible,
+
+        -- Spending measure for value analyses: plausible values, excluding framework
+        -- agreements (their published value is a ceiling for future orders, not spending).
+        CASE WHEN awards.award_value_quality = 'plausible'
+              AND NOT COALESCE(awards.is_framework_agreement, FALSE)
+             THEN awards.award_value_eur END                         AS spend_value_eur,
+
+        -- Contract size band (plausible values only), with a numeric sort order for Power BI.
+        CASE
+            WHEN awards.award_value_quality <> 'plausible' THEN 'Unknown'
+            WHEN awards.award_value_eur < 10000      THEN 'Under 10k'
+            WHEN awards.award_value_eur < 100000     THEN '10k-100k'
+            WHEN awards.award_value_eur < 1000000    THEN '100k-1M'
+            WHEN awards.award_value_eur < 10000000   THEN '1M-10M'
+            ELSE '10M+'
+        END                                                          AS value_band,
+        CASE
+            WHEN awards.award_value_quality <> 'plausible' THEN 6
+            WHEN awards.award_value_eur < 10000      THEN 1
+            WHEN awards.award_value_eur < 100000     THEN 2
+            WHEN awards.award_value_eur < 1000000    THEN 3
+            WHEN awards.award_value_eur < 10000000   THEN 4
+            ELSE 5
+        END                                                          AS value_band_order
     FROM ted_awards AS awards
     LEFT JOIN dim_buyer AS buyer
         ON  standardize_name(awards.buyer_name) = buyer.buyer_name_std

@@ -18,7 +18,7 @@ def list_analyses():
 
 def run_analysis(connection, name):
     """Run sql/analysis/<name>.sql and return the result as a pandas DataFrame."""
-    sql_text = (config.ANALYSIS_SQL_DIR / f"{name}.sql").read_text()
+    sql_text = (config.ANALYSIS_SQL_DIR / f"{name}.sql").read_text(encoding="utf-8")
     return connection.sql(sql_text).df()
 
 

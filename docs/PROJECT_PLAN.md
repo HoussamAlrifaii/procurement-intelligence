@@ -68,7 +68,7 @@ ML target: `is_single_bid` = 1 if one offer, 0 if two or more (awarded contracts
 |---|---|
 | One-command pipeline (download → clean → load → build tables) | 1–3 ✅ (raw, clean and star-schema layers) |
 | Data quality checks that stop the pipeline on invalid data | 1 ✅ |
-| CI: environment checks + tests on every push (GitHub Actions) | 0 ✅ |
+| Automated tests (`python -m pytest`) and a CI workflow definition (`.github/workflows/tests.yml`); Actions is currently disabled for this repository, so tests are run locally | 0 ✅ |
 | Scheduled monthly data refresh (GitHub Actions) | 8 |
 | Automated red-flag summary after each refresh | 8 |
 
