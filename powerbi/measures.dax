@@ -1,0 +1,206 @@
+// Procurement Intelligence: DAX measures
+//
+// How to add them all at once (Power BI Desktop, DAX query view):
+//   1. Create an empty table named _Measures (Home > Enter data > name it _Measures > Load).
+//   2. Open DAX query view, paste this whole file, and click "Update model: Add new measures".
+//   3. Delete the default Column1 from _Measures; set formats as noted on each measure.
+//
+// Conventions
+//   - "Competitive" measures keep only procedures with a public call for competition
+//     (dim_procedure[is_competitive] = TRUE). Non-competitive procedures are single-bid
+//     by design, so they are excluded from the single-bid analysis.
+//   - Spending uses fact_award[spend_value_eur]: plausible values, excluding framework
+//     agreements, whose published value is a ceiling rather than spending.
+//   - Every number on the dashboard can be checked against powerbi/expected_values.md.
+
+DEFINE
+
+    // ---------------------------------------------------------------- Volume
+    MEASURE _Measures[Award Records] =                                   // format: #,0
+        COUNTROWS ( fact_award )
+
+    MEASURE _Measures[Awarded Contracts] =                               // format: #,0
+        CALCULATE ( [Award Records], fact_award[is_awarded] = 1 )
+
+    MEASURE _Measures[Awarded Share] =                                   // format: 0.0%
+        DIVIDE ( [Awarded Contracts], [Award Records] )
+
+    MEASURE _Measures[Failed Tender Share] =                             // format: 0.0%
+        1 - [Awarded Share]
+
+    MEASURE _Measures[Labelled Awards] =                                 // format: #,0
+        // is_single_bid is blank when the number of offers is unknown; COUNT skips blanks.
+        COUNT ( fact_award[is_single_bid] )
+
+    MEASURE _Measures[Labelled Awards (Competitive)] =                   // format: #,0
+        CALCULATE ( [Labelled Awards], dim_procedure[is_competitive] = TRUE () )
+
+    // ---------------------------------------------------------------- Competition
+    MEASURE _Measures[Single-Bid Awards] =                               // format: #,0
+        SUM ( fact_award[is_single_bid] )
+
+    MEASURE _Measures[Single-Bid Rate] =                                 // format: 0.0%
+        // Average of a 1/0 flag = share of awards that received one offer.
+        DIVIDE ( [Single-Bid Awards], [Labelled Awards] )
+
+    MEASURE _Measures[Single-Bid Rate (Competitive)] =                   // format: 0.0%
+        CALCULATE ( [Single-Bid Rate], dim_procedure[is_competitive] = TRUE () )
+
+    MEASURE _Measures[Single-Bid Rate (All Countries)] =                 // format: 0.0%
+        // Reference line: the rate for all buyers, ignoring any buyer or country filter.
+        CALCULATE ( [Single-Bid Rate (Competitive)], REMOVEFILTERS ( dim_buyer ) )
+
+    MEASURE _Measures[Single-Bid Rate Prior Year] =                      // format: 0.0%
+        // Requires dim_date to be marked as the date table (on dim_date[date]).
+        CALCULATE ( [Single-Bid Rate (Competitive)], SAMEPERIODLASTYEAR ( dim_date[date] ) )
+
+    MEASURE _Measures[Single-Bid Rate Change] =                          // format: +0.0%;-0.0%;0.0%
+        VAR CurrentRate = [Single-Bid Rate (Competitive)]
+        VAR PriorRate = [Single-Bid Rate Prior Year]
+        RETURN IF ( NOT ISBLANK ( PriorRate ), CurrentRate - PriorRate )
+
+    MEASURE _Measures[Average Offers] =                                  // format: 0.00
+        AVERAGE ( fact_award[number_offers] )
+
+    // ---------------------------------------------------------------- Buyers
+    MEASURE _Measures[Country Single-Bid Rate] =                         // format: 0.0%
+        // For each buyer row: the rate of all buyers in the same country.
+        CALCULATE (
+            [Single-Bid Rate (Competitive)],
+            REMOVEFILTERS ( dim_buyer ),
+            VALUES ( dim_buyer[buyer_country] )
+        )
+
+    MEASURE _Measures[Gap vs Country] =                                  // format: +0.0%;-0.0%;0.0%
+        [Single-Bid Rate (Competitive)] - [Country Single-Bid Rate]
+
+    MEASURE _Measures[Buyers with 100+ Awards] =                         // format: #,0
+        // Buyers with enough competitive awards for a stable rate.
+        COUNTROWS (
+            FILTER ( VALUES ( dim_buyer[buyer_key] ), [Labelled Awards (Competitive)] >= 100 )
+        )
+
+    MEASURE _Measures[Buyers at 80%+] =                                  // format: #,0
+        COUNTROWS (
+            FILTER (
+                VALUES ( dim_buyer[buyer_key] ),
+                [Labelled Awards (Competitive)] >= 100
+                    && [Single-Bid Rate (Competitive)] >= 0.8
+            )
+        )
+
+    MEASURE _Measures[Buyers 20+ Points Above Country] =                 // format: #,0
+        COUNTROWS (
+            FILTER (
+                VALUES ( dim_buyer[buyer_key] ),
+                [Labelled Awards (Competitive)] >= 100
+                    && [Gap vs Country] >= 0.2
+            )
+        )
+
+    // ---------------------------------------------------------------- Spending and vendors
+    MEASURE _Measures[Spending (EUR)] =                                  // format: €#,0.0,,,"bn" on cards; €#,0 in tables
+        SUM ( fact_award[spend_value_eur] )
+
+    MEASURE _Measures[Median Award Value (EUR)] =                        // format: €#,0
+        MEDIAN ( fact_award[spend_value_eur] )
+
+    MEASURE _Measures[Priced Awards] =                                   // format: #,0
+        // Awards with a spending value and a known winner: the base for concentration.
+        CALCULATE (
+            COUNTROWS ( fact_award ),
+            NOT ISBLANK ( fact_award[spend_value_eur] ),
+            NOT ISBLANK ( fact_award[vendor_key] )
+        )
+
+    MEASURE _Measures[Vendors Paid] =                                    // format: #,0
+        CALCULATE (
+            DISTINCTCOUNT ( fact_award[vendor_key] ),
+            NOT ISBLANK ( fact_award[spend_value_eur] ),
+            NOT ISBLANK ( fact_award[vendor_key] )
+        )
+
+    MEASURE _Measures[Top Vendor Share] =                                // format: 0.0%
+        VAR BuyerSpend = CALCULATE ( [Spending (EUR)], NOT ISBLANK ( fact_award[vendor_key] ) )
+        VAR VendorShares =
+            ADDCOLUMNS (
+                FILTER ( VALUES ( fact_award[vendor_key] ), NOT ISBLANK ( fact_award[vendor_key] ) ),
+                "@Share", DIVIDE ( CALCULATE ( [Spending (EUR)] ), BuyerSpend )
+            )
+        RETURN IF ( BuyerSpend > 0, MAXX ( VendorShares, [@Share] ) )
+
+    MEASURE _Measures[HHI] =                                             // format: #,0
+        // Herfindahl-Hirschman Index: sum of squared vendor shares (in %) of spending.
+        // 10,000 = one vendor receives everything; 1,000 = ten equal vendors.
+        VAR BuyerSpend = CALCULATE ( [Spending (EUR)], NOT ISBLANK ( fact_award[vendor_key] ) )
+        VAR VendorShares =
+            ADDCOLUMNS (
+                FILTER ( VALUES ( fact_award[vendor_key] ), NOT ISBLANK ( fact_award[vendor_key] ) ),
+                "@Share", DIVIDE ( CALCULATE ( [Spending (EUR)] ), BuyerSpend )
+            )
+        RETURN IF ( BuyerSpend > 0, SUMX ( VendorShares, ( [@Share] * 100 ) ^ 2 ) )
+
+    MEASURE _Measures[Concentration Band] =                              // text
+        VAR Index = [HHI]
+        RETURN
+            SWITCH (
+                TRUE (),
+                ISBLANK ( Index ), BLANK (),
+                Index >= 2500, "High",
+                Index >= 1500, "Moderate",
+                "Low"
+            )
+
+    MEASURE _Measures[Eligible Buyers (50+ Priced Awards)] =             // format: #,0
+        COUNTROWS ( FILTER ( VALUES ( dim_buyer[buyer_key] ), [Priced Awards] >= 50 ) )
+
+    MEASURE _Measures[High-Concentration Buyers] =                       // format: #,0
+        COUNTROWS (
+            FILTER (
+                FILTER ( VALUES ( dim_buyer[buyer_key] ), [Priced Awards] >= 50 ),
+                [HHI] >= 2500
+            )
+        )
+
+    MEASURE _Measures[High-Concentration Share] =                        // format: 0.0%
+        DIVIDE ( [High-Concentration Buyers], [Eligible Buyers (50+ Priced Awards)] )
+
+    // ---------------------------------------------------------------- World Bank and cross-market
+    MEASURE _Measures[World Bank Contracts] =                            // format: #,0
+        DISTINCTCOUNT ( fact_world_bank_contract[contract_id] )
+
+    MEASURE _Measures[World Bank Spending (USD)] =                       // format: $#,0.0,,,"bn" on cards; $#,0 in tables
+        // amount_usd_for_totals counts joint-venture contracts once.
+        SUM ( fact_world_bank_contract[amount_usd_for_totals] )
+
+    MEASURE _Measures[Cross-Market Companies] =                          // format: #,0
+        CALCULATE (
+            COUNTROWS ( dim_vendor ),
+            dim_vendor[in_ted] = TRUE (),
+            dim_vendor[in_world_bank] = TRUE ()
+        )
+
+    // ---------------------------------------------------------------- Formatting helpers
+    MEASURE _Measures[Bar Colour vs Average] =                           // text (hex colour)
+        // Conditional formatting: orange when above the all-countries rate, blue otherwise.
+        IF (
+            [Single-Bid Rate (Competitive)] > [Single-Bid Rate (All Countries)],
+            "#EB6834",
+            "#2A78D6"
+        )
+
+    MEASURE _Measures[Procedure Bar Colour] =                            // text (hex colour)
+        // Orange for procedures without a call for competition (single-bid by design).
+        VAR IsCompetitive = SELECTEDVALUE ( dim_procedure[is_competitive] )
+        RETURN IF ( NOT ISBLANK ( IsCompetitive ) && IsCompetitive = FALSE (), "#EB6834", "#2A78D6" )
+
+    MEASURE _Measures[Title Overview] =                                  // text
+        FORMAT ( [Single-Bid Rate (Competitive)], "0.0%" )
+            & " of competitive EU awards received a single offer"
+
+    MEASURE _Measures[Title Buyers] =                                    // text
+        FORMAT ( [Buyers at 80%+], "#,0" )
+            & " buyers with 100+ awards receive a single offer at least 80% of the time"
+
+EVALUATE
+    { [Award Records], [Single-Bid Rate (Competitive)], [Spending (EUR)], [Cross-Market Companies] }
