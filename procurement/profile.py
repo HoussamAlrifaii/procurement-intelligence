@@ -117,5 +117,5 @@ def write_profile_report(connection, table_names, output_path=None):
         lines.extend(format_table_section(table_name, profile_table(connection, table_name)))
 
     output_path.parent.mkdir(parents=True, exist_ok=True)
-    output_path.write_text("\n".join(lines))
+    output_path.write_text("\n".join(lines), encoding="utf-8")
     return output_path

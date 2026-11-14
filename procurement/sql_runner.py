@@ -25,7 +25,9 @@ def read_sql(path, **parameters):
     Placeholders are filled only with values created by the pipeline itself
     (file paths, table names, years), never with external input.
     """
-    template = Path(path).read_text()
+    # Always UTF-8: some SQL files contain Cyrillic and Greek text, and the default
+    # encoding on Windows is often not UTF-8.
+    template = Path(path).read_text(encoding="utf-8")
     if not parameters:
         # Files without placeholders are returned unchanged, so SQL that itself
         # contains braces (e.g. the regex class \p{L}) is not misread as a placeholder.

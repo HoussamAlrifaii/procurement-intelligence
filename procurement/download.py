@@ -61,7 +61,7 @@ def download_file(url, destination):
 
 def read_manifest():
     if config.MANIFEST_PATH.exists():
-        return json.loads(config.MANIFEST_PATH.read_text())
+        return json.loads(config.MANIFEST_PATH.read_text(encoding="utf-8"))
     return {}
 
 
@@ -89,7 +89,7 @@ def download_sources(years):
         size_mb = path.stat().st_size / 1e6
         print(f"  {path.name}: {status} ({size_mb:,.0f} MB)")
 
-    config.MANIFEST_PATH.write_text(json.dumps(manifest, indent=2) + "\n")
+    config.MANIFEST_PATH.write_text(json.dumps(manifest, indent=2) + "\n", encoding="utf-8")
     return {
         "ted_zips": [ted_zip_path(year) for year in years],
         "world_bank_csv": world_bank_csv_path(),
