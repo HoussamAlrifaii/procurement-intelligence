@@ -182,17 +182,18 @@ DEFINE
 
     // ---------------------------------------------------------------- Formatting helpers
     MEASURE _Measures[Bar Colour vs Average] =                           // text (hex colour)
-        // Conditional formatting: orange when above the all-countries rate, blue otherwise.
+        // Conditional formatting: gold when above the all-countries rate, blue otherwise
+        // (colours of the dark theme, powerbi/theme_dark.json).
         IF (
             [Single-Bid Rate (Competitive)] > [Single-Bid Rate (All Countries)],
-            "#EB6834",
-            "#2A78D6"
+            "#C98500",
+            "#3987E5"
         )
 
     MEASURE _Measures[Procedure Bar Colour] =                            // text (hex colour)
-        // Orange for procedures without a call for competition (single-bid by design).
+        // Gold for procedures without a call for competition (single-bid by design).
         VAR IsCompetitive = SELECTEDVALUE ( dim_procedure[is_competitive] )
-        RETURN IF ( NOT ISBLANK ( IsCompetitive ) && IsCompetitive = FALSE (), "#EB6834", "#2A78D6" )
+        RETURN IF ( NOT ISBLANK ( IsCompetitive ) && IsCompetitive = FALSE (), "#C98500", "#3987E5" )
 
     MEASURE _Measures[Title Overview] =                                  // text
         FORMAT ( [Single-Bid Rate (Competitive)], "0.0%" )

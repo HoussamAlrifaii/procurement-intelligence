@@ -7,7 +7,8 @@ procurement officers, auditors and small businesses.
 | File | Purpose |
 |---|---|
 | `powerbi/measures.dax` | All DAX measures, added in one step through DAX query view |
-| `powerbi/theme.json` | Report theme (colour-blind-safe palette, typography, card style) |
+| `powerbi/theme_dark.json` | **Report theme used**: dark, blue data with gold highlights (colour-blind-safe, validated on the dark surface) |
+| `powerbi/theme.json` | Light alternative with the same structure (blue and orange) |
 | `powerbi/expected_values.md` | The value every visual must show with no slicer selected |
 | `data/marts/*.parquet` | The star schema (built by `python -m procurement.pipeline`) |
 
@@ -74,7 +75,7 @@ Do not create any relationship between the two fact tables.
 5. Run the `EVALUATE` at the end of the file: it should return 3,557,158 · 0.306 · 2.69e12 · 672.
 
 ### 1.7 Theme
-View → Themes → **Browse for themes** → `powerbi/theme.json`.
+Design → **Import theme** → `powerbi/theme_dark.json` (the conditional-formatting measures return the dark theme's blue `#3987E5` and gold `#C98500`).
 
 ---
 
