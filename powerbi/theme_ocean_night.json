@@ -1,0 +1,85 @@
+{
+  "name": "Procurement Intelligence Ocean Night",
+  "dataColors": [
+    "#2B8DE0",
+    "#E4528A",
+    "#C98500",
+    "#199E70",
+    "#D95926",
+    "#9085E9",
+    "#008300",
+    "#E66767"
+  ],
+  "foreground": "#E0E1DD",
+  "foregroundNeutralSecondary": "#9AA6B2",
+  "foregroundNeutralTertiary": "#7A8696",
+  "background": "#1B263B",
+  "backgroundLight": "#22314A",
+  "backgroundNeutral": "#2A3A55",
+  "secondaryBackground": "#22314A",
+  "tableAccent": "#2B8DE0",
+  "hyperlink": "#86B6EF",
+  "good": "#0CA30C",
+  "neutral": "#C98500",
+  "bad": "#E66767",
+  "maximum": "#86B6EF",
+  "center": "#2B8DE0",
+  "minimum": "#184F95",
+  "null": "#2A3A55",
+  "textClasses": {
+    "callout": { "fontSize": 30, "fontFace": "Segoe UI Semibold", "color": "#E0E1DD" },
+    "title": { "fontSize": 12, "fontFace": "Segoe UI Semibold", "color": "#E0E1DD" },
+    "header": { "fontSize": 11, "fontFace": "Segoe UI Semibold", "color": "#E0E1DD" },
+    "label": { "fontSize": 9, "fontFace": "Segoe UI", "color": "#9AA6B2" }
+  },
+  "visualStyles": {
+    "*": {
+      "*": {
+        "background": [{ "show": true, "color": { "solid": { "color": "#1B263B" } }, "transparency": 0 }],
+        "border": [{ "show": true, "color": { "solid": { "color": "#2A3A55" } }, "radius": 10 }],
+        "dropShadow": [{ "show": false }],
+        "title": [{
+          "show": true,
+          "fontFamily": "Segoe UI Semibold",
+          "fontSize": 12,
+          "fontColor": { "solid": { "color": "#E0E1DD" } },
+          "alignment": "left"
+        }],
+        "subTitle": [{ "show": false }],
+        "categoryAxis": [{
+          "labelColor": { "solid": { "color": "#9AA6B2" } },
+          "showAxisTitle": false,
+          "gridlineShow": false
+        }],
+        "valueAxis": [{
+          "labelColor": { "solid": { "color": "#7A8696" } },
+          "showAxisTitle": false,
+          "gridlineColor": { "solid": { "color": "#2A3A55" } }
+        }],
+        "labels": [{ "show": true, "color": { "solid": { "color": "#E0E1DD" } } }],
+        "legend": [{ "labelColor": { "solid": { "color": "#9AA6B2" } } }]
+      }
+    },
+    "page": {
+      "*": {
+        "background": [{ "color": { "solid": { "color": "#0D1B2A" } }, "transparency": 0 }],
+        "outspace": [{ "color": { "solid": { "color": "#091421" } }, "transparency": 0 }]
+      }
+    },
+    "textbox": {
+      "*": {
+        "background": [{ "show": false }],
+        "border": [{ "show": false }]
+      }
+    },
+    "slicer": {
+      "*": {
+        "header": [{ "fontColor": { "solid": { "color": "#9AA6B2" } }, "textSize": 9 }],
+        "items": [{
+          "fontColor": { "solid": { "color": "#E0E1DD" } },
+          "background": { "solid": { "color": "#22314A" } }
+        }]
+      }
+    }
+  }
+}
