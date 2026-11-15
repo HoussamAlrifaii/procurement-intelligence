@@ -47,8 +47,11 @@ DEFINE
         CALCULATE ( [Single-Bid Rate], dim_procedure[is_competitive] = TRUE () )
 
     MEASURE _Measures[Single-Bid Rate (All Countries)] =                 // format: 0.0%
-        // Reference line: the rate for all buyers, ignoring any buyer or country filter.
-        CALCULATE ( [Single-Bid Rate (Competitive)], REMOVEFILTERS ( dim_buyer ) )
+        // Reference line: the rate for everything currently selected by slicers and page
+        // filters, ignoring the chart's own categories (country, contract type, sector ...).
+        // ALLSELECTED keeps slicer selections; REMOVEFILTERS(dim_buyer) would only ignore
+        // countries, so on a contract-type chart each bar would be compared with itself.
+        CALCULATE ( [Single-Bid Rate (Competitive)], ALLSELECTED () )
 
     MEASURE _Measures[Single-Bid Rate Prior Year] =                      // format: 0.0%
         // Requires dim_date to be marked as the date table (on dim_date[date]).
