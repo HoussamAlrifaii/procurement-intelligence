@@ -7,7 +7,7 @@ procurement officers, auditors and small businesses.
 | File | Purpose |
 |---|---|
 | `powerbi/measures.dax` | All DAX measures, added in one step through DAX query view |
-| `powerbi/theme_dark.json` | **Report theme used**: dark, blue data with gold highlights (colour-blind-safe, validated on the dark surface) |
+| `powerbi/theme_midnight_indigo.json` | **Report theme used** (Midnight Indigo): indigo data, teal highlights on a near-black page (colour-blind-safe, validated on the dark surface) |
 | `powerbi/theme.json` | Light alternative with the same structure (blue and orange) |
 | `powerbi/expected_values.md` | The value every visual must show with no slicer selected |
 | `data/marts/*.parquet` | The star schema (built by `python -m procurement.pipeline`) |
@@ -75,7 +75,7 @@ Do not create any relationship between the two fact tables.
 5. Run the `EVALUATE` at the end of the file: it should return 3,557,158 · 0.306 · 2.69e12 · 672.
 
 ### 1.7 Theme
-Design → **Import theme** → `powerbi/theme_dark.json` (the conditional-formatting measures return the dark theme's blue `#3987E5` and gold `#C98500`).
+Design → **Import theme** → `powerbi/theme_midnight_indigo.json` (the conditional-formatting measures return indigo `#6366F1` and teal `#06A3B8`).
 
 ---
 
