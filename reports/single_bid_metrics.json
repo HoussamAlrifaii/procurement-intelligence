@@ -1,0 +1,133 @@
+{
+  "split": {
+    "train": "published up to 2020",
+    "validation": "2021",
+    "test": "2022"
+  },
+  "population": "awarded contracts in competitive procedures with a known number of offers",
+  "lightgbm_best_iteration": 1014,
+  "metrics": {
+    "baseline": {
+      "validation": {
+        "rows": 714104,
+        "positive_rate": 0.29491082531395985,
+        "roc_auc": 0.6831647282481895,
+        "pr_auc": 0.4543951997728056,
+        "brier": 0.1873097756129882,
+        "log_loss": 0.5577721396491555,
+        "lift_top_10pct": 1.8742062370063803
+      },
+      "test": {
+        "rows": 691865,
+        "positive_rate": 0.30887673173234664,
+        "roc_auc": 0.6518676744843412,
+        "pr_auc": 0.43669169465128344,
+        "brier": 0.19780042998921832,
+        "log_loss": 0.5826899074165209,
+        "lift_top_10pct": 1.6692602186148107
+      }
+    },
+    "logistic": {
+      "validation": {
+        "rows": 714104,
+        "positive_rate": 0.29491082531395985,
+        "roc_auc": 0.7506160514209235,
+        "pr_auc": 0.5925141928396789,
+        "brier": 0.17089795569399602,
+        "log_loss": 0.5177187946998989,
+        "lift_top_10pct": 2.4594030362175947
+      },
+      "test": {
+        "rows": 691865,
+        "positive_rate": 0.30887673173234664,
+        "roc_auc": 0.7281901747675077,
+        "pr_auc": 0.5544707019326831,
+        "brier": 0.1825501365309691,
+        "log_loss": 0.546843615424757,
+        "lift_top_10pct": 2.1813345226151997
+      }
+    },
+    "lightgbm": {
+      "validation": {
+        "rows": 714104,
+        "positive_rate": 0.29491082531395985,
+        "roc_auc": 0.7937481292983852,
+        "pr_auc": 0.6530733994258602,
+        "brier": 0.15685693256048291,
+        "log_loss": 0.4802086578191032,
+        "lift_top_10pct": 2.6718004139254625
+      },
+      "test": {
+        "rows": 691865,
+        "positive_rate": 0.30887673173234664,
+        "roc_auc": 0.7618338734654333,
+        "pr_auc": 0.6065860326475954,
+        "brier": 0.17275443091493106,
+        "log_loss": 0.521279581643909,
+        "lift_top_10pct": 2.3691216177402623
+      }
+    }
+  },
+  "test_calibration": [
+    {
+      "decile": 1,
+      "rows": 69188,
+      "mean_predicted": 0.03534507561816752,
+      "observed_rate": 0.05950453835925305
+    },
+    {
+      "decile": 2,
+      "rows": 69185,
+      "mean_predicted": 0.07909780442212418,
+      "observed_rate": 0.11031292910312929
+    },
+    {
+      "decile": 3,
+      "rows": 69491,
+      "mean_predicted": 0.11911896141759917,
+      "observed_rate": 0.15953145011584233
+    },
+    {
+      "decile": 4,
+      "rows": 68882,
+      "mean_predicted": 0.16269857120619594,
+      "observed_rate": 0.19092070497372318
+    },
+    {
+      "decile": 5,
+      "rows": 69192,
+      "mean_predicted": 0.20906200000232417,
+      "observed_rate": 0.22801768990634755
+    },
+    {
+      "decile": 6,
+      "rows": 69181,
+      "mean_predicted": 0.2632584008242758,
+      "observed_rate": 0.2728494817941342
+    },
+    {
+      "decile": 7,
+      "rows": 69186,
+      "mean_predicted": 0.33345000422384047,
+      "observed_rate": 0.3510103200069378
+    },
+    {
+      "decile": 8,
+      "rows": 69187,
+      "mean_predicted": 0.42692025257858623,
+      "observed_rate": 0.43975024209750385
+    },
+    {
+      "decile": 9,
+      "rows": 69186,
+      "mean_predicted": 0.5479390425422103,
+      "observed_rate": 0.5452403665481456
+    },
+    {
+      "decile": 10,
+      "rows": 69187,
+      "mean_predicted": 0.7445221290887591,
+      "observed_rate": 0.7317704192984231
+    }
+  ]
+}
