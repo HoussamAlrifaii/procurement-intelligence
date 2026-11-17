@@ -13,9 +13,26 @@ into answers:
 | Suspicious patterns are hidden in millions of records | SQL analysis + Power BI dashboard of competition, vendor concentration and unusual prices | Auditors, journalists |
 | Small businesses can't find or price opportunities | AI assistant matching a company to relevant tenders, past winners and prices | Small and medium businesses |
 
-> 🚧 **Status: in development.** Phases 0–3 complete: project setup, a
-> reproducible data pipeline, cleaning and exploratory analysis, star schema
-> and SQL analysis.
+> 🚧 **Status: in development.** Phases 0–4 complete: project setup, a
+> reproducible data pipeline, cleaning and exploratory analysis, star schema,
+> SQL analysis and a Power BI dashboard.
+
+## Dashboard
+
+Four-page Power BI report built on the star schema ([PDF export](reports/dashboard.pdf) ·
+[build guide](docs/phases/PHASE_4_POWER_BI.md)).
+
+**Overview:** how often competitive tenders receive a single offer, by year, country and contract type.
+![Overview](docs/images/dashboard_1_overview.png)
+
+**Competition:** what makes a tender attract only one bidder (procedure, size, sector, buyer type).
+![Competition](docs/images/dashboard_2_competition.png)
+
+**Buyers:** where an auditor should look first, each buyer compared with its own country.
+![Buyers](docs/images/dashboard_3_buyers.png)
+
+**Vendors and markets:** who wins the money, buyer concentration (Herfindahl-Hirschman Index) and companies active in both EU and World Bank markets.
+![Vendors and markets](docs/images/dashboard_4_vendors.png)
 > See the [project plan](docs/PROJECT_PLAN.md).
 
 ## Highlights so far
@@ -53,7 +70,8 @@ tables `ted_awards` and `world_bank_awards`, and a star schema (two fact tables,
 five dimensions) in `data/marts/` for analysis and Power BI. Details:
 [Phase 1](docs/phases/PHASE_1_DATA_PIPELINE.md) ·
 [Phase 2](docs/phases/PHASE_2_CLEANING_EDA.md) ·
-[Phase 3](docs/phases/PHASE_3_SQL_ANALYSIS.md).
+[Phase 3](docs/phases/PHASE_3_SQL_ANALYSIS.md) ·
+[Phase 4](docs/phases/PHASE_4_POWER_BI.md).
 
 ## Project structure
 

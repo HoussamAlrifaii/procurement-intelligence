@@ -179,10 +179,19 @@ Add a slicer for `dim_sector[sector_name]` (dropdown) in the header on this page
 ## Part 4: Check, save and publish
 
 1. **Check every visual against `powerbi/expected_values.md`** (no slicers selected). A mismatch means a relationship, a filter direction or a measure needs fixing.
-2. **Save as a Power BI project:** File → Save as → *Power BI project (.pbip)* → `powerbi/ProcurementIntelligence.pbip`. The project stores the model and measures as text files, so it can be committed and reviewed. The imported data cache is excluded by `.gitignore`.
-3. **Screenshots:** one PNG per page (File → Export → or a full-screen capture) saved as `docs/images/dashboard_1_overview.png` … `dashboard_4_vendors.png`.
+2. **Save the report locally:** `powerbi/ProcurementIntelligence.pbix`. The file contains the imported data (about 200 MB), so it is excluded by `.gitignore` and is not committed. Anyone can rebuild it from the marts with Parts 1–3 of this guide.
+3. **Screenshots:** one PNG per page (full-screen capture) saved as `docs/images/dashboard_1_overview.png` … `dashboard_4_vendors.png`.
 4. **PDF export:** File → Export → Export to PDF → `reports/dashboard.pdf`.
-5. Commit on branch `phase-4-power-bi` and open a pull request; the README will then show the screenshots.
+
+### What is committed
+
+| File | Purpose |
+|---|---|
+| `powerbi/measures.dax` | Every DAX measure, as text that can be reviewed and re-applied |
+| `powerbi/theme_ocean_night.json` | Report theme |
+| `powerbi/expected_values.md` | Reference numbers used to validate each visual |
+| `docs/images/dashboard_*.png` | Page screenshots, shown in the README |
+| `reports/dashboard.pdf` | Full report export |
 
 ## Notes and limits
 
