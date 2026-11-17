@@ -56,7 +56,7 @@ ML target: `is_single_bid` = 1 if one offer, 0 if two or more (awarded contracts
 | **1. Data sourcing + pipeline** ✅ | Download, field verification, DuckDB load, quality checks | One-command data pipeline |
 | **2. Cleaning + EDA** ✅ | Vendor-name standardisation, missing values, outliers | EDA notebook and cleaned tables |
 | **3. SQL analysis** ✅ | Star schema; competition and concentration queries | SQL layer |
-| **4. Power BI** | Four-page dashboard | Dashboard (.pbip), screenshots, PDF |
+| **4. Power BI** ✅ | Four-page dashboard | Dashboard (.pbip), screenshots, PDF |
 | **5. Machine learning** | Single-bid risk classifier, price anomaly detection, SHAP explanations | Evaluated models |
 | **6. AI assistant** | Tender search + LLM assistant that calls the risk model as a tool, with an evaluation set | Assistant + evaluation report |
 | **7. API + app + deployment** | FastAPI, Streamlit, Docker | Live application |
