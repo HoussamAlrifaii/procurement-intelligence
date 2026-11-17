@@ -47,8 +47,11 @@ DEFINE
         CALCULATE ( [Single-Bid Rate], dim_procedure[is_competitive] = TRUE () )
 
     MEASURE _Measures[Single-Bid Rate (All Countries)] =                 // format: 0.0%
-        // Reference line: the rate for all buyers, ignoring any buyer or country filter.
-        CALCULATE ( [Single-Bid Rate (Competitive)], REMOVEFILTERS ( dim_buyer ) )
+        // Reference line: the rate for everything currently selected by slicers and page
+        // filters, ignoring the chart's own categories (country, contract type, sector ...).
+        // ALLSELECTED keeps slicer selections; REMOVEFILTERS(dim_buyer) would only ignore
+        // countries, so on a contract-type chart each bar would be compared with itself.
+        CALCULATE ( [Single-Bid Rate (Competitive)], ALLSELECTED () )
 
     MEASURE _Measures[Single-Bid Rate Prior Year] =                      // format: 0.0%
         // Requires dim_date to be marked as the date table (on dim_date[date]).
@@ -182,17 +185,18 @@ DEFINE
 
     // ---------------------------------------------------------------- Formatting helpers
     MEASURE _Measures[Bar Colour vs Average] =                           // text (hex colour)
-        // Conditional formatting: orange when above the all-countries rate, blue otherwise.
+        // Conditional formatting: pink when above the all-countries rate, blue otherwise
+        // (colours of powerbi/theme_ocean_night.json).
         IF (
             [Single-Bid Rate (Competitive)] > [Single-Bid Rate (All Countries)],
-            "#EB6834",
-            "#2A78D6"
+            "#E4528A",
+            "#2B8DE0"
         )
 
     MEASURE _Measures[Procedure Bar Colour] =                            // text (hex colour)
-        // Orange for procedures without a call for competition (single-bid by design).
+        // Pink for procedures without a call for competition (single-bid by design).
         VAR IsCompetitive = SELECTEDVALUE ( dim_procedure[is_competitive] )
-        RETURN IF ( NOT ISBLANK ( IsCompetitive ) && IsCompetitive = FALSE (), "#EB6834", "#2A78D6" )
+        RETURN IF ( NOT ISBLANK ( IsCompetitive ) && IsCompetitive = FALSE (), "#E4528A", "#2B8DE0" )
 
     MEASURE _Measures[Title Overview] =                                  // text
         FORMAT ( [Single-Bid Rate (Competitive)], "0.0%" )
