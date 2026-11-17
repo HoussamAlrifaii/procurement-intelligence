@@ -18,7 +18,9 @@ data/analysis/
 *.duckdb
 *.duckdb.wal
 
-# Power BI caches (the .pbip project files themselves ARE committed)
+# Power BI: .pbix files contain the imported data, so only the .pbip project
+# (text files) is committed, without its local caches.
+*.pbix
 **/.pbi/cache.abf
 **/.pbi/localSettings.json
 
