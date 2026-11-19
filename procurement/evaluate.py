@@ -1,7 +1,10 @@
 """Metrics for probability predictions of a binary target."""
 import numpy as np
 import pandas as pd
-from sklearn.metrics import average_precision_score, brier_score_loss, log_loss, roc_auc_score
+from sklearn.metrics import (average_precision_score, brier_score_loss, f1_score, log_loss,
+                             precision_recall_curve, precision_score, recall_score, roc_auc_score)
+
+LIFT_SHARES = [0.01, 0.05, 0.10, 0.20]
 
 
 def lift_at_top(y_true, y_score, share=0.10):
@@ -27,6 +30,37 @@ def classification_metrics(y_true, y_score):
         "brier": float(brier_score_loss(y_true, y_score)),       # mean squared error of probabilities
         "log_loss": float(log_loss(y_true, y_score)),
         "lift_top_10pct": float(lift_at_top(y_true, y_score, 0.10)),
+    }
+
+
+def lift_table(y_true, y_score, shares=LIFT_SHARES):
+    """Lift at several review budgets: the smaller the reviewed share, the higher the lift."""
+    return {f"top_{share:.0%}": float(lift_at_top(y_true, y_score, share)) for share in shares}
+
+
+def best_f1_threshold(y_true, y_score):
+    """Threshold with the highest F1 (balance of precision and recall).
+
+    Chosen on the validation year only, then applied unchanged to the test year.
+    """
+    precision, recall, thresholds = precision_recall_curve(y_true, y_score)
+    # The last precision/recall pair has no threshold, so it is dropped.
+    precision = precision[:-1]
+    recall = recall[:-1]
+    denominator = precision + recall
+    f1 = np.divide(2 * precision * recall, denominator, out=np.zeros_like(denominator), where=denominator > 0)
+    return float(thresholds[np.argmax(f1)])
+
+
+def threshold_metrics(y_true, y_score, threshold):
+    """Precision, recall and F1 when every row at or above the threshold is flagged."""
+    flagged = (np.asarray(y_score) >= threshold).astype(int)
+    return {
+        "threshold": float(threshold),
+        "flagged_share": float(flagged.mean()),
+        "precision": float(precision_score(y_true, flagged)),
+        "recall": float(recall_score(y_true, flagged)),
+        "f1": float(f1_score(y_true, flagged)),
     }
 
 

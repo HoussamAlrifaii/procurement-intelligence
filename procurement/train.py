@@ -23,7 +23,8 @@ from sklearn.pipeline import Pipeline, make_pipeline
 from sklearn.preprocessing import OneHotEncoder, StandardScaler
 
 from procurement import config
-from procurement.evaluate import calibration_table, classification_metrics
+from procurement.evaluate import (best_f1_threshold, calibration_table, classification_metrics, lift_table,
+                                  threshold_metrics)
 from procurement.features import (CATEGORICAL_FEATURES, FEATURES, NUMERIC_FEATURES, TARGET,
                                   load_features, split_by_year)
 
@@ -138,7 +139,20 @@ def main():
     print_results(results, "test")
 
     test = splits["test"]
-    calibration = calibration_table(test[TARGET], score("lightgbm", lightgbm_model, test))
+    validation = splits["validation"]
+    test_scores = score("lightgbm", lightgbm_model, test)
+
+    # The threshold is chosen on 2021 and only applied to 2022.
+    threshold = best_f1_threshold(validation[TARGET], score("lightgbm", lightgbm_model, validation))
+    at_threshold = threshold_metrics(test[TARGET], test_scores, threshold)
+    print(f"\nLightGBM on the test year, flagging risk >= {threshold:.0%} (best F1 on validation):")
+    print(f"  flagged {at_threshold['flagged_share']:.1%} of awards, precision {at_threshold['precision']:.1%}, "
+          f"recall {at_threshold['recall']:.1%}, F1 {at_threshold['f1']:.3f}")
+
+    lifts = lift_table(test[TARGET], test_scores)
+    print("LightGBM lift by review budget: " + ", ".join(f"{name} {value:.2f}x" for name, value in lifts.items()))
+
+    calibration = calibration_table(test[TARGET], test_scores)
     print("\nLightGBM calibration on the test year:")
     print(calibration.to_string(index=False, float_format=lambda value: f"{value:.3f}"))
 
@@ -155,6 +169,8 @@ def main():
         "population": "awarded contracts in competitive procedures with a known number of offers",
         "lightgbm_best_iteration": int(lightgbm_model.best_iteration_),
         "metrics": results,
+        "test_at_validation_threshold": at_threshold,
+        "test_lift_by_budget": lifts,
         "test_calibration": calibration.to_dict(orient="records"),
     }
     config.SINGLE_BID_METRICS_PATH.write_text(json.dumps(report, indent=2), encoding="utf-8")

@@ -5,7 +5,7 @@ import pandas as pd
 import pytest
 
 from procurement import config
-from procurement.evaluate import calibration_table, lift_at_top
+from procurement.evaluate import best_f1_threshold, calibration_table, lift_at_top, threshold_metrics
 from procurement.features import (FEATURES, POST_PUBLICATION_COLUMNS, build_feature_table,
                                   load_features, split_by_year)
 
@@ -102,3 +102,14 @@ def test_calibration_table_compares_predicted_and_observed_rates():
     table = calibration_table(actual, predicted, bins=2)
     assert table["observed_rate"].tolist() == [0.0, 1.0]
     assert table["rows"].sum() == 100
+
+
+def test_best_threshold_separates_perfectly_ranked_classes():
+    actual = np.array([0, 0, 0, 1, 1])
+    scores = np.array([0.1, 0.2, 0.3, 0.7, 0.9])
+    threshold = best_f1_threshold(actual, scores)
+    assert threshold == pytest.approx(0.7)
+    metrics = threshold_metrics(actual, scores, threshold)
+    assert metrics["precision"] == 1.0
+    assert metrics["recall"] == 1.0
+    assert metrics["flagged_share"] == pytest.approx(0.4)
