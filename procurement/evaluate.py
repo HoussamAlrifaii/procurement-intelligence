@@ -78,3 +78,40 @@ def calibration_table(y_true, y_score, bins=10):
         observed_rate=("actual", "mean"),
     )
     return table.reset_index()
+
+
+def regression_metrics(log_actual, log_predicted):
+    """Errors of a price prediction made on the log scale.
+
+    The ratio predicted / actual is used for the percentage errors, so "20% off"
+    means the same thing for a EUR 50k contract and a EUR 5m one.
+    """
+    log_actual = np.asarray(log_actual)
+    log_predicted = np.asarray(log_predicted)
+    log_error = log_predicted - log_actual
+    ratio_error = np.abs(np.exp(log_error) - 1)
+    total_variance = np.sum((log_actual - log_actual.mean()) ** 2)
+    return {
+        "rows": int(len(log_actual)),
+        "mae_log": float(np.mean(np.abs(log_error))),
+        "median_abs_pct_error": float(np.median(ratio_error)),
+        "within_25pct": float(np.mean(ratio_error <= 0.25)),
+        "within_factor_2": float(np.mean(np.abs(log_error) <= np.log(2))),
+        "r2_log": float(1 - np.sum(log_error ** 2) / total_variance),
+    }
+
+
+def interval_metrics(log_actual, log_lower, log_upper):
+    """How often the actual value falls inside the predicted range, and how wide the range is.
+
+    For a 10th-90th percentile range, about 80% coverage means the range is honest:
+    neither too narrow (overconfident) nor too wide (useless).
+    """
+    log_actual = np.asarray(log_actual)
+    log_lower = np.asarray(log_lower)
+    log_upper = np.asarray(log_upper)
+    inside = (log_actual >= log_lower) & (log_actual <= log_upper)
+    return {
+        "coverage": float(np.mean(inside)),
+        "median_width_ratio": float(np.median(np.exp(log_upper - log_lower))),  # upper / lower
+    }

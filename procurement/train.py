@@ -56,12 +56,12 @@ class CountryRateBaseline:
         return rates.fillna(self.overall_rate).to_numpy()
 
 
-def build_logistic_regression():
-    """Logistic regression with the preprocessing it needs.
+def build_linear_preprocessing(categorical_features, numeric_features):
+    """Preprocessing a linear model needs (trees need none of it).
 
-    Unlike trees, a linear model needs categories turned into 0/1 columns
-    (one-hot), missing numbers filled in, and numbers on a similar scale so the
-    regularisation treats every feature fairly.
+    Categories become 0/1 columns (one-hot), missing numbers are filled in, and
+    numbers are put on a similar scale so the regularisation treats every
+    feature fairly.
     """
     categorical = OneHotEncoder(handle_unknown="infrequent_if_exist", min_frequency=100)
     numeric = make_pipeline(
@@ -70,10 +70,14 @@ def build_logistic_regression():
         SimpleImputer(strategy="median", add_indicator=True),
         StandardScaler(),
     )
-    preprocessing = ColumnTransformer([
-        ("categorical", categorical, CATEGORICAL_FEATURES),
-        ("numeric", numeric, NUMERIC_FEATURES),
+    return ColumnTransformer([
+        ("categorical", categorical, categorical_features),
+        ("numeric", numeric, numeric_features),
     ])
+
+
+def build_logistic_regression():
+    preprocessing = build_linear_preprocessing(CATEGORICAL_FEATURES, NUMERIC_FEATURES)
     model = LogisticRegression(C=1.0, max_iter=1000)
     return Pipeline([("preprocessing", preprocessing), ("model", model)])
 

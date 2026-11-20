@@ -32,12 +32,14 @@ MARTS_DIR = DATA_DIR / "marts"          # star-schema tables (Parquet) for Power
 ANALYSIS_OUTPUT_DIR = DATA_DIR / "analysis"  # results of the sql/analysis queries (CSV)
 ML_DATA_DIR = DATA_DIR / "ml"            # feature tables for the models (Parquet)
 SINGLE_BID_FEATURES_PATH = ML_DATA_DIR / "single_bid_features.parquet"
+PRICE_FEATURES_PATH = ML_DATA_DIR / "price_features.parquet"
 MODELS_DIR = PROJECT_ROOT / "models"     # trained models, re-created by the training scripts
 
 REPORTS_DIR = PROJECT_ROOT / "reports"
 PROFILE_REPORT_PATH = REPORTS_DIR / "data_profile.md"
 FIGURES_DIR = REPORTS_DIR / "figures"
 SINGLE_BID_METRICS_PATH = REPORTS_DIR / "single_bid_metrics.json"
+PRICE_METRICS_PATH = REPORTS_DIR / "price_metrics.json"
 
 # Folders that must exist before the pipeline runs.
 REQUIRED_FOLDERS = [RAW_DATA_DIR, PROCESSED_DATA_DIR, SQL_DIR, REPORTS_DIR]
@@ -87,5 +89,11 @@ BUYER_HISTORY_LAG_DAYS = 180
 
 # Pseudo-awards used to shrink a buyer's historical rate towards the overall rate.
 BUYER_HISTORY_SMOOTHING = 20
+
+# Fair price model: the 10th, 50th and 90th percentiles give an expected value
+# with an 80% range. An award is flagged as unusual when it is more than
+# PRICE_ANOMALY_FACTOR times above the 90th percentile or below the 10th.
+PRICE_QUANTILES = [0.1, 0.5, 0.9]
+PRICE_ANOMALY_FACTOR = 2.0
 
 RANDOM_SEED = 42

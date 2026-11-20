@@ -42,6 +42,9 @@ FEATURE_LABELS = {
     "publication_month": "Publication month",
     "buyer_prior_awards": "Buyer's earlier awards",
     "buyer_prior_single_bid_rate": "Buyer's earlier single-bid rate",
+    "cpv_group": "Sector group (CPV 3 digits)",
+    "buyer_prior_priced_awards": "Buyer's earlier priced awards",
+    "buyer_prior_mean_log_value": "Buyer's typical contract value",
 }
 
 
@@ -49,14 +52,14 @@ def load_model(path=MODEL_PATH):
     return lgb.Booster(model_file=str(path))
 
 
-def shap_values(model, frame):
+def shap_values(model, frame, features=FEATURES):
     """SHAP values per row and feature, plus the base value (log-odds).
 
     pred_contrib returns one column per feature followed by one column with the
     base value: the model's average output before any feature is considered.
     """
-    contributions = model.predict(frame[FEATURES], pred_contrib=True)
-    values = pd.DataFrame(contributions[:, :-1], columns=FEATURES, index=frame.index)
+    contributions = model.predict(frame[features], pred_contrib=True)
+    values = pd.DataFrame(contributions[:, :-1], columns=features, index=frame.index)
     base_value = contributions[0, -1]
     return values, base_value
 
@@ -100,12 +103,13 @@ def explain_award(model, row):
     return probability, reasons.reset_index(drop=True)
 
 
-def plot_importance(importance, output_path):
+def plot_importance(importance, output_path, title="What drives single-bid risk (test year 2022)",
+                    x_label="Mean |SHAP value| (log-odds)"):
     figure, axis = plt.subplots(figsize=(8, 5.5))
     ordered = importance.sort_values()
     axis.barh(ordered.index, ordered.to_numpy(), color="#2B8DE0")
-    axis.set_xlabel("Mean |SHAP value| (log-odds)")
-    axis.set_title("What drives single-bid risk (test year 2022)", loc="left")
+    axis.set_xlabel(x_label)
+    axis.set_title(title, loc="left")
     axis.spines[["top", "right"]].set_visible(False)
     figure.tight_layout()
     figure.savefig(output_path, dpi=150)
