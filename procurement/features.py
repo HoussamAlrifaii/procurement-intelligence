@@ -51,16 +51,22 @@ POST_PUBLICATION_COLUMNS = [
 ]
 
 
-def build_feature_table(connection, output_path=None):
-    """Write the single-bid feature table to Parquet and return its row count."""
+def build_feature_table(connection, output_path=None, history_lag_days=None):
+    """Write the single-bid feature table to Parquet and return its row count.
+
+    history_lag_days defaults to config.BUYER_HISTORY_LAG_DAYS; other values are
+    only used by the lag experiment (procurement.lag_experiment).
+    """
     output_path = output_path or config.SINGLE_BID_FEATURES_PATH
+    if history_lag_days is None:
+        history_lag_days = config.BUYER_HISTORY_LAG_DAYS
     output_path.parent.mkdir(parents=True, exist_ok=True)
     run_sql_file(
         connection,
         config.ML_SQL_DIR / "01_single_bid_features.sql",
         output_path=sql_string(output_path),
         train_end_year=config.TRAIN_END_YEAR,
-        history_lag_days=config.BUYER_HISTORY_LAG_DAYS,
+        history_lag_days=history_lag_days,
         smoothing_awards=config.BUYER_HISTORY_SMOOTHING,
     )
     return connection.sql(f"SELECT COUNT(*) FROM read_parquet({sql_string(output_path)})").fetchone()[0]
