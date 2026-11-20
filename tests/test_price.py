@@ -9,7 +9,8 @@ from procurement.evaluate import interval_metrics, regression_metrics
 from procurement.features import POST_PUBLICATION_COLUMNS
 from procurement.price_features import (EVALUATION_COLUMNS, FEATURES, build_price_feature_table,
                                         load_price_features)
-from procurement.price_train import PeerMedianBaseline, flag_unusual_prices, predict_range
+from procurement.price_train import (PeerMedianBaseline, conformal_margin, flag_unusual_prices, predict_range,
+                                     widen_range)
 
 AWARDS = [
     # award_id, publication_date, award_value_eur, quality, framework, estimated_value_eur
@@ -125,3 +126,14 @@ def test_regression_and_interval_metrics():
     assert metrics["within_factor_2"] == 1.0
     coverage = interval_metrics(actual, np.log([90.0, 1200.0]), np.log([150.0, 3000.0]))
     assert coverage["coverage"] == 0.5
+
+
+def test_conformal_margin_widens_the_range_to_the_target_coverage():
+    predicted = pd.DataFrame({"log_p10": np.zeros(10), "log_p90": np.ones(10)})
+    # Eight values inside [0, 1]; two fall outside, by 0.5 and by 2.0.
+    actual = np.array([0.5] * 8 + [1.5, -2.0])
+    margin = conformal_margin(actual, predicted, target_coverage=0.9)
+    widened = widen_range(predicted, margin)
+    inside = (actual >= widened["log_p10"]) & (actual <= widened["log_p90"])
+    assert inside.mean() >= 0.9
+    assert margin < 2.0

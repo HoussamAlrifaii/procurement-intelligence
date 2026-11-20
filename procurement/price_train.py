@@ -92,6 +92,31 @@ def predict_range(models, frame):
     return pd.DataFrame(predictions, columns=["log_p10", "log_p50", "log_p90"], index=frame.index)
 
 
+def conformal_margin(log_actual, predicted_range, target_coverage=0.8):
+    """Extra width (log scale) that makes the range cover `target_coverage` of actual values.
+
+    Conformalised quantile regression: for every validation award, measure how far
+    the actual value falls outside the predicted range (negative when inside).
+    The `target_coverage` quantile of these distances is the margin to add on both
+    sides. Trained ranges are often too narrow on a new year, because prices
+    shift over time; this corrects them using the validation year only.
+    The validation year also stopped the training early, so the margin is a
+    slightly optimistic estimate; the test year shows the real coverage.
+    """
+    log_actual = np.asarray(log_actual)
+    below_by = predicted_range["log_p10"].to_numpy() - log_actual
+    above_by = log_actual - predicted_range["log_p90"].to_numpy()
+    distance_outside = np.maximum(below_by, above_by)
+    return float(np.quantile(distance_outside, target_coverage))
+
+
+def widen_range(predicted_range, margin):
+    widened = predicted_range.copy()
+    widened["log_p10"] = widened["log_p10"] - margin
+    widened["log_p90"] = widened["log_p90"] + margin
+    return widened
+
+
 def flag_unusual_prices(log_actual, predicted_range, factor=config.PRICE_ANOMALY_FACTOR):
     """'high' if the award is more than `factor` times the 90th percentile,
     'low' if below the 10th percentile divided by `factor`, otherwise 'expected'."""
@@ -159,7 +184,14 @@ def main():
     print_point_metrics(results, "validation")
     print_point_metrics(results, "test")
 
-    test_range = predict_range(quantile_models, test)
+    # Calibrate the 80% range on 2021, then apply the same margin to 2022.
+    validation_range = predict_range(quantile_models, validation)
+    margin = conformal_margin(validation[TARGET], validation_range)
+    raw_test_range = predict_range(quantile_models, test)
+    raw_coverage = interval_metrics(test[TARGET], raw_test_range["log_p10"], raw_test_range["log_p90"])
+    test_range = widen_range(raw_test_range, margin)
+    print(f"\nConformal margin from {config.VALIDATION_YEAR}: x{np.exp(margin):.2f} on each side; "
+          f"test coverage of the 80% range {raw_coverage['coverage']:.1%} before, after below")
     print("\nLightGBM on the test year by estimate availability:")
     print(f"  {'segment':<28} {'share':>6} {'median % error':>15} {'within 2x':>10} {'80% range coverage':>19}")
     segment_results = {}
@@ -200,6 +232,8 @@ def main():
         "best_iterations": {f"p{quantile * 100:.0f}": int(model.best_iteration_)
                             for quantile, model in quantile_models.items()},
         "metrics": results,
+        "conformal_margin_log": margin,
+        "test_coverage_before_calibration": raw_coverage["coverage"],
         "test_by_estimate_segment": segment_results,
         "test_unusual_price_shares": flag_shares,
         "test_shap_importance": importance.round(4).to_dict(),
