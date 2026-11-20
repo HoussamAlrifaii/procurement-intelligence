@@ -105,7 +105,7 @@ def flag_unusual_prices(log_actual, predicted_range, factor=config.PRICE_ANOMALY
 def estimate_segments(frame):
     """Row masks for reporting: is a usable estimate available, and does it equal the award?"""
     has_estimate = frame["log_estimated_value"].notna()
-    equals_award = frame["estimate_equals_award"].fillna(False).astype(bool)
+    equals_award = frame["estimate_equals_award"].astype("boolean").fillna(False).astype(bool)
     return {
         "all": pd.Series(True, index=frame.index),
         "estimate_differs_from_award": has_estimate & ~equals_award,

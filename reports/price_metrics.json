@@ -1,0 +1,137 @@
+{
+  "split": {
+    "train": "published up to 2020",
+    "validation": "2021",
+    "test": "2022"
+  },
+  "population": "awarded contracts with a plausible value, excluding framework agreements",
+  "best_iterations": {
+    "p10": 1355,
+    "p50": 2748,
+    "p90": 1289
+  },
+  "metrics": {
+    "baseline": {
+      "validation": {
+        "rows": 550749,
+        "mae_log": 1.6222523186368467,
+        "median_abs_pct_error": 0.899445981348469,
+        "within_25pct": 0.10840146781927884,
+        "within_factor_2": 0.2845034670966266,
+        "r2_log": 0.40266735466405856
+      },
+      "test": {
+        "rows": 541098,
+        "mae_log": 1.636611591116642,
+        "median_abs_pct_error": 0.8851089022799333,
+        "within_25pct": 0.1086309688817922,
+        "within_factor_2": 0.2845436501336172,
+        "r2_log": 0.3660656145246507
+      }
+    },
+    "linear": {
+      "validation": {
+        "rows": 550749,
+        "mae_log": 1.1800388610185497,
+        "median_abs_pct_error": 0.7013258555357179,
+        "within_25pct": 0.16042153503683165,
+        "within_factor_2": 0.4096947974485655,
+        "r2_log": 0.6420507265493226
+      },
+      "test": {
+        "rows": 541098,
+        "mae_log": 1.19594210909477,
+        "median_abs_pct_error": 0.6964731269372341,
+        "within_25pct": 0.1587826974041671,
+        "within_factor_2": 0.403511009096319,
+        "r2_log": 0.6149210169098318
+      }
+    },
+    "lightgbm": {
+      "validation": {
+        "rows": 550749,
+        "mae_log": 0.8550192038645593,
+        "median_abs_pct_error": 0.40425760860845983,
+        "within_25pct": 0.39335523078571183,
+        "within_factor_2": 0.6117287548411345,
+        "r2_log": 0.7449434566658053
+      },
+      "test": {
+        "rows": 541098,
+        "mae_log": 0.8753475083877941,
+        "median_abs_pct_error": 0.4084240126782771,
+        "within_25pct": 0.3825868881422589,
+        "within_factor_2": 0.607705073757434,
+        "r2_log": 0.7274735438840292
+      }
+    }
+  },
+  "test_by_estimate_segment": {
+    "all": {
+      "share": 1.0,
+      "rows": 541098,
+      "mae_log": 0.8753475083877941,
+      "median_abs_pct_error": 0.4084240126782771,
+      "within_25pct": 0.3825868881422589,
+      "within_factor_2": 0.607705073757434,
+      "r2_log": 0.7274735438840292,
+      "coverage": 0.7311485165348975,
+      "median_width_ratio": 11.114098189043926
+    },
+    "estimate_differs_from_award": {
+      "share": 0.4802512668684785,
+      "rows": 259863,
+      "mae_log": 0.6490673586196345,
+      "median_abs_pct_error": 0.2586707200732081,
+      "within_25pct": 0.49034298842082175,
+      "within_factor_2": 0.7352335653786803,
+      "r2_log": 0.8003214427972223,
+      "coverage": 0.6988220716300512,
+      "median_width_ratio": 2.307412977298033
+    },
+    "estimate_equals_award": {
+      "share": 0.13160092996093128,
+      "rows": 71209,
+      "mae_log": 0.29545463433398983,
+      "median_abs_pct_error": 0.12893408408450324,
+      "within_25pct": 0.7160330857054585,
+      "within_factor_2": 0.8978219045345391,
+      "r2_log": 0.9590647714230529,
+      "coverage": 0.7422235953320507,
+      "median_width_ratio": 2.1632014646593403
+    },
+    "no_estimate": {
+      "share": 0.38814780317059017,
+      "rows": 210026,
+      "mae_log": 1.3519334083606576,
+      "median_abs_pct_error": 0.7939091057644485,
+      "within_25pct": 0.13620694580670964,
+      "within_factor_2": 0.3515517126451011,
+      "r2_log": 0.5289403121648166,
+      "coverage": 0.7673907040080752,
+      "median_width_ratio": 52.959771494273824
+    }
+  },
+  "test_unusual_price_shares": {
+    "high": 0.028386724770743933,
+    "low": 0.04638531282688164
+  },
+  "test_shap_importance": {
+    "Estimated value": 1.1287,
+    "Lots in notice": 0.3664,
+    "Country": 0.336,
+    "Buyer's typical contract value": 0.2201,
+    "Sector group (CPV 3 digits)": 0.2066,
+    "Sector (CPV division)": 0.0814,
+    "Buyer's earlier priced awards": 0.0595,
+    "Award criterion": 0.0513,
+    "Buyer activity": 0.0439,
+    "Procedure": 0.0321,
+    "Buyer type": 0.0296,
+    "Publication month": 0.0162,
+    "Contract type": 0.012,
+    "Covered by the GPA": 0.0058,
+    "Electronic auction": 0.0048,
+    "EU-funded": 0.0032
+  }
+}
