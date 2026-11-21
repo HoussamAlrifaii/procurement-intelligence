@@ -17,7 +17,7 @@
 |---|---|---|
 | **Small business owner** (e.g. a 20-person IT firm) | "We do network installation, €50k–500k. What fits us?" → matching tenders, past winners, typical winning price | AI assistant (Phase 6) |
 | **Auditor or journalist** | Map of single-bid rates → a region at 45% vs a 20% average → one vendor wins 70% of an agency's IT contracts → ranked red-flag list | SQL + Power BI (Phases 3–4) |
-| **Procurement officer** | Enters a planned tender → "62% single-bid risk; main driver: 15-day bidding window vs 35 typical" → extends the window | ML model (Phase 5) |
+| **Procurement officer** | Enters a planned tender → "62% single-bid risk; main drivers: buyer history and sector" → adjusts the design; checks the budget against the expected price range | ML models (Phase 5) |
 
 ## 3. Data
 
@@ -57,7 +57,7 @@ ML target: `is_single_bid` = 1 if one offer, 0 if two or more (awarded contracts
 | **2. Cleaning + EDA** ✅ | Vendor-name standardisation, missing values, outliers | EDA notebook and cleaned tables |
 | **3. SQL analysis** ✅ | Star schema; competition and concentration queries | SQL layer |
 | **4. Power BI** ✅ | Four-page dashboard | Dashboard, DAX measures, screenshots, PDF |
-| **5. Machine learning** | Single-bid risk classifier, price anomaly detection, SHAP explanations | Evaluated models |
+| **5. Machine learning** ✅ | Single-bid risk classifier, fair price model with calibrated ranges and unusual-price flags, SHAP explanations | Evaluated models, model card |
 | **6. AI assistant** | Tender search + LLM assistant that calls the risk model as a tool, with an evaluation set | Assistant + evaluation report |
 | **7. API + app + deployment** | FastAPI, Streamlit, Docker | Live application |
 | **8. Automation + polish** | Scheduled refresh, automated red-flag summary, documentation | Production-style workflow |
@@ -79,5 +79,5 @@ licence and is out of scope.
 ## 6. Technology
 
 Python 3.12, pandas, DuckDB, rapidfuzz, Jupyter, matplotlib/seaborn,
-scikit-learn, SHAP, Power BI Desktop, Streamlit, FastAPI, LLM API, pytest,
+scikit-learn, LightGBM (with built-in SHAP values), Power BI Desktop, Streamlit, FastAPI, LLM API, pytest,
 GitHub Actions, Docker.

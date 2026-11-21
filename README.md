@@ -13,9 +13,9 @@ into answers:
 | Suspicious patterns are hidden in millions of records | SQL analysis + Power BI dashboard of competition, vendor concentration and unusual prices | Auditors, journalists |
 | Small businesses can't find or price opportunities | AI assistant matching a company to relevant tenders, past winners and prices | Small and medium businesses |
 
-> 🚧 **Status: in development.** Phases 0–4 complete: project setup, a
+> 🚧 **Status: in development.** Phases 0–5 complete: project setup, a
 > reproducible data pipeline, cleaning and exploratory analysis, star schema,
-> SQL analysis and a Power BI dashboard.
+> SQL analysis, a Power BI dashboard and two machine learning models.
 
 ## Dashboard
 
@@ -35,6 +35,25 @@ Four-page Power BI report built on the star schema ([PDF export](reports/dashboa
 ![Vendors and markets](docs/images/dashboard_4_vendors.png)
 > See the [project plan](docs/PROJECT_PLAN.md).
 
+## Machine learning
+
+Two models trained only on information known **before** a tender is published,
+with a time-based split (train 2019–2020, validate 2021, test 2022)
+([details](docs/phases/PHASE_5_MACHINE_LEARNING.md) · [model card](reports/model_card.md)).
+
+| Model | Test result (2022) | Baseline |
+|---|---|---|
+| **Single-bid risk** (LightGBM classifier) | ROC-AUC 0.762, PR-AUC 0.607; the riskiest 10% of lots are single-bid 73% of the time (lift 2.37x) | Country rate: ROC-AUC 0.652 |
+| **Fair price** (LightGBM quantile regression) | Median error 26% when the buyer publishes an estimate (41% overall); calibrated 80% range covers 78.5% of awards | Peer median: 88% error |
+
+- Buyer history skips the last 180 days so outcomes not yet public at
+  advertising time cannot leak in; an experiment shows the gap removes a small
+  leak (ROC-AUC +0.005 without it).
+- Price ranges drifted too narrow on later years (73% coverage); conformal
+  calibration on the validation year restored 78.5%.
+- Every prediction is explained with SHAP values; the main drivers of single-bid
+  risk are country, the buyer's history and the sector.
+
 ## Highlights so far
 
 From 3.56 million EU contract awards (2019–2022) and 143k World Bank contracts
@@ -50,7 +69,7 @@ From 3.56 million EU contract awards (2019–2022) and 143k World Bank contracts
 
 ## Tech stack
 
-Python · pandas · DuckDB (SQL) · scikit-learn · Power BI · LLM API ·
+Python · pandas · DuckDB (SQL) · scikit-learn · LightGBM · Power BI · LLM API ·
 FastAPI · Streamlit · Docker · GitHub Actions
 
 ## Quick start (Python 3.12)
@@ -62,6 +81,8 @@ pip install -r requirements.txt
 python -m procurement.check_setup
 python -m pytest -q
 python -m procurement.pipeline    # download and load 2019-2022 (~490 MB download)
+python -m procurement.features && python -m procurement.train              # single-bid model
+python -m procurement.price_features && python -m procurement.price_train  # fair price model
 ```
 
 The pipeline writes a DuckDB database to `data/procurement.duckdb`, a data
@@ -71,7 +92,8 @@ five dimensions) in `data/marts/` for analysis and Power BI. Details:
 [Phase 1](docs/phases/PHASE_1_DATA_PIPELINE.md) ·
 [Phase 2](docs/phases/PHASE_2_CLEANING_EDA.md) ·
 [Phase 3](docs/phases/PHASE_3_SQL_ANALYSIS.md) ·
-[Phase 4](docs/phases/PHASE_4_POWER_BI.md).
+[Phase 4](docs/phases/PHASE_4_POWER_BI.md) ·
+[Phase 5](docs/phases/PHASE_5_MACHINE_LEARNING.md).
 
 ## Project structure
 
@@ -81,6 +103,7 @@ sql/           SQL queries, kept as .sql files
 notebooks/     Exploratory analysis
 reference/     Small lookup tables (e.g. CPV sector names)
 data/          Downloaded and processed data (not committed; re-created by code)
+models/        Trained models (not committed; re-created by the training scripts)
 reports/       Generated reports and figures
 docs/          Project plan and one explanation file per phase
 tests/         Automated tests
