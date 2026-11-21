@@ -15,6 +15,10 @@ data/processed/*
 !data/processed/.gitkeep
 data/marts/
 data/analysis/
+data/ml/
+
+# Trained models: re-created by the training scripts
+models/
 *.duckdb
 *.duckdb.wal
 

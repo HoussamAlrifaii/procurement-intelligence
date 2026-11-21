@@ -22,6 +22,7 @@ PROFILE_SQL_DIR = SQL_DIR / "profile"
 CLEAN_SQL_DIR = SQL_DIR / "clean"
 MARTS_SQL_DIR = SQL_DIR / "marts"
 ANALYSIS_SQL_DIR = SQL_DIR / "analysis"
+ML_SQL_DIR = SQL_DIR / "ml"
 
 REFERENCE_DIR = PROJECT_ROOT / "reference"      # small lookup tables committed to the repository
 CPV_DIVISIONS_PATH = REFERENCE_DIR / "cpv_divisions.csv"
@@ -29,9 +30,16 @@ COUNTRIES_PATH = REFERENCE_DIR / "countries.csv"
 
 MARTS_DIR = DATA_DIR / "marts"          # star-schema tables (Parquet) for Power BI
 ANALYSIS_OUTPUT_DIR = DATA_DIR / "analysis"  # results of the sql/analysis queries (CSV)
+ML_DATA_DIR = DATA_DIR / "ml"            # feature tables for the models (Parquet)
+SINGLE_BID_FEATURES_PATH = ML_DATA_DIR / "single_bid_features.parquet"
+PRICE_FEATURES_PATH = ML_DATA_DIR / "price_features.parquet"
+MODELS_DIR = PROJECT_ROOT / "models"     # trained models, re-created by the training scripts
 
 REPORTS_DIR = PROJECT_ROOT / "reports"
 PROFILE_REPORT_PATH = REPORTS_DIR / "data_profile.md"
+FIGURES_DIR = REPORTS_DIR / "figures"
+SINGLE_BID_METRICS_PATH = REPORTS_DIR / "single_bid_metrics.json"
+PRICE_METRICS_PATH = REPORTS_DIR / "price_metrics.json"
 
 # Folders that must exist before the pipeline runs.
 REQUIRED_FOLDERS = [RAW_DATA_DIR, PROCESSED_DATA_DIR, SQL_DIR, REPORTS_DIR]
@@ -66,3 +74,26 @@ WORLD_BANK_CLEAN_VIEW = "world_bank_awards"
 
 TED_CLEAN_PATH = PROCESSED_DATA_DIR / "ted_awards_clean.parquet"
 WORLD_BANK_CLEAN_PATH = PROCESSED_DATA_DIR / "world_bank_awards_clean.parquet"
+
+# --- Machine learning -------------------------------------------------------
+
+# Time-based split by publication year: train on the past, choose the model on
+# the next year, and report the final result once on the most recent year.
+TRAIN_END_YEAR = 2020     # 2019-2020 (plus the few December 2018 notices)
+VALIDATION_YEAR = 2021
+TEST_YEAR = 2022
+
+# Buyer history only counts award notices published at least this many days
+# earlier, so outcomes not yet public when the tender was advertised are excluded.
+BUYER_HISTORY_LAG_DAYS = 180
+
+# Pseudo-awards used to shrink a buyer's historical rate towards the overall rate.
+BUYER_HISTORY_SMOOTHING = 20
+
+# Fair price model: the 10th, 50th and 90th percentiles give an expected value
+# with an 80% range. An award is flagged as unusual when it is more than
+# PRICE_ANOMALY_FACTOR times above the 90th percentile or below the 10th.
+PRICE_QUANTILES = [0.1, 0.5, 0.9]
+PRICE_ANOMALY_FACTOR = 2.0
+
+RANDOM_SEED = 42
