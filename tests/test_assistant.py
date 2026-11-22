@@ -146,14 +146,18 @@ def test_system_prompt_lists_cpv_divisions():
     assert "Never estimate" in prompt
 
 
-def test_figures_ignore_years_and_single_digits():
-    assert figures("In 2021, 1,240 contracts at EUR 156,488 and 41.9% single-bid, 3 lots") == {"1,240", "156,488", "41.9"}
+def test_figures_read_suffixes_and_skip_years_codes_and_small_numbers():
+    text = ("In 2021\u20112022, 1,240 contracts at EUR 156,488 or \u20ac118\u202f330, range EUR 60 k to EUR 2.07 m, "
+            "41.9%, 3 lots, ISO\u202f9001, CPV 1512")
+    assert sorted(figures(text)) == pytest.approx([41.9, 1240, 60000, 118330, 156488, 2070000])
 
 
-def test_ungrounded_figures_finds_invented_numbers():
-    calls = [{"arguments": {"cpv_groups": ["45314"]}, "result": {"contracts_awarded": "1,240", "single_bid_rate": "41.9%"}}]
-    answer = "CPV 45314: 1,240 contracts, 41.9% single-bid, your offer of 150,000 is fine, about 55% of buyers..."
-    assert ungrounded_figures(answer, calls, question="We offer EUR 150,000") == ["55"]
+def test_rounded_figures_are_grounded_but_invented_ones_are_not():
+    calls = [{"arguments": {"cpv_groups": ["45314"]},
+              "result": {"contracts_awarded": "1,240", "range": "EUR 60,832 to EUR 2,070,415", "single_bid_rate": "41.9%"}}]
+    answer = ("1,240 contracts, range €60.8 k – €2.07 m, 42% single-bid, your offer of 150,000 is fine; "
+              "plan for about €735 k.")
+    assert ungrounded_figures(answer, calls, question="We offer EUR 150,000") == ["735,000"]
 
 
 def test_score_case():

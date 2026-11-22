@@ -9,9 +9,11 @@ For each case it checks, from the tool calls and the answer:
 
 Every answer is saved to reports/assistant_answers.json for review.
 
-Usage (needs LLM_API_KEY in .env; about 20 LLM calls):
-    python -m procurement.evaluate_assistant
+Usage:
+    python -m procurement.evaluate_assistant            # run all cases (LLM_API_KEY in .env; ~20 LLM calls)
+    python -m procurement.evaluate_assistant --rescore  # score the saved answers again, without the LLM
 """
+import argparse
 import json
 import re
 
@@ -20,23 +22,40 @@ import duckdb
 from procurement import config
 from procurement.assistant import ask
 
-# Figures such as 1,240 / 156,488 / 41.9 / 30.9% (years and single digits are ignored).
-FIGURE = re.compile(r"\d{1,3}(?:,\d{3})+(?:\.\d+)?|\d+\.\d+|\d{2,}")
-YEARS = {str(year) for year in range(2015, 2031)}
+# Figures such as 1,240 / 156,488 / 41.9 / EUR 2.07 m / 12.7k. Numbers written right after
+# "ISO" or "CPV" are names of standards and codes, not figures, and are skipped.
+# Thousands may be separated by commas or spaces ("156,488" or "156 488").
+FIGURE = re.compile(r"(?<![\w.])(?<!ISO )(?<!CPV )(\d{1,3}(?:[, ]\d{3})+(?:\.\d+)?|\d+(?:\.\d+)?)\s?(bn|[kKmM])?(?![\w])")
+MULTIPLIERS = {None: 1, "k": 1e3, "K": 1e3, "m": 1e6, "M": 1e6, "bn": 1e9}
+YEARS = set(range(2015, 2031))
+TOLERANCE = 0.05   # a rounded figure ("about 16%" for 16.5%) counts if within 5% of a source value
 
 
 def figures(text):
-    return {match for match in FIGURE.findall(text) if match not in YEARS}
+    """Numeric values written in a text, with k/m/bn suffixes applied (years and values below 10 ignored)."""
+    # Models often use no-break spaces inside numbers ("118\u202f330"); treat them as plain spaces.
+    text = text.replace("\u202f", " ").replace("\u00a0", " ")
+    values = set()
+    for number, suffix in FIGURE.findall(text):
+        value = float(number.replace(",", "").replace(" ", "")) * MULTIPLIERS[suffix or None]
+        if value >= 10 and not (not suffix and value in YEARS):
+            values.add(value)
+    return values
 
 
 def ungrounded_figures(answer, tool_calls, question=""):
-    """Figures in the answer found neither in the question nor in any tool call (arguments or result).
+    """Figures in the answer that match no figure in the question or the tool calls (arguments or results).
 
-    Arguments count as sources because the assistant may mention the codes and
-    value range it searched with.
+    Arguments count as sources because the assistant may mention the codes and value range
+    it searched with. Rounding is accepted ("EUR 2.07 m" for EUR 2,070,415); a figure with
+    no source value within 5% was calculated or invented by the model.
     """
-    sources = question + json.dumps(tool_calls, ensure_ascii=False, default=str)
-    return sorted(figure for figure in figures(answer) if figure not in sources)
+    sources = figures(question + json.dumps(tool_calls, ensure_ascii=False, default=str))
+    missing = []
+    for value in figures(answer):
+        if not any(abs(value - source) <= TOLERANCE * source for source in sources):
+            missing.append(f"{value:,.10g}")
+    return sorted(missing)
 
 
 def used_values(tool_calls, argument):
@@ -86,10 +105,33 @@ def write_report(scores):
     config.ASSISTANT_EVALUATION_PATH.write_text("\n".join(lines) + "\n", encoding="utf-8")
 
 
-def main():
-    from procurement.llm import LLM
+def rescore(cases):
+    """Score answers saved by an earlier run, e.g. after a change to the scoring rules."""
+    saved = json.loads(config.ASSISTANT_ANSWERS_PATH.read_text(encoding="utf-8"))
+    by_id = {answer["id"]: answer for answer in saved}
+    return [score_case(case, by_id[case["id"]]) for case in cases]
 
+
+def print_score(score):
+    print(f"{score['id']:<22} tool={score['tool']!s:<5} sector={score['sector']!s:<5} "
+          f"country={score['country']!s:<5} grounded={score['grounded']!s:<5} {score['ungrounded']}")
+
+
+def main():
+    parser = argparse.ArgumentParser(description="Evaluate the assistant on the hand-written cases.")
+    parser.add_argument("--rescore", action="store_true", help="score the saved answers without calling the LLM")
+    arguments = parser.parse_args()
     cases = json.loads(config.ASSISTANT_CASES_PATH.read_text(encoding="utf-8"))
+
+    if arguments.rescore:
+        scores = rescore(cases)
+        for score in scores:
+            print_score(score)
+        write_report(scores)
+        print(f"\nSaved {config.ASSISTANT_EVALUATION_PATH.relative_to(config.PROJECT_ROOT)}")
+        return
+
+    from procurement.llm import LLM
     llm = LLM()
     scores = []
     answers = []
@@ -101,9 +143,7 @@ def main():
                 result = {"answer": f"ERROR: {problem}", "tool_calls": []}
             scores.append(score_case(case, result))
             answers.append({"id": case["id"], "question": case["question"], **result})
-            score = scores[-1]
-            print(f"{case['id']:<22} tool={score['tool']!s:<5} sector={score['sector']!s:<5} "
-                  f"country={score['country']!s:<5} grounded={score['grounded']!s:<5} {score['ungrounded']}")
+            print_score(scores[-1])
     write_report(scores)
     config.ASSISTANT_ANSWERS_PATH.write_text(json.dumps(answers, indent=2, ensure_ascii=False, default=str),
                                              encoding="utf-8")
