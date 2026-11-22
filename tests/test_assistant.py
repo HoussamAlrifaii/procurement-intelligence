@@ -76,10 +76,17 @@ def test_invalid_arguments_come_back_as_errors_for_the_llm(connection):
     assert "error" in tools.run_tool(connection, "search_market", {"sectors": ["453"]})
 
 
-def test_cpv_codes_become_divisions_or_groups(connection):
-    assert tools.check_cpv_codes(connection, ["45314300", " 324 ", "33"]) == ["324", "33", "453"]
+def test_cpv_codes_keep_two_to_five_digits(connection):
+    assert tools.check_cpv_codes(connection, ["45314300", " 324 ", "33"]) == ["324", "33", "45314"]
+    assert tools.check_cpv_group(connection, "45314300") == "453"
     with pytest.raises(tools.ToolError):
-        tools.check_cpv_codes(connection, ["45"], allow_divisions=False)
+        tools.check_cpv_group(connection, "45")
+    with pytest.raises(tools.ToolError):
+        tools.check_cpv_codes(connection, ["4"])
+
+
+def test_search_market_with_a_specific_category(connection):
+    assert tools.search_market(connection, ["45314"])["contracts_awarded"] == "2"
 
 
 def test_search_market_accepts_a_whole_division(connection):

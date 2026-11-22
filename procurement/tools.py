@@ -56,26 +56,31 @@ def known_values(connection, sql):
     return {row[0] for row in connection.sql(sql).fetchall()}
 
 
-def check_cpv_codes(connection, cpv_codes, allow_divisions=True):
-    """Shorten codes to a division (2 digits) or group (3 digits) and reject those absent from the data.
+def check_cpv_codes(connection, cpv_codes):
+    """Keep 2 to 5 leading digits of each CPV code and reject prefixes absent from the data.
 
-    The market search accepts both; the models need a three-digit group.
+    More digits mean a more specific market: 45 construction work, 453 building
+    installation work, 45314 installation of telecommunications equipment.
     """
-    codes = set()
-    for code in cpv_codes:
-        digits = str(code).strip()
-        codes.add(digits[:2] if len(digits) == 2 else digits[:3])
-    codes.discard("")
-    if not codes:
-        raise ToolError("Give at least one CPV code, e.g. '51' (division) or '453' (group).")
-    if not allow_divisions and any(len(code) < 3 for code in codes):
-        raise ToolError("This tool needs a three-digit CPV group (e.g. '453'), not a two-digit division.")
-    known = known_values(connection, "SELECT DISTINCT LEFT(cpv_code, 3) FROM ted_awards WHERE cpv_code IS NOT NULL")
-    known |= {group[:2] for group in known}
-    unknown = sorted(code for code in codes if code not in known)
+    codes = {str(code).strip()[:5] for code in cpv_codes}
+    codes = {code for code in codes if code}
+    if not codes or any(len(code) < 2 or not code.isdigit() for code in codes):
+        raise ToolError("Give CPV codes of 2 to 5 digits, e.g. '51', '453' or '45314'.")
+    known = known_values(connection, """
+        SELECT DISTINCT UNNEST([LEFT(cpv_code, 2), LEFT(cpv_code, 3), LEFT(cpv_code, 4), LEFT(cpv_code, 5)])
+        FROM ted_awards WHERE cpv_code IS NOT NULL""")
+    unknown = sorted(codes - known)
     if unknown:
-        raise ToolError(f"Unknown CPV codes: {unknown}. Use a two-digit division or a three-digit group from the CPV list.")
+        raise ToolError(f"Unknown CPV codes: {unknown}. Use codes that exist in the CPV list.")
     return sorted(codes)
+
+
+def check_cpv_group(connection, cpv_code):
+    """The models use the three-digit CPV group; longer codes are cut to it."""
+    code = check_cpv_codes(connection, [cpv_code])[0]
+    if len(code) < 3:
+        raise ToolError("This tool needs a CPV code of at least three digits (e.g. '453'), not a division.")
+    return code[:3]
 
 
 def check_country(connection, country):
@@ -190,7 +195,7 @@ def planned_tender(cpv_group, country, contract_type, estimated_value=None, lots
 
 
 def checked_tender(connection, cpv_group, country, contract_type, estimated_value, lots):
-    group = check_cpv_codes(connection, [cpv_group], allow_divisions=False)[0]
+    group = check_cpv_group(connection, cpv_group)
     return planned_tender(group, check_country(connection, country), check_contract_type(contract_type),
                           estimated_value, int(lots or 1))
 
@@ -224,7 +229,7 @@ def single_bid_risk(connection, cpv_group, country, contract_type, estimated_val
 # --- What the LLM sees -----------------------------------------------------------
 
 TENDER_PARAMETERS = {
-    "cpv_group": {"type": "string", "description": "Three-digit CPV group, e.g. '453' (building installation work)."},
+    "cpv_group": {"type": "string", "description": "CPV code of at least three digits, e.g. '453' or '45314'."},
     "country": {"type": "string", "description": "Two-letter buyer country code, e.g. 'PL'."},
     "contract_type": {"type": "string", "enum": CONTRACT_TYPES},
     "estimated_value": {"type": "number", "description": "Buyer's published estimate in EUR, if known."},
@@ -238,8 +243,8 @@ TOOL_SCHEMAS = [
                        "top buyers, top winning companies, typical award values, single-bid rate and SME win share.",
         "parameters": {"type": "object", "required": ["cpv_groups"], "properties": {
             "cpv_groups": {"type": "array", "items": {"type": "string"},
-                           "description": "CPV codes describing what the company sells: two-digit divisions "
-                                          "(e.g. '51') and/or three-digit groups (e.g. '453')."},
+                           "description": "CPV codes (2 to 5 leading digits) describing what the company sells, "
+                                          "e.g. '45314' for telecommunications installation or '72' for IT services."},
             "country": {"type": "string", "description": "Two-letter buyer country code; omit for all countries."},
             "min_value": {"type": "number", "description": "Smallest award value in EUR to include."},
             "max_value": {"type": "number", "description": "Largest award value in EUR to include."},
