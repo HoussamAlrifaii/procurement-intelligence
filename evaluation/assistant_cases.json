@@ -1,0 +1,238 @@
+[
+  {
+    "id": "network-installer-pl",
+    "question": "We are a 20-person IT company in Poland. We install computer networks and structured cabling. Our projects are usually EUR 50k-500k.",
+    "acceptable_cpv_divisions": [
+      "32",
+      "45",
+      "50",
+      "51",
+      "72"
+    ],
+    "country": "PL",
+    "expected_tools": [
+      "search_market"
+    ]
+  },
+  {
+    "id": "bakery-si",
+    "question": "Small family bakery in Slovenia, we deliver bread and pastries. Which public buyers could we supply?",
+    "acceptable_cpv_divisions": [
+      "15"
+    ],
+    "country": "SI",
+    "expected_tools": [
+      "search_market"
+    ]
+  },
+  {
+    "id": "medical-supplies-ro",
+    "question": "We distribute medical consumables such as gloves, syringes and bandages in Romania.",
+    "acceptable_cpv_divisions": [
+      "33"
+    ],
+    "country": "RO",
+    "expected_tools": [
+      "search_market"
+    ]
+  },
+  {
+    "id": "software-de",
+    "question": "German software company building custom web applications and doing IT consulting for the public sector.",
+    "acceptable_cpv_divisions": [
+      "48",
+      "72"
+    ],
+    "country": "DE",
+    "expected_tools": [
+      "search_market"
+    ]
+  },
+  {
+    "id": "cleaning-fr",
+    "question": "Nous sommes une entreprise de nettoyage de bureaux à Lyon, 40 salariés.",
+    "acceptable_cpv_divisions": [
+      "90"
+    ],
+    "country": "FR",
+    "expected_tools": [
+      "search_market"
+    ]
+  },
+  {
+    "id": "road-works-cz",
+    "question": "Czech construction firm specialised in road resurfacing and asphalt works.",
+    "acceptable_cpv_divisions": [
+      "45"
+    ],
+    "country": "CZ",
+    "expected_tools": [
+      "search_market"
+    ]
+  },
+  {
+    "id": "catering-it",
+    "question": "We run a catering company in Italy serving school canteens.",
+    "acceptable_cpv_divisions": [
+      "55",
+      "15"
+    ],
+    "country": "IT",
+    "expected_tools": [
+      "search_market"
+    ]
+  },
+  {
+    "id": "translation-eu",
+    "question": "Translation agency covering all EU languages. Where is the demand across Europe?",
+    "acceptable_cpv_divisions": [
+      "79"
+    ],
+    "country": null,
+    "expected_tools": [
+      "search_market"
+    ]
+  },
+  {
+    "id": "furniture-es",
+    "question": "Spanish manufacturer of office furniture: desks, chairs and storage.",
+    "acceptable_cpv_divisions": [
+      "39"
+    ],
+    "country": "ES",
+    "expected_tools": [
+      "search_market"
+    ]
+  },
+  {
+    "id": "security-guards-be",
+    "question": "Private security company in Belgium offering guarding and surveillance services.",
+    "acceptable_cpv_divisions": [
+      "79",
+      "35"
+    ],
+    "country": "BE",
+    "expected_tools": [
+      "search_market"
+    ]
+  },
+  {
+    "id": "lab-equipment-pl",
+    "question": "Polska firma dostarczająca sprzęt laboratoryjny dla uczelni i szpitali.",
+    "acceptable_cpv_divisions": [
+      "38",
+      "33"
+    ],
+    "country": "PL",
+    "expected_tools": [
+      "search_market"
+    ]
+  },
+  {
+    "id": "bus-transport-se",
+    "question": "We operate buses and want to bid for school and public transport services in Sweden.",
+    "acceptable_cpv_divisions": [
+      "60",
+      "34"
+    ],
+    "country": "SE",
+    "expected_tools": [
+      "search_market"
+    ]
+  },
+  {
+    "id": "architects-nl",
+    "question": "Architecture and engineering design studio in the Netherlands, projects from EUR 100k.",
+    "acceptable_cpv_divisions": [
+      "71"
+    ],
+    "country": "NL",
+    "expected_tools": [
+      "search_market"
+    ]
+  },
+  {
+    "id": "training-ie",
+    "question": "We provide professional training courses and e-learning in Ireland.",
+    "acceptable_cpv_divisions": [
+      "80"
+    ],
+    "country": "IE",
+    "expected_tools": [
+      "search_market"
+    ]
+  },
+  {
+    "id": "price-cabling-pl",
+    "question": "A hospital in Krakow is tendering network cabling installation works, 2 lots, estimate EUR 200,000. Is an offer of EUR 150,000 reasonable?",
+    "acceptable_cpv_divisions": [
+      "45",
+      "32",
+      "50",
+      "51"
+    ],
+    "country": "PL",
+    "expected_tools": [
+      "estimate_price"
+    ]
+  },
+  {
+    "id": "price-medicines-ro",
+    "question": "A Romanian hospital tenders pharmaceutical supplies, 3 lots, estimated at EUR 62,000. What price should we expect and will there be competition?",
+    "acceptable_cpv_divisions": [
+      "33"
+    ],
+    "country": "RO",
+    "expected_tools": [
+      "estimate_price",
+      "single_bid_risk"
+    ]
+  },
+  {
+    "id": "price-software-de",
+    "question": "A German ministry plans a software development services contract, single lot, estimate EUR 800,000. What is the expected award value?",
+    "acceptable_cpv_divisions": [
+      "72",
+      "48"
+    ],
+    "country": "DE",
+    "expected_tools": [
+      "estimate_price"
+    ]
+  },
+  {
+    "id": "risk-lab-si",
+    "question": "How likely is a Slovenian tender for laboratory equipment supplies to get only one bid?",
+    "acceptable_cpv_divisions": [
+      "38",
+      "33"
+    ],
+    "country": "SI",
+    "expected_tools": [
+      "single_bid_risk"
+    ]
+  },
+  {
+    "id": "price-cleaning-fr",
+    "question": "A French city tenders office cleaning services with no published estimate. What range should we expect?",
+    "acceptable_cpv_divisions": [
+      "90"
+    ],
+    "country": "FR",
+    "expected_tools": [
+      "estimate_price"
+    ]
+  },
+  {
+    "id": "risk-roads-gr",
+    "question": "We consider bidding on Greek road construction works around EUR 1 million. Is competition usually low?",
+    "acceptable_cpv_divisions": [
+      "45"
+    ],
+    "country": "GR",
+    "expected_tools": [
+      "single_bid_risk",
+      "search_market"
+    ]
+  }
+]

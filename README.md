@@ -13,9 +13,10 @@ into answers:
 | Suspicious patterns are hidden in millions of records | SQL analysis + Power BI dashboard of competition, vendor concentration and unusual prices | Auditors, journalists |
 | Small businesses can't find or price opportunities | AI assistant matching a company to relevant tenders, past winners and prices | Small and medium businesses |
 
-> 🚧 **Status: in development.** Phases 0–5 complete: project setup, a
+> 🚧 **Status: in development.** Phases 0–6 complete: project setup, a
 > reproducible data pipeline, cleaning and exploratory analysis, star schema,
-> SQL analysis, a Power BI dashboard and two machine learning models.
+> SQL analysis, a Power BI dashboard, two machine learning models and an AI
+> assistant.
 
 ## Dashboard
 
@@ -54,6 +55,25 @@ with a time-based split (train 2019–2020, validate 2021, test 2022)
 - Every prediction is explained with SHAP values; the main drivers of single-bid
   risk are country, the buyer's history and the sector.
 
+## AI assistant
+
+A small business describes itself in plain language (any EU language); an LLM
+turns that into CPV sector codes, a country and a value range, and calls three
+tools: a SQL market search over 2021–2022 awards and the two models above. The
+LLM writes the answer; every figure comes from the tools
+([details](docs/phases/PHASE_6_AI_ASSISTANT.md)).
+
+```bash
+python -m procurement.assistant "We are a 20-person IT company in Poland installing networks, EUR 50k-500k"
+```
+
+> 1,156 awards in your price band · typical value EUR 194,206 · single-bid rate 57.5% ·
+> SMEs won 70.7% · top buyers: Centrum e-Zdrowia, City of Warsaw … · frequent winners: Asseco Poland, Comtegra, Exatel …
+
+On 20 hand-written test cases it chose the right tool, sector and country every
+time; 18 of 20 answers used only figures from the tools, checked automatically
+([evaluation](reports/assistant_evaluation.md)).
+
 ## Highlights so far
 
 From 3.56 million EU contract awards (2019–2022) and 143k World Bank contracts
@@ -83,6 +103,7 @@ python -m pytest -q
 python -m procurement.pipeline    # download and load 2019-2022 (~490 MB download)
 python -m procurement.features && python -m procurement.train              # single-bid model
 python -m procurement.price_features && python -m procurement.price_train  # fair price model
+python -m procurement.assistant "describe your company"                    # needs LLM_API_KEY in .env
 ```
 
 The pipeline writes a DuckDB database to `data/procurement.duckdb`, a data
@@ -93,7 +114,8 @@ five dimensions) in `data/marts/` for analysis and Power BI. Details:
 [Phase 2](docs/phases/PHASE_2_CLEANING_EDA.md) ·
 [Phase 3](docs/phases/PHASE_3_SQL_ANALYSIS.md) ·
 [Phase 4](docs/phases/PHASE_4_POWER_BI.md) ·
-[Phase 5](docs/phases/PHASE_5_MACHINE_LEARNING.md).
+[Phase 5](docs/phases/PHASE_5_MACHINE_LEARNING.md) ·
+[Phase 6](docs/phases/PHASE_6_AI_ASSISTANT.md).
 
 ## Project structure
 
@@ -105,6 +127,7 @@ reference/     Small lookup tables (e.g. CPV sector names)
 data/          Downloaded and processed data (not committed; re-created by code)
 models/        Trained models (not committed; re-created by the training scripts)
 reports/       Generated reports and figures
+evaluation/    Test cases for the AI assistant
 docs/          Project plan and one explanation file per phase
 tests/         Automated tests
 ```
