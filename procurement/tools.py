@@ -56,16 +56,26 @@ def known_values(connection, sql):
     return {row[0] for row in connection.sql(sql).fetchall()}
 
 
-def check_cpv_groups(connection, cpv_groups):
-    """Keep the first three digits of each code and reject groups absent from the data."""
-    groups = sorted({str(code).strip()[:3] for code in cpv_groups if str(code).strip()})
-    if not groups:
-        raise ToolError("Give at least one CPV group (first three digits of a CPV code, e.g. '453').")
+def check_cpv_codes(connection, cpv_codes, allow_divisions=True):
+    """Shorten codes to a division (2 digits) or group (3 digits) and reject those absent from the data.
+
+    The market search accepts both; the models need a three-digit group.
+    """
+    codes = set()
+    for code in cpv_codes:
+        digits = str(code).strip()
+        codes.add(digits[:2] if len(digits) == 2 else digits[:3])
+    codes.discard("")
+    if not codes:
+        raise ToolError("Give at least one CPV code, e.g. '51' (division) or '453' (group).")
+    if not allow_divisions and any(len(code) < 3 for code in codes):
+        raise ToolError("This tool needs a three-digit CPV group (e.g. '453'), not a two-digit division.")
     known = known_values(connection, "SELECT DISTINCT LEFT(cpv_code, 3) FROM ted_awards WHERE cpv_code IS NOT NULL")
-    unknown = [group for group in groups if group not in known]
+    known |= {group[:2] for group in known}
+    unknown = sorted(code for code in codes if code not in known)
     if unknown:
-        raise ToolError(f"Unknown CPV groups: {unknown}. Use three-digit groups that exist in the CPV list.")
-    return groups
+        raise ToolError(f"Unknown CPV codes: {unknown}. Use a two-digit division or a three-digit group from the CPV list.")
+    return sorted(codes)
 
 
 def check_country(connection, country):
@@ -90,7 +100,7 @@ def check_contract_type(contract_type):
 def search_market(connection, cpv_groups, country=None, min_value=None, max_value=None):
     """Who buys, who wins, at what price and with how much competition in a market."""
     parameters = {
-        "cpv_groups": check_cpv_groups(connection, cpv_groups),
+        "cpv_codes": check_cpv_codes(connection, cpv_groups),
         "country": check_country(connection, country),
         "min_value": min_value,
         "max_value": max_value,
@@ -105,7 +115,7 @@ def search_market(connection, cpv_groups, country=None, min_value=None, max_valu
     return {
         "period": f"{config.ASSISTANT_FIRST_YEAR}-{config.ASSISTANT_LAST_YEAR}",
         "filters": parameters,
-        "cpv_divisions": {group: cpv_division_names().get(group[:2], "unknown") for group in parameters["cpv_groups"]},
+        "cpv_divisions": {code: cpv_division_names().get(code[:2], "unknown") for code in parameters["cpv_codes"]},
         "contracts_awarded": count(summary["awards"]),
         "tenders": count(summary["tenders"]),
         "buyers": count(summary["buyers"]),
@@ -180,7 +190,7 @@ def planned_tender(cpv_group, country, contract_type, estimated_value=None, lots
 
 
 def checked_tender(connection, cpv_group, country, contract_type, estimated_value, lots):
-    group = check_cpv_groups(connection, [cpv_group])[0]
+    group = check_cpv_codes(connection, [cpv_group], allow_divisions=False)[0]
     return planned_tender(group, check_country(connection, country), check_contract_type(contract_type),
                           estimated_value, int(lots or 1))
 
@@ -228,7 +238,8 @@ TOOL_SCHEMAS = [
                        "top buyers, top winning companies, typical award values, single-bid rate and SME win share.",
         "parameters": {"type": "object", "required": ["cpv_groups"], "properties": {
             "cpv_groups": {"type": "array", "items": {"type": "string"},
-                           "description": "One or more three-digit CPV groups describing what the company sells."},
+                           "description": "CPV codes describing what the company sells: two-digit divisions "
+                                          "(e.g. '51') and/or three-digit groups (e.g. '453')."},
             "country": {"type": "string", "description": "Two-letter buyer country code; omit for all countries."},
             "min_value": {"type": "number", "description": "Smallest award value in EUR to include."},
             "max_value": {"type": "number", "description": "Largest award value in EUR to include."},

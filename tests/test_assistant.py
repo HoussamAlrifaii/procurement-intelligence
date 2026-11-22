@@ -70,14 +70,21 @@ def test_search_market_value_range_filter(connection):
 
 
 def test_invalid_arguments_come_back_as_errors_for_the_llm(connection):
-    assert "Unknown CPV groups" in tools.run_tool(connection, "search_market", {"cpv_groups": ["999"]})["error"]
+    assert "Unknown CPV codes" in tools.run_tool(connection, "search_market", {"cpv_groups": ["999"]})["error"]
     assert "Unknown country" in tools.run_tool(connection, "search_market", {"cpv_groups": ["453"], "country": "XX"})["error"]
     assert "Unknown tool" in tools.run_tool(connection, "delete_everything", {})["error"]
     assert "error" in tools.run_tool(connection, "search_market", {"sectors": ["453"]})
 
 
-def test_cpv_codes_are_cut_to_three_digit_groups(connection):
-    assert tools.check_cpv_groups(connection, ["45314300", " 324 "]) == ["324", "453"]
+def test_cpv_codes_become_divisions_or_groups(connection):
+    assert tools.check_cpv_codes(connection, ["45314300", " 324 ", "33"]) == ["324", "33", "453"]
+    with pytest.raises(tools.ToolError):
+        tools.check_cpv_codes(connection, ["45"], allow_divisions=False)
+
+
+def test_search_market_accepts_a_whole_division(connection):
+    # Division 45 covers awards 1 and 2 (2021); award 5 is from 2019.
+    assert tools.search_market(connection, ["45"])["contracts_awarded"] == "2"
 
 
 def test_planned_tender_has_every_model_feature(monkeypatch):
