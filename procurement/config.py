@@ -42,6 +42,7 @@ FIGURES_DIR = REPORTS_DIR / "figures"
 SINGLE_BID_METRICS_PATH = REPORTS_DIR / "single_bid_metrics.json"
 PRICE_METRICS_PATH = REPORTS_DIR / "price_metrics.json"
 ASSISTANT_EVALUATION_PATH = REPORTS_DIR / "assistant_evaluation.md"
+ASSISTANT_ANSWERS_PATH = REPORTS_DIR / "assistant_answers.json"
 
 EVALUATION_DIR = PROJECT_ROOT / "evaluation"   # hand-written test cases for the assistant
 ASSISTANT_CASES_PATH = EVALUATION_DIR / "assistant_cases.json"

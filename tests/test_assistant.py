@@ -151,8 +151,8 @@ def test_figures_ignore_years_and_single_digits():
 
 
 def test_ungrounded_figures_finds_invented_numbers():
-    calls = [{"result": {"contracts_awarded": "1,240", "single_bid_rate": "41.9%"}}]
-    answer = "1,240 contracts, 41.9% single-bid, your offer of 150,000 is fine, about 55% of buyers..."
+    calls = [{"arguments": {"cpv_groups": ["45314"]}, "result": {"contracts_awarded": "1,240", "single_bid_rate": "41.9%"}}]
+    answer = "CPV 45314: 1,240 contracts, 41.9% single-bid, your offer of 150,000 is fine, about 55% of buyers..."
     assert ungrounded_figures(answer, calls, question="We offer EUR 150,000") == ["55"]
 
 

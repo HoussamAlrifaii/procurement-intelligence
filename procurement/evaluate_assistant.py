@@ -4,7 +4,10 @@ For each case it checks, from the tool calls and the answer:
   tool    - the assistant called at least one of the expected tools
   sector  - at least one CPV group it used falls in an acceptable CPV division
   country - it searched the expected country (or no country when none was given)
-  grounded - every figure in the answer appears in a tool result (no invented numbers)
+  grounded - every figure in the answer appears in the question, a tool call or a tool
+             result, written the same way (no invented, rounded or derived numbers)
+
+Every answer is saved to reports/assistant_answers.json for review.
 
 Usage (needs LLM_API_KEY in .env; about 20 LLM calls):
     python -m procurement.evaluate_assistant
@@ -27,8 +30,12 @@ def figures(text):
 
 
 def ungrounded_figures(answer, tool_calls, question=""):
-    """Figures in the answer that appear neither in a tool result nor in the user's question."""
-    sources = question + json.dumps([call["result"] for call in tool_calls], ensure_ascii=False, default=str)
+    """Figures in the answer found neither in the question nor in any tool call (arguments or result).
+
+    Arguments count as sources because the assistant may mention the codes and
+    value range it searched with.
+    """
+    sources = question + json.dumps(tool_calls, ensure_ascii=False, default=str)
     return sorted(figure for figure in figures(answer) if figure not in sources)
 
 
@@ -64,7 +71,8 @@ def score_case(case, result):
 def write_report(scores):
     checks = ["tool", "sector", "country", "grounded"]
     lines = ["# Assistant evaluation", "",
-             f"{len(scores)} hand-written cases from `evaluation/assistant_cases.json`.", "",
+             f"{len(scores)} hand-written cases from `evaluation/assistant_cases.json`; "
+             "full answers in `assistant_answers.json`.", "",
              "| Check | Passed |", "|---|---|"]
     for check in checks:
         passed = sum(score[check] for score in scores)
@@ -84,15 +92,20 @@ def main():
     cases = json.loads(config.ASSISTANT_CASES_PATH.read_text(encoding="utf-8"))
     llm = LLM()
     scores = []
+    answers = []
     with duckdb.connect(str(config.DATABASE_PATH), read_only=True) as connection:
         for case in cases:
             result = ask(case["question"], llm, connection)
             scores.append(score_case(case, result))
+            answers.append({"id": case["id"], "question": case["question"], **result})
             score = scores[-1]
             print(f"{case['id']:<22} tool={score['tool']!s:<5} sector={score['sector']!s:<5} "
                   f"country={score['country']!s:<5} grounded={score['grounded']!s:<5} {score['ungrounded']}")
     write_report(scores)
-    print(f"\nSaved {config.ASSISTANT_EVALUATION_PATH.relative_to(config.PROJECT_ROOT)}")
+    config.ASSISTANT_ANSWERS_PATH.write_text(json.dumps(answers, indent=2, ensure_ascii=False, default=str),
+                                             encoding="utf-8")
+    print(f"\nSaved {config.ASSISTANT_EVALUATION_PATH.relative_to(config.PROJECT_ROOT)} and "
+          f"{config.ASSISTANT_ANSWERS_PATH.relative_to(config.PROJECT_ROOT)}")
 
 
 if __name__ == "__main__":
