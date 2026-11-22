@@ -160,18 +160,42 @@ def load_booster(file_name):
     return lgb.Booster(model_file=str(config.MODELS_DIR / file_name))
 
 
-@lru_cache(maxsize=1)
-def unknown_buyer_single_bid_rate():
-    """Training-years single-bid rate: the smoothed history value of a buyer with no history."""
+MODEL_CONSTANTS_FILE = "model_constants.json"
+
+
+def training_single_bid_rate():
+    """Single-bid rate of the training years, computed from the feature table."""
     sql = (f"SELECT AVG(is_single_bid) FROM read_parquet('{config.SINGLE_BID_FEATURES_PATH.as_posix()}') "
            f"WHERE publication_year <= {config.TRAIN_END_YEAR}")
     return duckdb.sql(sql).fetchone()[0]
 
 
-@lru_cache(maxsize=1)
-def price_conformal_margin():
+def bundled_constant(name):
+    """A value stored next to the models in the app bundle, or None when running from the pipeline."""
+    constants_path = config.MODELS_DIR / MODEL_CONSTANTS_FILE
+    if not constants_path.exists():
+        return None
+    return json.loads(constants_path.read_text(encoding="utf-8"))[name]
+
+
+def training_price_margin():
     report = json.loads(config.PRICE_METRICS_PATH.read_text(encoding="utf-8"))
     return report["conformal_margin_log"]
+
+
+@lru_cache(maxsize=1)
+def unknown_buyer_single_bid_rate():
+    """The smoothed history value of a buyer with no history (the training-years rate).
+
+    The app bundle stores it next to the models, because the feature table is not deployed.
+    """
+    return bundled_constant("training_single_bid_rate") or training_single_bid_rate()
+
+
+@lru_cache(maxsize=1)
+def price_conformal_margin():
+    """Calibration margin of the price range, stored with the models it belongs to."""
+    return bundled_constant("price_conformal_margin_log") or training_price_margin()
 
 
 def planned_tender(cpv_group, country, contract_type, estimated_value=None, lots=1):

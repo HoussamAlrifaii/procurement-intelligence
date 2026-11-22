@@ -117,3 +117,16 @@ DEFAULT_LLM_MODEL = "openai/gpt-oss-120b"
 
 # Upper limit on LLM <-> tool round trips for one question.
 ASSISTANT_MAX_STEPS = 6
+
+# --- Web app and API -----------------------------------------------------------
+
+# The deployed app cannot run the pipeline, so it uses a small bundle: 2021-2022
+# awards (only the columns the tools need), buyer names and the trained models.
+# It is built by procurement.app_bundle and published as a GitHub Release asset.
+APP_BUNDLE_DIR = DATA_DIR / "app"
+APP_BUNDLE_NAME = "procurement_app_bundle"
+APP_BUNDLE_URL = ("https://github.com/HoussamAlrifaii/procurement-intelligence/releases/download/"
+                  "app-data-v1/procurement_app_bundle.zip")
+
+# Questions one visitor may ask the AI assistant per session (protects the free LLM quota).
+APP_MAX_QUESTIONS = 10

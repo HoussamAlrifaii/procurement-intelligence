@@ -16,3 +16,7 @@ scikit-learn==1.9.1
 lightgbm==4.7.0
 # Phase 6: AI assistant (OpenAI-compatible client, also used for Groq and Gemini)
 openai==3.57.0
+# Phase 7: web app and API
+streamlit==1.67.0
+fastapi==0.165.0
+uvicorn==0.54.0

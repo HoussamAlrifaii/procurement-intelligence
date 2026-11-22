@@ -16,6 +16,7 @@ data/processed/*
 data/marts/
 data/analysis/
 data/ml/
+data/app/
 
 # Trained models: re-created by the training scripts
 models/
