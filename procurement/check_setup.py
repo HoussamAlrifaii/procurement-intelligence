@@ -12,7 +12,7 @@ import sys
 from procurement import config
 
 # Import names of the packages in requirements.txt
-# (python-dotenv is imported as `dotenv`).
+# (python-dotenv is imported as `dotenv`, scikit-learn as `sklearn`).
 REQUIRED_PACKAGES = [
     "pandas",
     "numpy",
@@ -24,6 +24,9 @@ REQUIRED_PACKAGES = [
     "seaborn",
     "dotenv",
     "pytest",
+    "sklearn",
+    "lightgbm",
+    "openai",
 ]
 
 

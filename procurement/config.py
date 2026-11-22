@@ -23,6 +23,7 @@ CLEAN_SQL_DIR = SQL_DIR / "clean"
 MARTS_SQL_DIR = SQL_DIR / "marts"
 ANALYSIS_SQL_DIR = SQL_DIR / "analysis"
 ML_SQL_DIR = SQL_DIR / "ml"
+ASSISTANT_SQL_DIR = SQL_DIR / "assistant"
 
 REFERENCE_DIR = PROJECT_ROOT / "reference"      # small lookup tables committed to the repository
 CPV_DIVISIONS_PATH = REFERENCE_DIR / "cpv_divisions.csv"
@@ -40,6 +41,10 @@ PROFILE_REPORT_PATH = REPORTS_DIR / "data_profile.md"
 FIGURES_DIR = REPORTS_DIR / "figures"
 SINGLE_BID_METRICS_PATH = REPORTS_DIR / "single_bid_metrics.json"
 PRICE_METRICS_PATH = REPORTS_DIR / "price_metrics.json"
+ASSISTANT_EVALUATION_PATH = REPORTS_DIR / "assistant_evaluation.md"
+
+EVALUATION_DIR = PROJECT_ROOT / "evaluation"   # hand-written test cases for the assistant
+ASSISTANT_CASES_PATH = EVALUATION_DIR / "assistant_cases.json"
 
 # Folders that must exist before the pipeline runs.
 REQUIRED_FOLDERS = [RAW_DATA_DIR, PROCESSED_DATA_DIR, SQL_DIR, REPORTS_DIR]
@@ -97,3 +102,17 @@ PRICE_QUANTILES = [0.1, 0.5, 0.9]
 PRICE_ANOMALY_FACTOR = 2.0
 
 RANDOM_SEED = 42
+
+# --- AI assistant -----------------------------------------------------------
+
+# Market searches cover the two most recent years in the data.
+ASSISTANT_FIRST_YEAR = 2021
+ASSISTANT_LAST_YEAR = 2022
+
+# Any provider with an OpenAI-compatible API works; Groq is the default.
+# LLM_API_KEY, LLM_BASE_URL and LLM_MODEL can be set in .env.
+DEFAULT_LLM_BASE_URL = "https://api.groq.com/openai/v1"
+DEFAULT_LLM_MODEL = "openai/gpt-oss-120b"
+
+# Upper limit on LLM <-> tool round trips for one question.
+ASSISTANT_MAX_STEPS = 6
