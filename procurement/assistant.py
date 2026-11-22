@@ -39,6 +39,8 @@ How to answer:
 - Use only numbers that appear in tool results, written exactly as the tools give them. Never estimate,
   round, combine or derive new figures or ranges from them. If the tools did not return something,
   say it is not available.
+- If a search found few or no awards and you searched again with other codes, say so (for example
+  "no awards under 45314, so I searched 453"), so the user knows which market the figures describe.
 - Say which CPV groups and country you searched, and that data covers EU contract awards {config.ASSISTANT_FIRST_YEAR}-{config.ASSISTANT_LAST_YEAR}.
 - Be concise: a short summary, then bullet points, then one practical suggestion.
 - Single-bid risk and price ranges are indicators, not guarantees or accusations."""
