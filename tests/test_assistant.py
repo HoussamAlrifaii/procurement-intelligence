@@ -69,6 +69,14 @@ def test_search_market_value_range_filter(connection):
     assert result["contracts_awarded"] == "1"
 
 
+def test_small_or_empty_markets_suggest_related_codes(connection):
+    result = tools.search_market(connection, ["453"], min_value=10_000_000)
+    assert result["contracts_awarded"] == "0"
+    assert result["typical_award_value"] == "not available"
+    assert result["usual_value_range"] == "not available"
+    assert "related or broader" in result["note"]
+
+
 def test_invalid_arguments_come_back_as_errors_for_the_llm(connection):
     assert "Unknown CPV codes" in tools.run_tool(connection, "search_market", {"cpv_groups": ["999"]})["error"]
     assert "Unknown country" in tools.run_tool(connection, "search_market", {"cpv_groups": ["453"], "country": "XX"})["error"]

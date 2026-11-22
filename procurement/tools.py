@@ -27,12 +27,16 @@ class ToolError(ValueError):
 
 # --- Formatting ---------------------------------------------------------------
 
+NOT_AVAILABLE = "not available"
+SMALL_MARKET = 30   # fewer awards than this: suggest searching related codes too
+
+
 def euros(value):
-    return None if value is None or pd.isna(value) else f"EUR {value:,.0f}"
+    return NOT_AVAILABLE if value is None or pd.isna(value) else f"EUR {value:,.0f}"
 
 
 def percent(value):
-    return None if value is None or pd.isna(value) else f"{value:.1%}"
+    return NOT_AVAILABLE if value is None or pd.isna(value) else f"{value:.1%}"
 
 
 def count(value):
@@ -117,7 +121,7 @@ def search_market(connection, cpv_groups, country=None, min_value=None, max_valu
     buyers = connection.sql(read_sql(config.ASSISTANT_SQL_DIR / "02_top_buyers.sql")).df()
     winners = connection.sql(read_sql(config.ASSISTANT_SQL_DIR / "03_top_winners.sql")).df()
 
-    return {
+    result = {
         "period": f"{config.ASSISTANT_FIRST_YEAR}-{config.ASSISTANT_LAST_YEAR}",
         "filters": parameters,
         "cpv_divisions": {code: cpv_division_names().get(code[:2], "unknown") for code in parameters["cpv_codes"]},
@@ -126,7 +130,8 @@ def search_market(connection, cpv_groups, country=None, min_value=None, max_valu
         "buyers": count(summary["buyers"]),
         "winning_companies": count(summary["winners"]),
         "typical_award_value": euros(summary["median_value"]),
-        "usual_value_range": f"{euros(summary['p10_value'])} to {euros(summary['p90_value'])}",
+        "usual_value_range": (NOT_AVAILABLE if pd.isna(summary["p10_value"])
+                              else f"{euros(summary['p10_value'])} to {euros(summary['p90_value'])}"),
         "single_bid_rate": percent(summary["single_bid_rate"]),
         "share_won_by_smes": percent(summary["sme_win_share"]),
         "top_buyers": [
@@ -140,6 +145,12 @@ def search_market(connection, cpv_groups, country=None, min_value=None, max_valu
             for row in winners.itertuples()
         ],
     }
+    if summary["awards"] < SMALL_MARKET:
+        # Buyers code similar work differently (e.g. network projects as equipment or IT
+        # services rather than installation), so a narrow code can miss most of a market.
+        result["note"] = (f"Only {int(summary['awards'])} awards match. Search again with related or broader "
+                          "codes (e.g. equipment and service codes next to installation codes) or wider filters.")
+    return result
 
 
 # --- Tools 2 and 3: the models ---------------------------------------------------

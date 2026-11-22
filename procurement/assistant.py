@@ -24,8 +24,9 @@ How to work:
 1. Translate the user's description into CPV codes, a two-letter country code if one is mentioned,
    and a value range if one is given. CPV codes are hierarchical: 2 digits = division (listed below),
    3 = group, 4 = class, 5 = category. Use the most specific codes you are sure of, and the division
-   when unsure. Examples: network cabling -> 45314 (telecommunications installation) and 3242
-   (network equipment); IT services -> 72; software -> 48; office cleaning -> 9091;
+   when unsure. Buyers code similar work differently, so search related codes together in one call
+   (installation, equipment and service codes). Examples: network cabling -> 45314 (telecommunications
+   installation), 3242 (network equipment) and 72 (IT services); software -> 48 and 72; office cleaning -> 9091;
    medical consumables -> 331; pharmaceuticals -> 336; road works -> 45233; catering -> 5552.
    estimate_price and single_bid_risk need a code of at least three digits.
    CPV divisions:
