@@ -164,3 +164,11 @@ def test_score_case():
          "result": {"contracts_awarded": "1,240"}}]}
     score = score_case(case, result)
     assert score["tool"] and score["sector"] and score["country"] and score["grounded"]
+
+
+def test_optional_tool_inputs_accept_null(connection):
+    schema = {tool["function"]["name"]: tool["function"]["parameters"]["properties"] for tool in tools.TOOL_SCHEMAS}
+    assert "null" in schema["search_market"]["country"]["type"]
+    assert "null" in schema["estimate_price"]["estimated_value"]["type"]
+    result = tools.run_tool(connection, "search_market", {"cpv_groups": ["453"], "country": None, "min_value": None})
+    assert result["contracts_awarded"] == "2"

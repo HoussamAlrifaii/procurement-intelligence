@@ -95,7 +95,10 @@ def main():
     answers = []
     with duckdb.connect(str(config.DATABASE_PATH), read_only=True) as connection:
         for case in cases:
-            result = ask(case["question"], llm, connection)
+            try:
+                result = ask(case["question"], llm, connection)
+            except Exception as problem:   # e.g. the provider rejects a malformed tool call
+                result = {"answer": f"ERROR: {problem}", "tool_calls": []}
             scores.append(score_case(case, result))
             answers.append({"id": case["id"], "question": case["question"], **result})
             score = scores[-1]

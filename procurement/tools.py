@@ -243,8 +243,8 @@ TENDER_PARAMETERS = {
     "cpv_group": {"type": "string", "description": "CPV code of at least three digits, e.g. '453' or '45314'."},
     "country": {"type": "string", "description": "Two-letter buyer country code, e.g. 'PL'."},
     "contract_type": {"type": "string", "enum": CONTRACT_TYPES},
-    "estimated_value": {"type": "number", "description": "Buyer's published estimate in EUR, if known."},
-    "lots": {"type": "integer", "description": "Number of lots in the tender (default 1)."},
+    "estimated_value": {"type": ["number", "null"], "description": "Buyer's published estimate in EUR, if known."},
+    "lots": {"type": ["integer", "null"], "description": "Number of lots in the tender (default 1)."},
 }
 
 TOOL_SCHEMAS = [
@@ -256,9 +256,10 @@ TOOL_SCHEMAS = [
             "cpv_groups": {"type": "array", "items": {"type": "string"},
                            "description": "CPV codes (2 to 5 leading digits) describing what the company sells, "
                                           "e.g. '45314' for telecommunications installation or '72' for IT services."},
-            "country": {"type": "string", "description": "Two-letter buyer country code; omit for all countries."},
-            "min_value": {"type": "number", "description": "Smallest award value in EUR to include."},
-            "max_value": {"type": "number", "description": "Largest award value in EUR to include."},
+            # Optional inputs also accept null: some models send null instead of leaving them out.
+            "country": {"type": ["string", "null"], "description": "Two-letter buyer country code; null for all countries."},
+            "min_value": {"type": ["number", "null"], "description": "Smallest award value in EUR to include."},
+            "max_value": {"type": ["number", "null"], "description": "Largest award value in EUR to include."},
         }},
     }},
     {"type": "function", "function": {
