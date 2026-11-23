@@ -17,6 +17,7 @@ COPY sql/ sql/
 COPY reference/ reference/
 COPY reports/price_metrics.json reports/
 COPY .streamlit/ .streamlit/
+COPY app_pages/ app_pages/
 COPY streamlit_app.py .
 
 EXPOSE 8501 8000
