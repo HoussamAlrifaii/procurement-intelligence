@@ -9,6 +9,7 @@ Run locally:  streamlit run streamlit_app.py
 """
 import os
 
+import altair as alt
 import pandas as pd
 import streamlit as st
 
@@ -70,6 +71,24 @@ def show_error(result):
 
 # --- Page 1: market explorer -----------------------------------------------------------
 
+COLUMN_NAMES = {"buyer": "Buyer", "company": "Company", "country": "Country", "contracts": "Contracts",
+                "typical_value": "Typical value", "sme": "SME"}
+
+
+def contracts_chart(buyers):
+    """Top buyers by number of contracts, largest first."""
+    data = buyers.assign(Contracts=buyers["Contracts"].str.replace(",", "").astype(int))
+    return (
+        alt.Chart(data, title="Contracts awarded by the top buyers")
+        .mark_bar(color="#2B8DE0")
+        .encode(
+            x=alt.X("Contracts:Q", title=None),
+            y=alt.Y("Buyer:N", sort="-x", title=None, axis=alt.Axis(labelLimit=320)),
+            tooltip=["Buyer", "Country", "Contracts", "Typical value"],
+        )
+        .properties(height=220)
+    )
+
 def market_explorer():
     st.title("Market explorer")
     st.caption("Who buys, who wins and at what price, by sector and country. " + DATA_NOTE)
@@ -113,16 +132,15 @@ def market_explorer():
     second[2].metric("Low end of usual values", low, help="10% of awards are below this value")
     second[3].metric("High end of usual values", high, help="10% of awards are above this value")
 
-    buyers = pd.DataFrame(result["top_buyers"]).rename(columns=str.capitalize)
-    winners = pd.DataFrame(result["top_winners"]).rename(columns={"sme": "SME"}).rename(columns=str.capitalize)
+    buyers = pd.DataFrame(result["top_buyers"]).rename(columns=COLUMN_NAMES)
+    winners = pd.DataFrame(result["top_winners"]).rename(columns=COLUMN_NAMES)
     left, right = st.columns(2)
     left.subheader("Top buyers")
     left.dataframe(buyers, hide_index=True, width="stretch")
     right.subheader("Most frequent winners")
     right.dataframe(winners, hide_index=True, width="stretch")
     if not buyers.empty:
-        chart = buyers.assign(Contracts=buyers["Contracts"].str.replace(",", "").astype(int))
-        st.bar_chart(chart, x="Buyer", y="Contracts", horizontal=True, color="#2B8DE0")
+        st.altair_chart(contracts_chart(buyers), width="stretch")
 
 
 # --- Page 2: tender check -------------------------------------------------------------
