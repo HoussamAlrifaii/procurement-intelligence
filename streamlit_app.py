@@ -100,7 +100,10 @@ def market_explorer():
         chosen_divisions = left.multiselect("Sectors (CPV divisions)", list(divisions), default=["72"],
                                             format_func=divisions.get)
         extra_codes = left.text_input("More specific CPV codes (optional, 3-5 digits, comma-separated)",
-                                      placeholder="e.g. 45314, 3242")
+                                      placeholder="e.g. 45314, 3242",
+                                      help="Searched together with the sectors above. Codes are hierarchical: "
+                                           "33 medical, 331 medical equipment, 3314 medical consumables. "
+                                           "Not sure which codes fit? Describe your company on the AI assistant page.")
         country = right.selectbox("Buyer country", [None] + list(countries),
                                   format_func=lambda code: "All countries" if code is None else countries[code])
         low, high = right.columns(2)
@@ -110,7 +113,11 @@ def market_explorer():
 
     if not submitted:
         return
-    codes = parse_codes(extra_codes) or chosen_divisions
+    codes = chosen_divisions + parse_codes(extra_codes)
+    if not codes:
+        st.warning("Choose at least one sector or type a CPV code. "
+                   "Not sure which ones fit? Describe your company on the AI assistant page.")
+        return
     result = tools.run_tool(cursor(), "search_market", {
         "cpv_groups": codes, "country": country,
         "min_value": min_value or None, "max_value": max_value or None,
