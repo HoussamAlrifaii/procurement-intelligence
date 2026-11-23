@@ -28,6 +28,7 @@ ASSISTANT_SQL_DIR = SQL_DIR / "assistant"
 REFERENCE_DIR = PROJECT_ROOT / "reference"      # small lookup tables committed to the repository
 CPV_DIVISIONS_PATH = REFERENCE_DIR / "cpv_divisions.csv"
 COUNTRIES_PATH = REFERENCE_DIR / "countries.csv"
+CPV_CODES_PATH = REFERENCE_DIR / "cpv_codes.csv"   # official CPV 2008 list, English names
 
 MARTS_DIR = DATA_DIR / "marts"          # star-schema tables (Parquet) for Power BI
 ANALYSIS_OUTPUT_DIR = DATA_DIR / "analysis"  # results of the sql/analysis queries (CSV)

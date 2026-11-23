@@ -1,9 +1,10 @@
 """Procurement Intelligence web app.
 
-Three pages built on the same tools as the AI assistant (procurement/tools.py):
+Four pages built on the same tools as the AI assistant (procurement/tools.py):
+  AI assistant    - questions in plain language, answered from the tools
   Market explorer - who buys, who wins and at what price in a sector and country
   Tender check    - expected award value, price range and single-bid risk of a planned tender
-  AI assistant    - questions in plain language, answered from the tools
+  CPV lookup      - find the procurement codes for a product or service
 
 Run locally:  streamlit run streamlit_app.py
 """
@@ -69,7 +70,7 @@ def show_error(result):
     return False
 
 
-# --- Page 1: market explorer -----------------------------------------------------------
+# --- Page 2: market explorer -----------------------------------------------------------
 
 COLUMN_NAMES = {"buyer": "Buyer", "company": "Company", "country": "Country", "contracts": "Contracts",
                 "typical_value": "Typical value", "sme": "SME"}
@@ -103,7 +104,8 @@ def market_explorer():
                                       placeholder="e.g. 45314, 3242",
                                       help="Searched together with the sectors above. Codes are hierarchical: "
                                            "33 medical, 331 medical equipment, 3314 medical consumables. "
-                                           "Not sure which codes fit? Describe your company on the AI assistant page.")
+                                           "Find codes on the CPV lookup page, or describe your company on the "
+                                           "AI assistant page.")
         country = right.selectbox("Buyer country", [None] + list(countries),
                                   format_func=lambda code: "All countries" if code is None else countries[code])
         low, high = right.columns(2)
@@ -150,7 +152,7 @@ def market_explorer():
         st.altair_chart(contracts_chart(buyers), width="stretch")
 
 
-# --- Page 2: tender check -------------------------------------------------------------
+# --- Page 3: tender check -------------------------------------------------------------
 
 def tender_check():
     st.title("Tender check")
@@ -198,7 +200,31 @@ def tender_check():
     st.caption(price["note"] + " Predictions assume a typical buyer with an open procedure.")
 
 
-# --- Page 3: AI assistant -------------------------------------------------------------
+# --- Page 4: CPV lookup ---------------------------------------------------------------
+
+def cpv_lookup():
+    st.title("CPV lookup")
+    st.caption("Every EU tender is labelled with a CPV code from the official Common Procurement Vocabulary "
+               "(9,454 codes). Type what you sell in English to find its codes, then use them in Market explorer "
+               "or Tender check. Codes used by many contracts come first.")
+    keywords = st.text_input("What do you sell?", placeholder="e.g. bread, office cleaning, network cabling")
+    if not keywords:
+        st.markdown("Codes are hierarchical: each extra digit narrows the market, e.g. "
+                    "**33** medical equipment and pharmaceuticals → **331** medical equipment → "
+                    "**3314** medical consumables.")
+        return
+    result = tools.run_tool(cursor(), "find_cpv_codes", {"keywords": keywords, "limit": 15})
+    if show_error(result):
+        return
+    if not result["codes"]:
+        st.info(result["note"])
+        return
+    table = pd.DataFrame(result["codes"]).rename(columns={
+        "cpv_code": "CPV code", "name": "Name", "contracts_2021_2022": "Contracts 2021-2022"})
+    st.dataframe(table, hide_index=True, width="stretch")
+
+
+# --- Page 1: AI assistant -------------------------------------------------------------
 
 EXAMPLES = [
     "We are a 20-person IT company in Poland. We install computer networks and cabling. Projects are usually EUR 50k-500k.",
@@ -282,8 +308,9 @@ with st.sidebar:
     st.markdown("[Source code and documentation](https://github.com/HoussamAlrifaii/procurement-intelligence)")
 
 pages = st.navigation([
+    st.Page(assistant, title="AI assistant", icon="💬", url_path="assistant", default=True),
     st.Page(market_explorer, title="Market explorer", icon="🔎", url_path="market"),
     st.Page(tender_check, title="Tender check", icon="💶", url_path="tender"),
-    st.Page(assistant, title="AI assistant", icon="💬", url_path="assistant"),
+    st.Page(cpv_lookup, title="CPV lookup", icon="📖", url_path="cpv"),
 ])
 pages.run()

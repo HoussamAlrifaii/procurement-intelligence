@@ -23,8 +23,9 @@ def system_prompt():
 How to work:
 1. Translate the user's description into CPV codes, a two-letter country code if one is mentioned,
    and a value range if one is given. CPV codes are hierarchical: 2 digits = division (listed below),
-   3 = group, 4 = class, 5 = category. Use the most specific codes you are sure of, and the division
-   when unsure. Buyers code similar work differently, so search related codes together in one call
+   3 = group, 4 = class, 5 = category. When you are not sure which codes fit, call find_cpv_codes
+   with one to three English keywords first; prefer codes that many awards use. Use the most specific
+   codes you are sure of, and the division when unsure. Buyers code similar work differently, so search related codes together in one call
    (installation, equipment and service codes). Examples: network cabling -> 45314 (telecommunications
    installation), 3242 (network equipment) and 72 (IT services); software -> 48 and 72; office cleaning -> 9091;
    medical consumables -> 331; pharmaceuticals -> 336; road works -> 45233; catering -> 5552.

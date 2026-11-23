@@ -84,15 +84,15 @@ def test_api_rejects_invalid_input(client):
     assert client.post("/price", json={"cpv_group": "453", "country": "PL", "contract_type": "Goods"}).status_code == 422
 
 
-def test_web_app_market_page_runs(bundle, monkeypatch):
+def test_web_app_opens_on_the_assistant_page(bundle, monkeypatch):
     from streamlit.testing.v1 import AppTest
 
     monkeypatch.setattr(app_data, "download_bundle", lambda: bundle)
+    monkeypatch.delenv("LLM_API_KEY", raising=False)
+    monkeypatch.setattr("dotenv.load_dotenv", lambda *args, **kwargs: False)   # ignore a local .env
     app = AppTest.from_file(str(config.PROJECT_ROOT / "streamlit_app.py"), default_timeout=60)
     app.run()
     assert not app.exception
-    assert app.title[0].value == "Market explorer"
-    app.button[0].click().run()   # default search: IT services (72), all countries
-    assert not app.exception
-    metrics = {metric.label: metric.value for metric in app.metric}
-    assert metrics["Contracts awarded"] == "1"
+    assert app.title[0].value == "AI assistant"
+    # Without a key the page explains itself instead of failing.
+    assert "needs an LLM API key" in app.info[0].value

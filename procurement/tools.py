@@ -1,5 +1,6 @@
 """Tools the AI assistant can call. Every number in an answer comes from here.
 
+  find_cpv_codes  - official CPV codes matching keywords, with how often buyers use them
   search_market   - SQL over the 2021-2022 awards: size, buyers, competitors, prices
   estimate_price  - fair price model: expected award value and calibrated 80% range
   single_bid_risk - single-bid risk model: probability of receiving only one offer
@@ -8,6 +9,8 @@ The LLM chooses the arguments; this module checks them, runs the query or the
 model and returns plain dictionaries with numbers already formatted for display.
 """
 import json
+import math
+import re
 from functools import lru_cache
 
 import duckdb
@@ -49,6 +52,32 @@ def short_name(name, limit=80):
 
 
 # --- Argument checks ------------------------------------------------------------
+
+@lru_cache(maxsize=1)
+def cpv_code_names():
+    """Official CPV list as {8-digit code: English name}; the check digit ('-1') is dropped."""
+    table = pd.read_csv(config.CPV_CODES_PATH, dtype=str, encoding="utf-8-sig")
+    codes = table["CODE"].str.split("-").str[0]
+    return dict(zip(codes, table["EN"]))
+
+
+def search_prefix(code):
+    """'15810000' -> '1581': trailing zeros only pad the code, so the prefix selects the same awards."""
+    return code.rstrip("0").ljust(2, "0")
+
+
+def keyword_pattern(word):
+    """Regex for one keyword in a CPV name.
+
+    Long words are shortened so 'cabling' matches 'cable' and 'cleaning' matches 'clean',
+    and must start a word ('bread' matches 'Bread products', not 'Breakdown').
+    Words of up to 4 letters must match whole, plurals allowed ('bus' matches 'buses', not 'business').
+    """
+    if len(word) <= 4:
+        return re.compile(rf"\b{re.escape(word)}(es|s)?\b")
+    stem = word if len(word) <= 5 else word[:max(4, len(word) - 3)]
+    return re.compile(rf"\b{re.escape(stem)}")
+
 
 @lru_cache(maxsize=1)
 def cpv_division_names():
@@ -153,7 +182,55 @@ def search_market(connection, cpv_groups, country=None, min_value=None, max_valu
     return result
 
 
-# --- Tools 2 and 3: the models ---------------------------------------------------
+# --- Tool 2: CPV code lookup -------------------------------------------------------
+
+def find_cpv_codes(connection, keywords, limit=10):
+    """Official CPV codes whose English name matches the keywords, with their number of awards.
+
+    Codes are ranked by the keywords they match (rare words weigh more, like TF-IDF),
+    then by how many awards use them, so the codes buyers actually use come first.
+    """
+    patterns = [keyword_pattern(word) for word in re.findall(r"[a-z]{2,}", str(keywords).lower())]
+    if not patterns:
+        raise ToolError("Give one or more English keywords, e.g. 'bread' or 'network cabling'.")
+
+    names = {code: name.lower() for code, name in cpv_code_names().items()}
+    # Rare words say more than common ones: in "medical gloves", "gloves" should decide.
+    weights = []
+    for pattern in patterns:
+        matching = sum(pattern.search(name) is not None for name in names.values())
+        weights.append(math.log(len(names) / matching) if matching else 0.0)
+
+    candidates = []
+    for code, lowered in names.items():
+        score = sum(weight for pattern, weight in zip(patterns, weights) if pattern.search(lowered))
+        if score > 0:
+            candidates.append((score, search_prefix(code), cpv_code_names()[code]))
+    candidates.sort(key=lambda candidate: (-candidate[0], len(candidate[1])))
+    candidates = candidates[:50]
+    if not candidates:
+        return {"keywords": keywords, "codes": [], "note": "No CPV names match; try other or broader words."}
+
+    counts = dict(connection.execute(f"""
+        SELECT prefix, COUNT(*)
+        FROM ted_awards, UNNEST($prefixes) AS prefixes(prefix)
+        WHERE ted_awards.award_status = 'awarded'
+          AND YEAR(ted_awards.publication_date) BETWEEN {config.ASSISTANT_FIRST_YEAR} AND {config.ASSISTANT_LAST_YEAR}
+          AND starts_with(ted_awards.cpv_code, prefix)
+        GROUP BY prefix
+    """, {"prefixes": [prefix for _, prefix, _ in candidates]}).fetchall())
+
+    ranked = sorted(candidates, key=lambda candidate: (-round(candidate[0], 6), -counts.get(candidate[1], 0)))
+    return {
+        "keywords": keywords,
+        "codes": [
+            {"cpv_code": prefix, "name": name, "contracts_2021_2022": count(counts.get(prefix, 0))}
+            for _, prefix, name in ranked[:limit]
+        ],
+    }
+
+
+# --- Tools 3 and 4: the models ---------------------------------------------------
 
 @lru_cache(maxsize=None)
 def load_booster(file_name):
@@ -273,6 +350,15 @@ TENDER_PARAMETERS = {
 
 TOOL_SCHEMAS = [
     {"type": "function", "function": {
+        "name": "find_cpv_codes",
+        "description": "Look up official CPV codes by English keywords in their names (e.g. 'bread', 'cleaning', "
+                       "'telecommunications installation'). Returns codes, names and how many 2021-2022 awards use "
+                       "each code. Use it before searching when you are not sure which codes fit.",
+        "parameters": {"type": "object", "required": ["keywords"], "properties": {
+            "keywords": {"type": "string", "description": "One to three English words describing the product or service."},
+        }},
+    }},
+    {"type": "function", "function": {
         "name": "search_market",
         "description": "Summarise a public procurement market from 2021-2022 EU contract awards: number of contracts, "
                        "top buyers, top winning companies, typical award values, single-bid rate and SME win share.",
@@ -301,6 +387,7 @@ TOOL_SCHEMAS = [
 ]
 
 TOOLS = {
+    "find_cpv_codes": find_cpv_codes,
     "search_market": search_market,
     "estimate_price": estimate_price,
     "single_bid_risk": single_bid_risk,
