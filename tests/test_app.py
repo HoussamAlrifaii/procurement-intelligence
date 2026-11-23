@@ -84,7 +84,17 @@ def test_api_rejects_invalid_input(client):
     assert client.post("/price", json={"cpv_group": "453", "country": "PL", "contract_type": "Goods"}).status_code == 422
 
 
-def test_web_app_opens_on_the_assistant_page(bundle, monkeypatch):
+def test_web_app_opens_on_the_home_page(bundle, monkeypatch):
+    from streamlit.testing.v1 import AppTest
+
+    monkeypatch.setattr(app_data, "download_bundle", lambda: bundle)
+    app = AppTest.from_file(str(config.PROJECT_ROOT / "streamlit_app.py"), default_timeout=60)
+    app.run()
+    assert not app.exception
+    assert app.title[0].value == "🔍 TenderLens"
+
+
+def test_assistant_page_without_a_key_explains_itself(bundle, monkeypatch):
     from streamlit.testing.v1 import AppTest
 
     monkeypatch.setattr(app_data, "download_bundle", lambda: bundle)
@@ -92,6 +102,7 @@ def test_web_app_opens_on_the_assistant_page(bundle, monkeypatch):
     monkeypatch.setattr("dotenv.load_dotenv", lambda *args, **kwargs: False)   # ignore a local .env
     app = AppTest.from_file(str(config.PROJECT_ROOT / "streamlit_app.py"), default_timeout=60)
     app.run()
+    app.switch_page("app_pages/assistant.py").run()
     assert not app.exception
     assert app.title[0].value == "AI assistant"
     # Without a key the page explains itself instead of failing.
@@ -110,9 +121,36 @@ def test_each_assistant_question_is_answered_on_the_first_send(bundle, monkeypat
 
     app = AppTest.from_file(str(config.PROJECT_ROOT / "streamlit_app.py"), default_timeout=60)
     app.run()
+    app.switch_page("app_pages/assistant.py").run()
     app.chat_input[0].set_value("first question").run()
     app.chat_input[0].set_value("second question").run()
 
     shown = [message.markdown[0].value for message in app.chat_message]
     assert shown == ["first question", "Answer: first question", "second question", "Answer: second question"]
     assert any("8 of 10 questions left" in caption.value for caption in app.caption)
+
+
+def test_every_page_opens_without_errors(bundle, monkeypatch):
+    from streamlit.testing.v1 import AppTest
+
+    monkeypatch.setattr(app_data, "download_bundle", lambda: bundle)
+    app = AppTest.from_file(str(config.PROJECT_ROOT / "streamlit_app.py"), default_timeout=60)
+    app.run()
+    for page in ["market", "tender", "cpv", "assistant", "home"]:
+        app.switch_page(f"app_pages/{page}.py").run()
+        assert not app.exception, page
+
+
+def test_market_page_searches_sectors_and_codes_together(bundle, monkeypatch):
+    from streamlit.testing.v1 import AppTest
+
+    monkeypatch.setattr(app_data, "download_bundle", lambda: bundle)
+    app = AppTest.from_file(str(config.PROJECT_ROOT / "streamlit_app.py"), default_timeout=60)
+    app.run()
+    app.switch_page("app_pages/market.py").run()
+    app.multiselect[0].set_value([])
+    app.button[0].click().run()
+    assert "Choose at least one sector" in app.warning[0].value
+    app.text_input[0].set_value("45314")
+    app.button[0].click().run()
+    assert {metric.label: metric.value for metric in app.metric}["Contracts awarded"] == "2"
