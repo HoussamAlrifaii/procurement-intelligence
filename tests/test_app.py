@@ -96,3 +96,23 @@ def test_web_app_opens_on_the_assistant_page(bundle, monkeypatch):
     assert app.title[0].value == "AI assistant"
     # Without a key the page explains itself instead of failing.
     assert "needs an LLM API key" in app.info[0].value
+
+
+def test_each_assistant_question_is_answered_on_the_first_send(bundle, monkeypatch):
+    from streamlit.testing.v1 import AppTest
+
+    from procurement.llm import LLM, Reply
+
+    monkeypatch.setattr(app_data, "download_bundle", lambda: bundle)
+    monkeypatch.setenv("LLM_API_KEY", "test-key")
+    monkeypatch.setattr(LLM, "__init__", lambda self: None)
+    monkeypatch.setattr(LLM, "__call__", lambda self, messages, schemas: Reply(content="Answer: " + messages[-1]["content"]))
+
+    app = AppTest.from_file(str(config.PROJECT_ROOT / "streamlit_app.py"), default_timeout=60)
+    app.run()
+    app.chat_input[0].set_value("first question").run()
+    app.chat_input[0].set_value("second question").run()
+
+    shown = [message.markdown[0].value for message in app.chat_message]
+    assert shown == ["first question", "Answer: first question", "second question", "Answer: second question"]
+    assert any("8 of 10 questions left" in caption.value for caption in app.caption)

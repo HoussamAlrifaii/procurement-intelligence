@@ -280,8 +280,11 @@ def assistant():
         for index, text in enumerate(EXAMPLES):
             if st.button(text, key=f"example-{index}"):
                 example = text
-    question = st.chat_input(f"Describe your company or tender ({questions_left} questions left)") or example
+    # The placeholder must stay the same on every run: Streamlit identifies a widget by its
+    # parameters, so a changing text (e.g. a counter) would create a new box and drop the question.
+    question = st.chat_input("Describe your company or a tender") or example
     if not question:
+        st.caption(f"{questions_left} of {config.APP_MAX_QUESTIONS} questions left in this session.")
         return
 
     history.append({"role": "user", "content": question})
@@ -298,6 +301,7 @@ def assistant():
         st.markdown(result["answer"])
         show_tool_calls(result["tool_calls"])
     history.append({"role": "assistant", "content": result["answer"], "tool_calls": result["tool_calls"]})
+    st.caption(f"{questions_left - 1} of {config.APP_MAX_QUESTIONS} questions left in this session.")
 
 
 # --- Navigation -------------------------------------------------------------------
