@@ -2,7 +2,7 @@
   {
     "id": "network-installer-pl",
     "question": "We are a 20-person IT company in Poland. We install computer networks and structured cabling. Our projects are usually EUR 50k-500k.",
-    "answer": "**Poland – IT services & telecom‑equipment market (CPV 3242, 453, 72)**  \n*EU contract awards 2021‑2022, project values €50 k‑€500 k*\n\n- **Contracts awarded:** 1,282 (1,025 tenders)  \n- **Typical award value:** €188 654 (range €69 436 – €396 974)  \n- **Single‑bid rate:** 52.3 % – more than half of the contracts received only one offer.  \n- **SME win share:** 72.1 % – SMEs capture the majority of awards.  \n- **Top buyers:**  \n  1. Centrum e‑Zdrowia (30 contracts, avg. €164 865)  \n  2. Zakład Gospodarki Mieszkaniowej (29 contracts, avg. €179 894)  \n  3. Instytut Ekonomiki Rolnictwa i Gospodarki Żywnościowej – PIB (28 contracts, avg. €133 641)  \n  4. Miasto Stołeczne Warszawa (28 contracts, avg. €236 069)  \n  5. Komenda Główna Policji (24 contracts, avg. €206 299)  \n- **Top winning firms (SMEs):** Asseco Poland, IT Solution Factor, ALBA Facility Management, CompuGroup Medical Polska, Exatel.\n\n**Practical tip** – Because more than half of the tenders are single‑bid, increase your chances by monitoring procurement portals for “open‑procedure” notices (especially from the top public buyers listed) and submit early, well‑structured offers that highlight your 20‑person team’s agility and specialised cabling expertise. This can help you win the SME‑friendly contracts that dominate the market.",
+    "answer": "**Poland – IT company (20 people) – Structured‑cabling & network‑installation market**  \n*Data: EU contract awards 2021‑2022, filtered to €50 k – €500 k, CPV 453 (Construction work) – the most relevant code after no matches were found for the narrower installation codes (45314, 453143, 4531432).*\n\n**Key market figures**\n\n- **Contracts awarded:** 126 (75 tenders, 32 buyers)  \n- **Typical award value:** €134 536  \n- **Usual value range:** €78 079 – €372 265  \n- **Single‑bid rate:** 11.4 % (low risk of receiving only one offer)  \n- **SME win share:** 84.9 % (SMEs dominate this segment)  \n\n**Top Polish buyers (most contracts)**  \n\n1. Zakład Gospodarki Mieszkaniowej – 29 contracts (avg. €179 894)  \n2. Wrocławskie Mieszkania Sp. z o.o. (on behalf of Gmina Wrocław) – 18 contracts (avg. €114 179)  \n3. Generalna Dyrekcja Dróg Krajowych i Autostrad – 17 contracts (avg. €84 334)  \n\n**Top winning companies (SMEs)**  \n\n- ALBA Facility Management Sp. z o.o. – 17 contracts (SME)  \n- Termal Siwarski Wojciech – 11 contracts (SME)  \n- INQUBATOR Sp. z o.o. – 10 contracts (SME)  \n\n**Practical suggestion**  \nBecause the market is highly SME‑friendly and the single‑bid risk is modest, focus on **regional public housing authorities and municipal bodies** (the top buyers). Tailor your bid to the €80 k‑€350 k range, highlight your small‑company agility and local support, and consider teaming with a complementary SME (e.g., a specialist in low‑voltage electrical work) to broaden your offering and increase win probability.",
     "tool_calls": [
       {
         "name": "find_cpv_codes",
@@ -66,123 +66,136 @@
         }
       },
       {
-        "name": "search_market",
+        "name": "find_cpv_codes",
         "arguments": {
-          "country": "PL",
-          "cpv_groups": [
-            "4531432",
-            "453143"
-          ],
-          "max_value": 500000,
-          "min_value": 50000
+          "keywords": "telecommunications installation"
         },
         "result": {
-          "period": "2021-2022",
-          "filters": {
-            "cpv_codes": [
-              "45314"
-            ],
-            "country": "PL",
-            "min_value": 50000,
-            "max_value": 500000
-          },
-          "cpv_divisions": {
-            "45314": "Construction work"
-          },
-          "contracts_awarded": "0",
-          "tenders": "0",
-          "buyers": "0",
-          "winning_companies": "0",
-          "typical_award_value": "not available",
-          "usual_value_range": "not available",
-          "single_bid_rate": "not available",
-          "share_won_by_smes": "not available",
-          "top_buyers": [],
-          "top_winners": [],
-          "note": "Only 0 awards match. Search again with related or broader codes (e.g. equipment and service codes next to installation codes) or wider filters."
-        }
-      },
-      {
-        "name": "search_market",
-        "arguments": {
-          "country": "PL",
-          "cpv_groups": [
-            "4531432",
-            "453143"
-          ],
-          "max_value": 500000,
-          "min_value": 50000
-        },
-        "result": {
-          "period": "2021-2022",
-          "filters": {
-            "cpv_codes": [
-              "45314"
-            ],
-            "country": "PL",
-            "min_value": 50000,
-            "max_value": 500000
-          },
-          "cpv_divisions": {
-            "45314": "Construction work"
-          },
-          "contracts_awarded": "0",
-          "tenders": "0",
-          "buyers": "0",
-          "winning_companies": "0",
-          "typical_award_value": "not available",
-          "usual_value_range": "not available",
-          "single_bid_rate": "not available",
-          "share_won_by_smes": "not available",
-          "top_buyers": [],
-          "top_winners": [],
-          "note": "Only 0 awards match. Search again with related or broader codes (e.g. equipment and service codes next to installation codes) or wider filters."
-        }
-      },
-      {
-        "name": "search_market",
-        "arguments": {
-          "country": "PL",
-          "cpv_groups": [
-            "453",
-            "3242",
-            "72"
-          ],
-          "max_value": 500000,
-          "min_value": 50000
-        },
-        "result": {
-          "period": "2021-2022",
-          "filters": {
-            "cpv_codes": [
-              "3242",
-              "453",
-              "72"
-            ],
-            "country": "PL",
-            "min_value": 50000,
-            "max_value": 500000
-          },
-          "cpv_divisions": {
-            "3242": "Radio, television, communication and telecommunications equipment",
-            "453": "Construction work",
-            "72": "IT services: consulting, software development, Internet and support"
-          },
-          "contracts_awarded": "1,282",
-          "tenders": "1,025",
-          "buyers": "425",
-          "winning_companies": "646",
-          "typical_award_value": "EUR 188,654",
-          "usual_value_range": "EUR 69,436 to EUR 396,974",
-          "single_bid_rate": "52.3%",
-          "share_won_by_smes": "72.1%",
-          "top_buyers": [
+          "keywords": "telecommunications installation",
+          "codes": [
             {
-              "buyer": "Centrum e-Zdrowia",
-              "country": "PL",
-              "contracts": "30",
-              "typical_value": "EUR 164,865"
+              "cpv_code": "45314",
+              "name": "Installation of telecommunications equipment",
+              "contracts_2021_2022": "403"
             },
+            {
+              "cpv_code": "32",
+              "name": "Radio, television, communication, telecommunication and related equipment",
+              "contracts_2021_2022": "9,326"
+            },
+            {
+              "cpv_code": "64",
+              "name": "Postal and telecommunications services",
+              "contracts_2021_2022": "8,213"
+            },
+            {
+              "cpv_code": "642",
+              "name": "Telecommunications services",
+              "contracts_2021_2022": "5,709"
+            },
+            {
+              "cpv_code": "503",
+              "name": "Repair, maintenance and associated services related to personal computers, office equipment, telecommunications and audio-visual equipment",
+              "contracts_2021_2022": "4,029"
+            },
+            {
+              "cpv_code": "325",
+              "name": "Telecommunications equipment and supplies",
+              "contracts_2021_2022": "1,554"
+            },
+            {
+              "cpv_code": "6422",
+              "name": "Telecommunication services except telephone and data transmission services",
+              "contracts_2021_2022": "521"
+            },
+            {
+              "cpv_code": "5033",
+              "name": "Maintenance services of telecommunications equipment",
+              "contracts_2021_2022": "508"
+            },
+            {
+              "cpv_code": "3252",
+              "name": "Telecommunications cable and equipment",
+              "contracts_2021_2022": "222"
+            },
+            {
+              "cpv_code": "50332",
+              "name": "Telecommunications-infrastructure maintenance services",
+              "contracts_2021_2022": "117"
+            }
+          ]
+        }
+      },
+      {
+        "name": "search_market",
+        "arguments": {
+          "country": "PL",
+          "cpv_groups": [
+            "4531432",
+            "453143",
+            "45314"
+          ],
+          "max_value": 500000,
+          "min_value": 50000
+        },
+        "result": {
+          "period": "2021-2022",
+          "filters": {
+            "cpv_codes": [
+              "45314"
+            ],
+            "country": "PL",
+            "min_value": 50000,
+            "max_value": 500000
+          },
+          "cpv_divisions": {
+            "45314": "Construction work"
+          },
+          "contracts_awarded": "0",
+          "tenders": "0",
+          "buyers": "0",
+          "winning_companies": "0",
+          "typical_award_value": "not available",
+          "usual_value_range": "not available",
+          "single_bid_rate": "not available",
+          "share_won_by_smes": "not available",
+          "top_buyers": [],
+          "top_winners": [],
+          "note": "Only 0 awards match. Search again with related or broader codes (e.g. equipment and service codes next to installation codes) or wider filters."
+        }
+      },
+      {
+        "name": "search_market",
+        "arguments": {
+          "country": "PL",
+          "cpv_groups": [
+            "453"
+          ],
+          "max_value": 500000,
+          "min_value": 50000
+        },
+        "result": {
+          "period": "2021-2022",
+          "filters": {
+            "cpv_codes": [
+              "453"
+            ],
+            "country": "PL",
+            "min_value": 50000,
+            "max_value": 500000
+          },
+          "cpv_divisions": {
+            "453": "Construction work"
+          },
+          "contracts_awarded": "126",
+          "tenders": "75",
+          "buyers": "32",
+          "winning_companies": "55",
+          "typical_award_value": "EUR 134,536",
+          "usual_value_range": "EUR 78,079 to EUR 372,265",
+          "single_bid_rate": "11.4%",
+          "share_won_by_smes": "84.9%",
+          "top_buyers": [
             {
               "buyer": "Zakład Gospodarki Mieszkaniowej",
               "country": "PL",
@@ -190,37 +203,31 @@
               "typical_value": "EUR 179,894"
             },
             {
-              "buyer": "Instytut Ekonomiki Rolnictwa i Gospodarki Żywnościowej - PIB",
+              "buyer": "Wrocławskie Mieszkania Sp. z o.o. dzialająca w imieniu Gminy Wrocław",
               "country": "PL",
-              "contracts": "28",
-              "typical_value": "EUR 133,641"
+              "contracts": "18",
+              "typical_value": "EUR 114,179"
             },
             {
-              "buyer": "Miasto Stołeczne Warszawa",
+              "buyer": "Generalna Dyrekcja Dróg Krajowych i Autostrad ul. Wronia 53, 00-874 Warszawa, Pr...",
               "country": "PL",
-              "contracts": "28",
-              "typical_value": "EUR 236,069"
+              "contracts": "17",
+              "typical_value": "EUR 84,334"
             },
             {
-              "buyer": "Komenda Główna Policji",
+              "buyer": "Wrocławskie Mieszkania Sp. z o.o. działająca w imieniu Gminy Wrocław",
               "country": "PL",
-              "contracts": "24",
-              "typical_value": "EUR 206,299"
+              "contracts": "13",
+              "typical_value": "EUR 109,818"
+            },
+            {
+              "buyer": "Zarząd Zasobu Komunalnego Jednostka Budżetowa Gminy Wrocław",
+              "country": "PL",
+              "contracts": "7",
+              "typical_value": "EUR 88,729"
             }
           ],
           "top_winners": [
-            {
-              "company": "Asseco Poland S.A.",
-              "country": "PL",
-              "contracts": "26",
-              "sme": true
-            },
-            {
-              "company": "IT Solution Factor sp. z o.o.",
-              "country": "PL",
-              "contracts": "20",
-              "sme": true
-            },
             {
               "company": "ALBA Facility Management Sp. z o.o.",
               "country": "PL",
@@ -228,15 +235,27 @@
               "sme": true
             },
             {
-              "company": "CompuGroup Medical Polska Sp. z o.o.",
+              "company": "Termal Siwarski Wojciech",
               "country": "PL",
-              "contracts": "15",
+              "contracts": "11",
               "sme": true
             },
             {
-              "company": "Exatel S.A.",
+              "company": "INQUBATOR SP. Z O.O.",
               "country": "PL",
-              "contracts": "13",
+              "contracts": "10",
+              "sme": true
+            },
+            {
+              "company": "Ekon sp. z o.o.",
+              "country": "PL",
+              "contracts": "7",
+              "sme": false
+            },
+            {
+              "company": "PPUH „Ginek\", Grzegorz Oślizło",
+              "country": "PL",
+              "contracts": "5",
               "sme": true
             }
           ]
@@ -247,7 +266,7 @@
   {
     "id": "bakery-si",
     "question": "Small family bakery in Slovenia, we deliver bread and pastries. Which public buyers could we supply?",
-    "answer": "**Market snapshot (EU public‑procurement data 2021‑2022)**  \n- **CPV searched:** 1581 *Bread products, fresh pastry goods and cakes*  \n- **Country:** SI (Slovenia)  \n- **Awards found:** 3 contracts (2 buyers, 2 winning firms)  \n- **Single‑bid rate:** 0 % (all contracts received competition)  \n- **SME win share:** 100 % (both winners are small enterprises)  \n\n**Top public buyers for bread & pastry supplies**  \n- **Osnovna šola Polzela** – 2 contracts, typical value ≈ €49 k each  \n- **Osnovna šola Zbora odposlancev, Kočevje** – 1 contract, typical value ≈ €235 k  \n\n**What this means for your bakery**  \n- Schools are the most active public buyers of fresh bakery products in Slovenia.  \n- Contracts are modest‑to‑mid size (tens to a few hundred thousand euros).  \n- Competition is present but SMEs win all recorded awards, so a well‑positioned family bakery can be competitive.\n\n**Practical next step**  \n- Register on the Slovenian public‑procurement portal (eTendering) and set up alerts for CPV 1581 and for the buyer categories “schools” and “municipal catering”.  \n- Prepare a simple tender file (price list, nutritional info, delivery schedule) and reach out directly to the procurement offices of the two schools above to express interest and learn about upcoming tenders.  \n\n*Data covers EU contract awards 2021‑2022; no other public buyers were identified for this CPV code in Slovenia.*",
+    "answer": "**Market snapshot (EU public‑procurement data 2021‑2022)**  \n- **CPV searched:** 1581 *Bread products, fresh pastry goods and cakes*  \n- **Country:** SI (Slovenia)  \n- **Awards found:** 3 contracts (2 tenders) from 2 public buyers  \n- **Single‑bid rate:** 0 % (all contracts received competition)  \n- **SME win share:** 100 % (both winners are SMEs)  \n\n**Top public buyers for bread & pastry supplies**\n\n| Buyer (Slovenia) | Contracts won | Typical contract value |\n|------------------|--------------|------------------------|\n| Osnovna šola Polzela (primary school) | 2 | € 49,076 |\n| Osnovna šola Zbora odposlancev, Kočevje (primary school) | 1 | € 234,813 |\n\n**What this means for your bakery**  \n- The only public buyers that have awarded contracts for fresh bread and pastries in the last two years are **primary schools**.  \n- Contract values range from roughly **€ 50 k to € 235 k**, indicating both regular supply (smaller contracts) and occasional larger catering orders.  \n\n**Practical next step**  \n- **Contact the procurement offices of local primary schools and municipal education departments** (e.g., Polzela, Kočevje) to register as a potential supplier and request to be added to their vendor lists. Offer sample products and highlight your capacity to meet both routine daily deliveries and larger event‑catering needs.",
     "tool_calls": [
       {
         "name": "find_cpv_codes",
@@ -375,7 +394,7 @@
   {
     "id": "medical-supplies-ro",
     "question": "We distribute medical consumables such as gloves, syringes and bandages in Romania.",
-    "answer": "**Market snapshot for medical consumables in Romania (CPV 3314)**  \n*EU contract awards 2021‑2022*\n\n- **Contracts awarded:** 28,312  \n- **Typical award value:** €2,540 (range €244 – €53,724)  \n- **Single‑bid rate:** 17.1 %  \n- **SME win share:** 60.8 %  \n\n**Top Romanian buyers** (by number of contracts)  \n- Institutul Oncologic „Prof. Dr. I. Chiricuță”, Cluj‑Napoca – 1,991 contracts, avg. €1,373  \n- Spitalul Universitar de Urgență Militar Central “Dr. Carol Davila” – 1,951 contracts, avg. €7,823  \n- SPITALUL JUDEȚEAN SATU MARE – 1,473 contracts, avg. €1,604  \n- Institutul de Boli Infecțioase „Prof. Dr. Matei Balș” – 1,281 contracts, avg. €1,788  \n- SPITALUL JUDEȚEAN DE URGENȚĂ VÂLCEA – 1,120 contracts, avg. €2,063  \n\n**Top winning companies** (by contracts)  \n- CRIO‑2 S.R.L. (SME) – 1,514 contracts  \n- B. BRAUN MEDICAL (SME) – 1,052 contracts  \n- VALDOMEDICA TRADING (SME) – 876 contracts  \n- TZMO ROMANIA (SME) – 750 contracts  \n- ALPHA NED 2000 EXIM (SME) – 748 contracts  \n\n**Practical tip** – Because the single‑bid rate is modest (≈ 17 %) and SMEs win over 60 % of contracts, focus on building relationships with the top public hospitals and oncology institutes; offering competitive, well‑documented price‑quality proposals will give you a good chance to win multiple small‑to‑mid‑size tenders.",
+    "answer": "**Market snapshot – medical consumables (CPV 3314) in Romania (EU awards 2021‑2022)**  \n\n- **Contracts awarded:** 28,312  \n- **Tenders published:** 3,110  \n- **Typical award value:** €2,540 (range €244 – €53,724)  \n- **Single‑bid rate:** 17.1 %  \n- **SME win share:** 60.8 %  \n\n**Top buyers** (most contracts)  \n- Institutul Oncologic „Prof. Dr. I. Chiricuță”, Cluj‑Napoca – €1,373 avg.  \n- Spitalul Universitar de Urgență Militar Central “Dr. Carol Davila” – €7,823 avg.  \n- SPITALUL JUDEȚEAN SATU MARE – €1,604 avg.  \n- Institutul de Boli Infecțioase „Prof. Dr. Matei Balș” – €1,788 avg.  \n- SPITALUL JUDEȚEAN DE URGENȚĂ VÂLCEA – €2,063 avg.  \n\n**Top winning companies** (most contracts)  \n- CRIO‑2 S.R.L. (SME) – 1,514 contracts  \n- B. BRAUN MEDICAL (SME) – 1,052 contracts  \n- VALDOMEDICA TRADING (SME) – 876 contracts  \n- TZMO ROMANIA (SME) – 750 contracts  \n- ALPHA NED 2000 EXIM (SME) – 748 contracts  \n\n**Practical tip** – Because the single‑bid rate is modest (≈ 17 %) and SMEs win > 60 % of contracts, positioning your firm as an SME‑friendly, reliable supplier and targeting the major public hospitals listed above can give you good chances of winning medium‑size tenders (≈ €2‑8 k).",
     "tool_calls": [
       {
         "name": "find_cpv_codes",
@@ -444,7 +463,9 @@
           "country": "RO",
           "cpv_groups": [
             "3314"
-          ]
+          ],
+          "max_value": null,
+          "min_value": null
         },
         "result": {
           "period": "2021-2022",
@@ -538,7 +559,7 @@
   {
     "id": "software-de",
     "question": "German software company building custom web applications and doing IT consulting for the public sector.",
-    "answer": "**German public‑sector market for software packages & IT consulting (CPV 48 & 72)** – EU contract awards 2021‑2022  \n\n- **Contracts awarded:** 7,686 (5,705 tenders)  \n- **Typical award value:** €336,385 (range €60 k – €2.07 m)  \n- **Single‑bid rate:** 27.8 % (risk of only one offer)  \n- **SME win share:** 49.1 %  \n\n**Top buyers** (DE)  \n- BWI GmbH – 584 contracts (avg. €472,800)  \n- EnBW Energie Baden‑Württemberg AG – 153 contracts  \n- Bundesrepublik Deutschland – Beschaffungsamt BMI – 139 contracts (avg. €1.44 m)  \n- ITZBund – 121 contracts  \n- Land Hessen – Hessische Zentrale für Datenverarbeitung – 118 contracts (avg. €3.73 m)  \n\n**Top winning firms** (DE)  \n- SVA System Vertrieb Alexander GmbH (131 contracts)  \n- Bechtle GmbH & Co. KG (108)  \n- Hays AG (91)  \n- SoftwareONE Deutschland GmbH (88)  \n- Fujitsu Technology Solutions GmbH (81)  \n\n**Practical tip**  \nBecause more than a quarter of awards are single‑bid, strengthen pre‑qualification dossiers and highlight any niche expertise (e.g., security‑by‑design web apps) to stand out in competitive lots and improve win chances against larger incumbents.",
+    "answer": "**German public‑sector market for software packages (CPV 48) and IT consulting/services (CPV 72)** – EU contract awards 2021‑2022  \n\n- **Scope searched:** CPV 48 + 72, buyer country DE (Germany)  \n- **Activity level:** 7,686 contracts (5,705 tenders) awarded to 2,921 firms  \n- **Typical award size:** €336 k (range €60 k – €2.07 M)  \n- **Single‑bid risk:** 27.8 % of awards received only one offer  \n- **SME success:** 49.1 % of contracts won by small‑ and medium‑sized enterprises  \n\n**Top German buyers** (most contracts)  \n- BWI GmbH – 584 contracts (typical value €473 k)  \n- EnBW Energie Baden‑Württemberg AG – 153 contracts  \n- Bundesrepublik Deutschland – Beschaffungsamt BMI – 139 contracts (typical value €1.44 M)  \n- ITZBund – 121 contracts  \n- Land Hessen – Hessische Zentrale für Datenverarbeitung – 118 contracts (typical value €3.73 M)  \n\n**Leading suppliers** (most contracts)  \n- SVA System Vertrieb Alexander GmbH (131 contracts)  \n- Bechtle GmbH & Co. KG (108)  \n- Hays AG (91)  \n- SoftwareONE Deutschland GmbH (88)  \n- Fujitsu Technology Solutions GmbH (81)  \n\n**Practical tip**  \nBecause over a quarter of awards are single‑bid, positioning your firm as a specialist niche provider (e.g., custom web‑app frameworks or sector‑specific integration) and actively networking with the top buyers listed above can increase your chances of being invited to negotiate directly, reducing competition and improving win rates.",
     "tool_calls": [
       {
         "name": "search_market",
@@ -643,7 +664,7 @@
   {
     "id": "cleaning-fr",
     "question": "Nous sommes une entreprise de nettoyage de bureaux à Lyon, 40 salariés.",
-    "answer": "**Market snapshot for office‑cleaning services (CPV 9091) in France – EU awards 2021‑2022**\n\n- **Scope**: 4,630 contracts (1,641 tenders) awarded to 1,396 firms.  \n- **Typical contract size**: €118 k (range €11 k – €960 k).  \n- **Single‑bid rate**: 10.7 % (low competition risk).  \n- **SME win share**: 38.5 % of contracts go to small‑medium enterprises.  \n- **Top public buyers**: Aquitanis, SA HLM Erilia, Haute‑Savoie Habitat, Mesolia (33), Université de Lorraine.  \n- **Leading winners**: onet Services (165 contracts), derichebourg proprete (136), atalian proprete (74), derichebourg (47), ABER PROPRETE (45) – all SMEs.\n\n**Practical tip**  \nTarget the regional housing‑authority buyers (e.g., Aquitanis, SA HLM Erilia) where contract values are modest and SME participation is high; tailor bids to the typical €100‑200 k range to improve win chances.",
+    "answer": "**Market snapshot – Office‑cleaning services (CPV 9091) in France**  \n*EU contract awards 2021‑2022*\n\n- **4 630 contracts** awarded to **1 396 different firms** (38.5 % won by SMEs).  \n- **Typical award value:** €118 330 (range €11 519 – €960 000).  \n- **Single‑bid rate:** 10.7 % (low risk of only one offer).  \n- **Top French buyers:** Aquitanis, SA HLM Erilia, Haute‑Savoie Habitat, Mesolia (33), Université de Lorraine.  \n- **Leading winners:** onet Services (165 contracts), derichebourg proprete (136), atalian proprete (74), derichebourg (47), ABER PROPRETE (45).\n\n**Practical tip:** Leverage the strong SME presence and modest single‑bid risk by positioning your 40‑person firm as a specialist local provider; target mid‑size public bodies (e.g., regional housing agencies) that regularly award contracts in the €50‑200 k range.",
     "tool_calls": [
       {
         "name": "search_market",
@@ -745,69 +766,8 @@
   {
     "id": "road-works-cz",
     "question": "Czech construction firm specialised in road resurfacing and asphalt works.",
-    "answer": "**Market snapshot – Czech Republic, road‑resurfacing & asphalt works (CPV 45233)**  \n*EU contract awards 2021‑2022*\n\n- **Contracts awarded:** 1,677 (across 1,021 tenders)  \n- **Typical award value:** €76,456 (range €1,950 – €1,595,616)  \n- **Single‑bid rate:** 41.1 % – a high risk of only one offer per tender  \n- **SME win share:** 38.3 %  \n\n**Top buyers** (most contracts)  \n- Ředitelství silnic a dálnic ČR – 834 contracts (typical €13,865)  \n- Technická správa komunikací hl. m. Prahy, a.s. – 427 contracts (typical €85,881)  \n- město Příbram – 165 contracts (typical €29,005)  \n\n**Top winning firms** (most contracts)  \n- Značky Morava, a.s. – 370 contracts (SME)  \n- DAP a.s. – 172 contracts (SME)  \n- EUROVIA CS, a.s. – 155 contracts (SME)  \n\n**Practical tip**  \nBecause more than 40 % of tenders end with a single bid, strengthen your bid‑winning chances by:  \n\n- **Pre‑qualifying early** for the major road‑authority buyers (e.g., Ředitelství silnic a dálnic ČR) and maintaining up‑to‑date certifications, so you can be listed as an approved contractor before the tender is published. This reduces the “first‑come‑first‑served” advantage that often leads to single‑bid awards.",
+    "answer": "**Market snapshot – Czech Republic, CPV 45233 (road resurfacing & asphalt works)**  \n*EU contract awards 2021‑2022*\n\n- **Contracts awarded:** 1,677 (1,021 tenders)  \n- **Typical award value:** €76,456 (range €1,950 – €1,595,616)  \n- **Single‑bid rate:** 41.1 % – a high share of contracts receive only one offer.  \n- **SME win share:** 38.3 % – SMEs capture a solid portion of the market.  \n\n**Top buyers** (by number of contracts)  \n- Ředitelství silnic a dálnic ČR – 834 contracts (typical value €13,865)  \n- Technická správa komunikací hl. m. Prahy, a.s. – 427 contracts (typical value €85,881)  \n- město Příbram – 165 contracts (typical value €29,005)  \n\n**Top winning firms**  \n- Značky Morava, a.s. – 370 contracts (SME)  \n- DAP a.s. – 172 contracts (SME)  \n- EUROVIA CS, a.s. – 155 contracts (SME)  \n- INPROS Praha a.s. – 116 contracts (non‑SME)  \n- STRABAG a.s. – 99 contracts (SME)  \n\n**Practical tip** – Because more than 40 % of awards are single‑bid, positioning your firm as a reliable, pre‑qualified supplier (e.g., obtaining the Czech “Zelená karta” or similar framework agreements) can dramatically increase win chances, especially with the major buyers listed above.",
     "tool_calls": [
-      {
-        "name": "find_cpv_codes",
-        "arguments": {
-          "keywords": "road resurfacing"
-        },
-        "result": {
-          "keywords": "road resurfacing",
-          "codes": [
-            {
-              "cpv_code": "45233223",
-              "name": "Carriageway resurfacing works",
-              "contracts_2021_2022": "116"
-            },
-            {
-              "cpv_code": "45233251",
-              "name": "Resurfacing works",
-              "contracts_2021_2022": "30"
-            },
-            {
-              "cpv_code": "4523521",
-              "name": "Runway resurfacing",
-              "contracts_2021_2022": "9"
-            },
-            {
-              "cpv_code": "601",
-              "name": "Road transport services",
-              "contracts_2021_2022": "30,163"
-            },
-            {
-              "cpv_code": "4523",
-              "name": "Construction work for pipelines, communication and power lines, for highways, roads, airfields and railways; flatwork",
-              "contracts_2021_2022": "26,813"
-            },
-            {
-              "cpv_code": "45233",
-              "name": "Construction, foundation and surface works for highways, roads",
-              "contracts_2021_2022": "12,844"
-            },
-            {
-              "cpv_code": "6013",
-              "name": "Special-purpose road passenger-transport services",
-              "contracts_2021_2022": "12,703"
-            },
-            {
-              "cpv_code": "452331",
-              "name": "Construction work for highways, roads",
-              "contracts_2021_2022": "9,659"
-            },
-            {
-              "cpv_code": "502",
-              "name": "Repair, maintenance and associated services related to aircraft, railways, roads and marine equipment",
-              "contracts_2021_2022": "6,266"
-            },
-            {
-              "cpv_code": "60112",
-              "name": "Public road transport services",
-              "contracts_2021_2022": "4,648"
-            }
-          ]
-        }
-      },
       {
         "name": "search_market",
         "arguments": {
@@ -908,7 +868,7 @@
   {
     "id": "catering-it",
     "question": "We run a catering company in Italy serving school canteens.",
-    "answer": "**Market snapshot – school‑catering services in Italy (CPV 5552, 2021‑2022 EU awards)**  \n\n- **Contracts awarded:** 392 (279 tenders)  \n- **Typical award value:** ≈ €1.28 million (range €257 k – €6.84 million)  \n- **Single‑bid rate:** 28.2 % – over a quarter of contracts received only one offer.  \n- **SME win share:** 18.4 % – SMEs capture less than one‑fifth of the business.  \n- **Top buyers:**  \n  * Provincia di Treviso – 44 contracts (avg. €433 k)  \n  * Roma Capitale – 15 contracts (avg. €40.8 million)  \n  * Provincia di Brescia – 11 contracts (avg. €525 k)  \n  * Gemeinde Meran – 10 contracts (avg. €416 k)  \n  * Provincia di Monza e della Brianza – 10 contracts (avg. €1.52 million)  \n- **Top winning companies:** Dussmann Service SRL (31 contracts), Sodexo Italia SPA (28 contracts), Euroristorazione SRL (27 contracts), CAMST Soc. Coop. a r.l. (17 contracts), CIRFOOD S.C. (16 contracts).\n\n**Practical tip** – Because more than a quarter of awards are single‑bid, positioning your firm as a reliable, pre‑qualified supplier (e.g., obtaining the “SME‑preferred” status or joining a consortium) can increase your chances of winning, especially on the larger contracts where competition is tighter.",
+    "answer": "**Market snapshot – school‑canteen catering in Italy (CPV 5552, IT)**  \n*EU contract awards 2021‑2022*\n\n- **Contracts awarded:** 392 (279 tenders) to 166 different firms  \n- **Typical award value:** €1,275,875 (range €257,438 – €6,838,937)  \n- **Single‑bid rate:** 28.2 % – about one in three contracts receives only one offer  \n- **SME win share:** 18.4 % of contracts go to small‑ and medium‑sized enterprises  \n\n**Top buyers** (most contracts)  \n1. Provincia di Treviso – Stazione Unica Appaltante – Area Beni e Servizi (44 contracts, avg. €432,781)  \n2. Roma Capitale – Dipartimento Servizi Educativi e Scolastici (15 contracts, avg. €40,778,318)  \n3. Provincia di Brescia – Stazione Unica Appaltante (11 contracts, avg. €525,606)  \n\n**Top winning companies**  \n- DUSSMANN SERVICE SRL (31 contracts)  \n- SODEXO ITALIA SPA (28 contracts, SME)  \n- EURORISTORAZIONE SRL (27 contracts)  \n- CAMST Soc. Coop. a r.l. (17 contracts)  \n- CIRFOOD S.C. (16 contracts, SME)  \n\n**Practical tip**  \nBecause the single‑bid rate is relatively high (≈28 %), consider differentiating your offer with added value (e.g., nutrition‑focused menus, sustainability certifications, or digital ordering platforms) to stand out in competitive bids and increase your chances of winning against larger incumbents.",
     "tool_calls": [
       {
         "name": "search_market",
@@ -959,16 +919,16 @@
               "typical_value": "EUR 525,606"
             },
             {
-              "buyer": "Gemeinde Meran - Ausschreibungen und Vergabeverfahren\t",
-              "country": "IT",
-              "contracts": "10",
-              "typical_value": "EUR 415,600"
-            },
-            {
               "buyer": "Provincia di Monza e della Brianza",
               "country": "IT",
               "contracts": "10",
               "typical_value": "EUR 1,519,792"
+            },
+            {
+              "buyer": "PROVINCIA DI BRESCIA - STAZIONE APPALTANTE CENTRALE UNICA DI COMMITTENZA DI AREA...",
+              "country": "IT",
+              "contracts": "10",
+              "typical_value": "EUR 857,990"
             }
           ],
           "top_winners": [
@@ -1010,100 +970,124 @@
   {
     "id": "translation-eu",
     "question": "Translation agency covering all EU languages. Where is the demand across Europe?",
-    "answer": "**Summary**  \nThe EU market for business‑service contracts that include translation (CPV 794) is sizable – 6,878 contracts awarded in 2021‑2022, with an average value of about €179 k. Demand is spread across many Member States, with a modest single‑bid risk (15.6 %) and a strong SME presence (65 % of wins).\n\n**Key points**\n\n- **Geographic spread** – Top buyers are in Ireland (IE), Lithuania (LT), Germany (DE), France (FR) and Sweden (SE); contracts are awarded by 1,873 distinct public bodies across the EU.  \n- **Contract size** – Typical award €178,733; range €6,899 – €1,778,837.  \n- **Competition** – 15.6 % of contracts received only one offer.  \n- **SME success** – 65.3 % of contracts were won by SMEs, indicating good opportunities for smaller translation firms.  \n- **Market volume** – 3,380 tenders generated the 6,878 contracts, showing a healthy flow of opportunities.\n\n**Practical suggestion**  \nTarget the public procurement portals of the top‑buyer countries (IE, LT, DE, FR, SE) and monitor tenders under CPV 794. Emphasise your multilingual capability and SME status in bids to benefit from the high SME win‑share and relatively low single‑bid risk.",
+    "answer": "**Market snapshot for translation services (CPV 7953) – EU‑wide, 2021‑2022**\n\n- **Contracts awarded:** 2,079 across 375 tenders  \n- **Typical award value:** €3,759 (range €249 – €344,652)  \n- **Single‑bid rate:** 24.8 %  \n- **SME win share:** 63.8 %  \n\n**Top buyers** (most contracts)  \n- Translation Centre for the Bodies of the EU (LU) – 340 contracts  \n- GIZ GmbH (DE) – 153 contracts (avg. €176,622)  \n- Latvian Ministry of Justice (LV) – 134 contracts (avg. €3,094)  \n- Czech Ministry of Labour & Social Affairs (CZ) – 123 contracts (avg. €222)  \n- European Central Bank (DE) – 100 contracts (avg. €320,000)  \n\n**Top winning firms** (mostly SMEs)  \n- PRESTO – PŘEKLADATELSKÉ CENTRUM s.r.o. (CZ) – 140 contracts  \n- ADS LangLinx, s.r.o. (CZ) – 80 contracts  \n- CONTERA MEDIA S.R.L. (RO) – 60 contracts  \n- Michal Moudrý (CZ) – 51 contracts  \n- Osaühing Multilingua Tõlkebüroo (EE) – 32 contracts  \n\n**Practical tip** – Focus outreach on public bodies that repeatedly procure translation work (EU institutions, national ministries, and large agencies such as GIZ). Their high contract volumes and relatively modest award values make them attractive for SMEs and enable you to build a steady pipeline of repeat business.",
     "tool_calls": [
+      {
+        "name": "find_cpv_codes",
+        "arguments": {
+          "keywords": "translation"
+        },
+        "result": {
+          "keywords": "translation",
+          "codes": [
+            {
+              "cpv_code": "7953",
+              "name": "Translation services",
+              "contracts_2021_2022": "2,079"
+            },
+            {
+              "cpv_code": "4874",
+              "name": "Foreign language translation software package",
+              "contracts_2021_2022": "3"
+            },
+            {
+              "cpv_code": "7221274",
+              "name": "Foreign language translation software development services",
+              "contracts_2021_2022": "3"
+            }
+          ]
+        }
+      },
       {
         "name": "search_market",
         "arguments": {
           "country": null,
           "cpv_groups": [
-            "794"
-          ],
-          "max_value": null,
-          "min_value": null
+            "7953"
+          ]
         },
         "result": {
           "period": "2021-2022",
           "filters": {
             "cpv_codes": [
-              "794"
+              "7953"
             ],
             "country": null,
             "min_value": null,
             "max_value": null
           },
           "cpv_divisions": {
-            "794": "Business services: law, marketing, consulting, recruitment, printing and security"
+            "7953": "Business services: law, marketing, consulting, recruitment, printing and security"
           },
-          "contracts_awarded": "6,878",
-          "tenders": "3,380",
-          "buyers": "1,873",
-          "winning_companies": "3,787",
-          "typical_award_value": "EUR 178,733",
-          "usual_value_range": "EUR 6,899 to EUR 1,778,837",
-          "single_bid_rate": "15.6%",
-          "share_won_by_smes": "65.3%",
+          "contracts_awarded": "2,079",
+          "tenders": "375",
+          "buyers": "233",
+          "winning_companies": "659",
+          "typical_award_value": "EUR 3,759",
+          "usual_value_range": "EUR 249 to EUR 344,652",
+          "single_bid_rate": "24.8%",
+          "share_won_by_smes": "63.8%",
           "top_buyers": [
             {
-              "buyer": "The Office of Government Procurement",
-              "country": "IE",
-              "contracts": "322",
-              "typical_value": "EUR 5,000,000"
+              "buyer": "Translation Centre for the Bodies of the European Union (CdT)",
+              "country": "LU",
+              "contracts": "340",
+              "typical_value": "not available"
             },
             {
-              "buyer": "Švietimo mainų paramos fondas",
-              "country": "LT",
-              "contracts": "129",
-              "typical_value": "EUR 540"
+              "buyer": "Deutsche Gesellschaft für Internationale Zusammenarbeit (GIZ) GmbH",
+              "country": "DE",
+              "contracts": "153",
+              "typical_value": "EUR 176,622"
+            },
+            {
+              "buyer": "Latvijas Republikas Tieslietu ministrija",
+              "country": "LV",
+              "contracts": "134",
+              "typical_value": "EUR 3,094"
+            },
+            {
+              "buyer": "Česká republika - Ministerstvo práce a sociálních věcí",
+              "country": "CZ",
+              "contracts": "123",
+              "typical_value": "EUR 222"
             },
             {
               "buyer": "European Central Bank",
               "country": "DE",
-              "contracts": "97",
-              "typical_value": "EUR 2,095,000"
-            },
-            {
-              "buyer": "Caisse des dépôts",
-              "country": "FR",
-              "contracts": "91",
-              "typical_value": "EUR 507,500"
-            },
-            {
-              "buyer": "Länsstyrelsen i Stockholms Län",
-              "country": "SE",
-              "contracts": "91",
-              "typical_value": "EUR 6,899"
+              "contracts": "100",
+              "typical_value": "EUR 320,000"
             }
           ],
           "top_winners": [
             {
-              "company": "Fizinis asmuo",
-              "country": "LT",
-              "contracts": "128",
+              "company": "PRESTO - PŘEKLADATELSKÉ CENTRUM s.r.o.",
+              "country": "CZ",
+              "contracts": "140",
               "sme": true
             },
             {
-              "company": "HS Konsult AB",
-              "country": "SE",
-              "contracts": "34",
+              "company": "ADS LangLinx, s.r.o.",
+              "country": "CZ",
+              "contracts": "80",
               "sme": true
             },
             {
-              "company": "Växa Sverige",
-              "country": "SE",
-              "contracts": "31",
+              "company": "CONTERA MEDIA S.R.L.",
+              "country": "RO",
+              "contracts": "60",
               "sme": true
             },
             {
-              "company": "A.N.Z.S.Ó. 2001 Szolgáltató és Kereskedelmi Korlátolt Felelősségű Társaság",
-              "country": "HU",
-              "contracts": "27",
+              "company": "Michal Moudrý",
+              "country": "CZ",
+              "contracts": "51",
               "sme": true
             },
             {
-              "company": "City-Form 2000 Kft.",
-              "country": "HU",
-              "contracts": "24",
+              "company": "Osaühing Multilingua Tõlkebüroo",
+              "country": "EE",
+              "contracts": "32",
               "sme": true
             }
           ]
@@ -1114,15 +1098,15 @@
   {
     "id": "furniture-es",
     "question": "Spanish manufacturer of office furniture: desks, chairs and storage.",
-    "answer": "**Market snapshot for office‑furniture (CPV 391 / 3913) in Spain – EU awards 2021‑2022**\n\n- **Contracts:** 964 (320 tenders)  \n- **Typical award value:** €98,649 (range €9,728 – €5,328,000)  \n- **Single‑bid rate:** 11.7 %  \n- **SME win share:** 75.9 %  \n\n**Top Spanish buyers**  \n- Dirección General de Racionalización y Centralización de la Contratación – 124 contracts (typical value ≈ €9.36 M)  \n- Consellería de Cultura, Educación y Universidad – 71 contracts (≈ €36,687)  \n- Agencia Pública Andaluza de Educación – 46 contracts (≈ €111,338)  \n\n**Top winning firms** (all SMEs)  \n- El Secretario S.L. – 30 contracts  \n- FORESPAN, S.A. – 23 contracts  \n- TOTAL EKIP, S.L. – 20 contracts  \n\n**Practical tip** – Because the market is highly fragmented with a strong SME presence and a modest single‑bid risk, focus on building relationships with the major public buyers listed above and position your catalogue around mid‑range values (≈ €100 k) to increase win chances.",
+    "answer": "**Market snapshot – Spain (2021‑2022)**  \n*CPV groups searched: 39121 (desks & tables), 3911 (chairs & seats), 3913 (office furniture)*  \n\n- **Contracts awarded:** 144 (61 tenders)  \n- **Typical award value:** EUR 47,097 (range EUR 361 – EUR 370,195)  \n- **Single‑bid rate:** 9.7 %  \n- **SME win share:** 79.2 %  \n\n**Top buyers**  \n- Dirección General de Patrimonio y Contratación Centralizada (42 contracts, avg. EUR 432)  \n- Servicio Andaluz de Salud – Complejo Hospitalario Torrecárdenas (8 contracts, avg. EUR 25,391)  \n- Conselleria de Educación, Cultura y Deporte (6 contracts, avg. EUR 69,740)  \n\n**Top winning companies** (all SMEs)  \n- OFICACERES, S.L. – 6 contracts  \n- MUEBLES DE OFICINAS EXTREMEÑOS S.L. – 6 contracts  \n- INEX OFICINAS SL – 5 contracts  \n- MECANIZACION TENA SL – 5 contracts  \n- MECANIZACION EXTREMEÑA, S.A. – 5 contracts  \n\n**Practical tip** – Because the single‑bid risk is low (≈10 %) and SMEs capture most business, focus on building relationships with the listed public buyers and highlight any sustainability or ergonomic certifications to stand out in competitive bids.",
     "tool_calls": [
       {
         "name": "find_cpv_codes",
         "arguments": {
-          "keywords": "office furniture"
+          "keywords": "office furniture desks chairs storage"
         },
         "result": {
-          "keywords": "office furniture",
+          "keywords": "office furniture desks chairs storage",
           "codes": [
             {
               "cpv_code": "30",
@@ -1150,29 +1134,29 @@
               "contracts_2021_2022": "72"
             },
             {
-              "cpv_code": "391",
-              "name": "Furniture",
-              "contracts_2021_2022": "11,673"
+              "cpv_code": "39121",
+              "name": "Desks and tables",
+              "contracts_2021_2022": "82"
             },
             {
-              "cpv_code": "3916",
-              "name": "School furniture",
-              "contracts_2021_2022": "3,276"
+              "cpv_code": "391211",
+              "name": "Desks",
+              "contracts_2021_2022": "16"
             },
             {
-              "cpv_code": "34928",
-              "name": "Road furniture",
-              "contracts_2021_2022": "2,416"
+              "cpv_code": "445",
+              "name": "Tools, locks, keys, hinges, fasteners, chain and springs",
+              "contracts_2021_2022": "1,154"
             },
             {
-              "cpv_code": "33192",
-              "name": "Medical furniture",
-              "contracts_2021_2022": "1,819"
+              "cpv_code": "3911",
+              "name": "Seats, chairs and related products, and associated parts",
+              "contracts_2021_2022": "482"
             },
             {
-              "cpv_code": "349284",
-              "name": "Urban furniture",
-              "contracts_2021_2022": "1,668"
+              "cpv_code": "39113",
+              "name": "Miscellaneous seats and chairs",
+              "contracts_2021_2022": "112"
             }
           ]
         }
@@ -1182,15 +1166,17 @@
         "arguments": {
           "country": "ES",
           "cpv_groups": [
-            "3913",
-            "391"
+            "39121",
+            "3911",
+            "3913"
           ]
         },
         "result": {
           "period": "2021-2022",
           "filters": {
             "cpv_codes": [
-              "391",
+              "3911",
+              "39121",
               "3913"
             ],
             "country": "ES",
@@ -1198,36 +1184,19 @@
             "max_value": null
           },
           "cpv_divisions": {
-            "391": "Furniture, furnishings, domestic appliances and cleaning products",
+            "3911": "Furniture, furnishings, domestic appliances and cleaning products",
+            "39121": "Furniture, furnishings, domestic appliances and cleaning products",
             "3913": "Furniture, furnishings, domestic appliances and cleaning products"
           },
-          "contracts_awarded": "964",
-          "tenders": "320",
-          "buyers": "185",
-          "winning_companies": "368",
-          "typical_award_value": "EUR 98,649",
-          "usual_value_range": "EUR 9,728 to EUR 5,328,000",
-          "single_bid_rate": "11.7%",
-          "share_won_by_smes": "75.9%",
+          "contracts_awarded": "144",
+          "tenders": "61",
+          "buyers": "46",
+          "winning_companies": "79",
+          "typical_award_value": "EUR 47,097",
+          "usual_value_range": "EUR 361 to EUR 370,195",
+          "single_bid_rate": "9.7%",
+          "share_won_by_smes": "79.2%",
           "top_buyers": [
-            {
-              "buyer": "Dirección General de Racionalización y Centralización de la Contratación-Junta d...",
-              "country": "ES",
-              "contracts": "124",
-              "typical_value": "EUR 9,360,000"
-            },
-            {
-              "buyer": "Consellería de Cultura, Educación y Universidad",
-              "country": "ES",
-              "contracts": "71",
-              "typical_value": "EUR 36,687"
-            },
-            {
-              "buyer": "Agencia Pública Andaluza de Educación",
-              "country": "ES",
-              "contracts": "46",
-              "typical_value": "EUR 111,338"
-            },
             {
               "buyer": "Dirección General de Patrimonio y Contratación Centralizada",
               "country": "ES",
@@ -1235,41 +1204,59 @@
               "typical_value": "EUR 432"
             },
             {
+              "buyer": "Servicio Andaluz de Salud — Complejo Hospitalario Torrecárdenas",
+              "country": "ES",
+              "contracts": "8",
+              "typical_value": "EUR 25,391"
+            },
+            {
               "buyer": "Conselleria de Educación, Cultura y Deporte",
               "country": "ES",
-              "contracts": "32",
-              "typical_value": "EUR 105,493"
+              "contracts": "6",
+              "typical_value": "EUR 69,740"
+            },
+            {
+              "buyer": "SAM Manacor",
+              "country": "ES",
+              "contracts": "5",
+              "typical_value": "EUR 47,594"
+            },
+            {
+              "buyer": "Pleno de la Diputación Provincial de Valencia",
+              "country": "ES",
+              "contracts": "5",
+              "typical_value": "EUR 63,570"
             }
           ],
           "top_winners": [
             {
-              "company": "El Secretario S.L.",
+              "company": "OFICACERES, S.L.",
               "country": "ES",
-              "contracts": "30",
+              "contracts": "6",
               "sme": true
             },
             {
-              "company": "FORESPAN, S.A.",
+              "company": "MUEBLES DE OFICINAS EXTREMEÑOS S.L.",
               "country": "ES",
-              "contracts": "23",
+              "contracts": "6",
               "sme": true
             },
             {
-              "company": "TOTAL EKIP, S.L.",
+              "company": "INEX OFICINAS SL",
               "country": "ES",
-              "contracts": "20",
+              "contracts": "5",
               "sme": true
             },
             {
-              "company": "DISTRIBUCIONES GENERALES MRC SL",
+              "company": "MECANIZACION TENA SL",
               "country": "ES",
-              "contracts": "19",
+              "contracts": "5",
               "sme": true
             },
             {
-              "company": "Mobiliar, S.L.",
+              "company": "MECANIZACION EXTREMEÑA, S.A.",
               "country": "ES",
-              "contracts": "16",
+              "contracts": "5",
               "sme": true
             }
           ]
@@ -1280,31 +1267,16 @@
   {
     "id": "security-guards-be",
     "question": "Private security company in Belgium offering guarding and surveillance services.",
-    "answer": "**Belgium – Guarding & Surveillance (Security services – CPV 797 / 7971 / 79713)**  \nEU contract awards 2021‑2022  \n\n- **Contracts awarded:** 60 (38 tenders)  \n- **Typical award value:** € 706,996 (range € 121,251 – € 3,630,754)  \n- **Single‑bid rate:** 5.4 %  \n- **SME win share:** 16.1 %  \n\n**Top buyers** (most contracts)  \n- SPF Fin Division Achats – 8 contracts (typical value ≈ € 176,782)  \n- Associatie KU Leuven – 7 contracts  \n- Brussels Major Events – 4 contracts (typical value ≈ € 2.48 M)  \n- Fluxys LNG – 3 contracts  \n- Provinciale Ontwikkelingsmaatschappij Limburg – 3 contracts (typical value ≈ € 250,000)  \n\n**Top winning companies**  \n- T&D Security (BE) – 11 contracts  \n- PROTECTION UNIT SRL (BE) – 8 contracts (SME)  \n- G4S nv (BE) – 7 contracts  \n- Securitas SA (BE) – 6 contracts  \n- G4S SECURE SOLUTIONS nv (BE) – 4 contracts  \n\n**Practical tip** – Because the market has a low single‑bid rate (5 %), bidding on smaller‑to‑mid‑size contracts (≈ € 120 k‑€ 500 k) can improve your chances of winning and help you build a track record that positions you for larger awards later.",
+    "answer": "**Market snapshot for private‑security (guarding & surveillance) in Belgium**  \n*EU contract awards 2021‑2022 – CPV 797 / 7971, country BE*\n\n- **60 contracts** (38 tenders) awarded to **23 different firms**  \n- Typical award value **≈ EUR 707 k** (range EUR 121 k – EUR 3.63 M)  \n- **Single‑bid rate 5.4 %** – low risk of receiving only one offer  \n- **SMEs win 16.1 %** of the contracts  \n\n**Top Belgian buyers**  \n- SPF Fin Division Achats (8 contracts, avg. EUR 176 k)  \n- KU Leuven Association (7 contracts)  \n- Brussels Major Events (4 contracts, avg. EUR 2.48 M)  \n- Provinciale Ontwikkelingsmaatschappij Limburg (3 contracts, avg. EUR 250 k)  \n\n**Top winning companies**  \n- T&D Security (11 contracts)  \n- PROTECTION UNIT SRL (8 contracts, SME)  \n- G4S nv (7 contracts)  \n- Securitas SA (6 contracts)  \n\n**Practical tip**  \nFocus on the **public‑sector buyers that run multiple small‑to‑mid‑size security contracts** (e.g., SPF Fin Division Achats, regional development agencies). Register in their e‑procurement portals early and highlight SME status if applicable – it can improve win chances in a market where SMEs capture only a modest share.",
     "tool_calls": [
       {
         "name": "find_cpv_codes",
         "arguments": {
-          "keywords": "security guarding services"
+          "keywords": "security services"
         },
         "result": {
-          "keywords": "security guarding services",
+          "keywords": "security services",
           "codes": [
-            {
-              "cpv_code": "79713",
-              "name": "Guard services",
-              "contracts_2021_2022": "2,209"
-            },
-            {
-              "cpv_code": "3492832",
-              "name": "Guardrails",
-              "contracts_2021_2022": "5"
-            },
-            {
-              "cpv_code": "3746211",
-              "name": "Archery arm guards",
-              "contracts_2021_2022": "0"
-            },
             {
               "cpv_code": "79",
               "name": "Business services: law, marketing, consulting, recruitment, printing and security",
@@ -1339,6 +1311,21 @@
               "cpv_code": "6613",
               "name": "Brokerage and related securities and commodities services",
               "contracts_2021_2022": "489"
+            },
+            {
+              "cpv_code": "753",
+              "name": "Compulsory social security services",
+              "contracts_2021_2022": "346"
+            },
+            {
+              "cpv_code": "7524",
+              "name": "Public security, law and order services",
+              "contracts_2021_2022": "281"
+            },
+            {
+              "cpv_code": "734",
+              "name": "Research and Development services on security and defence materials",
+              "contracts_2021_2022": "114"
             }
           ]
         }
@@ -1348,20 +1335,16 @@
         "arguments": {
           "country": "BE",
           "cpv_groups": [
-            "79713",
             "7971",
             "797"
-          ],
-          "max_value": null,
-          "min_value": null
+          ]
         },
         "result": {
           "period": "2021-2022",
           "filters": {
             "cpv_codes": [
               "797",
-              "7971",
-              "79713"
+              "7971"
             ],
             "country": "BE",
             "min_value": null,
@@ -1369,8 +1352,7 @@
           },
           "cpv_divisions": {
             "797": "Business services: law, marketing, consulting, recruitment, printing and security",
-            "7971": "Business services: law, marketing, consulting, recruitment, printing and security",
-            "79713": "Business services: law, marketing, consulting, recruitment, printing and security"
+            "7971": "Business services: law, marketing, consulting, recruitment, printing and security"
           },
           "contracts_awarded": "60",
           "tenders": "38",
@@ -1400,16 +1382,16 @@
               "typical_value": "EUR 2,480,000"
             },
             {
-              "buyer": "Fluxys LNG",
-              "country": "BE",
-              "contracts": "3",
-              "typical_value": "not available"
-            },
-            {
               "buyer": "Provinciale Ontwikkelingsmaatschappij Limburg",
               "country": "BE",
               "contracts": "3",
               "typical_value": "EUR 250,000"
+            },
+            {
+              "buyer": "Fluxys LNG",
+              "country": "BE",
+              "contracts": "3",
+              "typical_value": "not available"
             }
           ],
           "top_winners": [
@@ -1451,7 +1433,7 @@
   {
     "id": "lab-equipment-pl",
     "question": "Polska firma dostarczająca sprzęt laboratoryjny dla uczelni i szpitali.",
-    "answer": "**Polish laboratory‑equipment market (CPV 38 – “Laboratory, optical and precision equipment”) – EU awards 2021‑2022**\n\n- **4 756 contracts** awarded to **1 340 suppliers** (≈ 89 % won by SMEs)  \n- **Typical award value:** €13 581 (range €526 – €284 429)  \n- **Single‑bid rate:** 65.5 % (high risk of only one offer)  \n- **Top buyers:**  \n  • Państwowy Instytut Weterynaryjny – 607 contracts (typical €674)  \n  • Uniwersytet Rzeszowski – 213 contracts (typical €4 359)  \n  • Uniwersytet Medyczny w Białymstoku – 186 contracts (typical €1 132)  \n- **Top winning companies:** VWR International, Alchem Grupa, Bionovo, Perlan Technologies, Danlab (all SMEs).\n\n**Practical tip:** Because the market is highly fragmented with many small‑value, single‑bid contracts, focus on building relationships with university procurement offices and offering bundled product‑service packages (e.g., equipment plus installation/maintenance) to increase contract size and reduce single‑bid risk.",
+    "answer": "**Polish laboratory‑equipment market (CPV 38 – “Laboratory, optical and precision equipment”) – EU awards 2021‑2022**\n\n- **4 756 contracts** awarded to **1 340 suppliers** (≈ 89 % won by SMEs)  \n- **Typical award value:** €13 581 (range €526 – €284 429)  \n- **Single‑bid rate:** 65.5 % (high competition risk)  \n- **Top buyers:**  \n  • Państwowy Instytut Weterynaryjny – 607 contracts (typical €674)  \n  • Uniwersytet Rzeszowski – 213 contracts (typical €4 359)  \n  • Uniwersytet Medyczny w Białymstoku – 186 contracts (typical €1 132)  \n- **Top winning companies:** VWR International Sp. z o.o., Alchem Grupa Sp. z o.o., Bionovo A. Ludiwg, Perlan Technologies Polska Sp. z o.o., Danlab Danuta Katryńska.\n\n**Practical tip:** Because more than two‑thirds of awards are single‑bid, improve your chances by joining a consortium or pre‑qualifying for framework agreements with the major university and research‑institute buyers. This spreads risk and gives you access to larger, multi‑lot contracts.",
     "tool_calls": [
       {
         "name": "find_cpv_codes",
@@ -1520,9 +1502,7 @@
           "country": "PL",
           "cpv_groups": [
             "38"
-          ],
-          "max_value": null,
-          "min_value": null
+          ]
         },
         "result": {
           "period": "2021-2022",
@@ -1616,65 +1596,126 @@
   {
     "id": "bus-transport-se",
     "question": "We operate buses and want to bid for school and public transport services in Sweden.",
-    "answer": "**Swedish school & public transport market (2021‑2022)**  \n\n- **CPV codes searched:** 6013 (special‑purpose road passenger‑transport services), 6014 (non‑scheduled passenger transport), 6017 (hire of passenger‑transport vehicles with driver) – all under division **60** (Transport services).  \n- **Country:** SE (Sweden) – data cover EU contract awards 2021‑2022.  \n\n**Key figures**\n\n- **138 contracts** awarded to **73 companies** by **60 public buyers**.  \n- **Typical award value:** € 492,781 (range € 61,105 – € 6,248,460).  \n- **Single‑bid rate:** 9 % of contracts.  \n- **SME win share:** 65.9 % of contracts.  \n\n**Top buyers**\n\n1. Uppsala universitet – 20 contracts (typical value € 788,449)  \n2. Falköpings kommun – 9 contracts (typical value € 61,105)  \n3. Norrköpings kommun – 8 contracts (typical value € 254,099)  \n4. LINKÖPINGS KOMMUN – 6 contracts (typical value € 268)  \n5. Varbergs kommun – 5 contracts (typical value € 551,914)  \n\n**Top winning companies**\n\n1. Bergkvarabuss Aktiebolag (SME) – 14 contracts  \n2. Kolmårdens Buss & Transport AB (SME) – 8 contracts  \n3. Sparlunds Buss & Taxi i Grästorp AB (SME) – 6 contracts  \n4. Axelssons Turisttrafik Aktiebolag (SME) – 5 contracts  \n5. Håbo Buss Mats Mattsson Aktiebolag (SME) – 5 contracts  \n\n**Practical tip**  \nBecause the single‑bid rate is low (9 %) and SMEs win the majority of contracts, positioning your bus company as an SME‑friendly, reliable partner and targeting the municipalities listed above (e.g., Uppsala, Falköping, Norrköping) will give you a strong chance of winning school and public‑transport contracts.",
+    "answer": "**Swedish school‑bus and public‑transport market (2021‑2022)**  \n*CPV groups searched:* **60172** – Hire of buses and coaches with driver (services)  \n**34121** – Buses and coaches (equipment)  \n*Country:* **SE (Sweden)**  \n\n- **49 contracts** awarded (19 tenders) to **24 different operators**  \n- **Typical award value:** €463,214 (range €172,473 – €2,308,185)  \n- **Single‑bid rate:** 2.1 % (low competition risk)  \n- **SME win share:** 40.8 % – SMEs win a sizable share of contracts  \n- **Top buyers:** Uppsala universitet (20 contracts), Karlskoga kommun (4), Kalmar kommun (3), Enköpings kommun (3), Eskilstuna kommun (3)  \n- **Top winning companies:** Bergkvarabuss AB (9 contracts, SME), Håbo Buss Mats Mattsson AB (5, SME), Kristian Larsson Busstrafik EF (4), Högbergs Bussresor AB (4), Bergsbrunna Busstrafik AB (3)\n\n**Practical tip:** Because the single‑bid rate is low and SMEs capture over 40 % of awards, position your bid as a flexible, locally‑responsive SME partner (e.g., highlight regional depots or green‑bus expertise) to increase your chances against larger incumbents.",
     "tool_calls": [
       {
         "name": "find_cpv_codes",
         "arguments": {
-          "keywords": "passenger transport services"
+          "keywords": "school transport services"
         },
         "result": {
-          "keywords": "passenger transport services",
+          "keywords": "school transport services",
           "codes": [
             {
-              "cpv_code": "6013",
-              "name": "Special-purpose road passenger-transport services",
-              "contracts_2021_2022": "12,703"
+              "cpv_code": "90919",
+              "name": "Office, school and office equipment cleaning services",
+              "contracts_2021_2022": "2,523"
             },
             {
-              "cpv_code": "6014",
-              "name": "Non-scheduled passenger transport",
-              "contracts_2021_2022": "2,642"
+              "cpv_code": "555231",
+              "name": "School-meal services",
+              "contracts_2021_2022": "1,113"
             },
             {
-              "cpv_code": "6017",
-              "name": "Hire of passenger transport vehicles with driver",
-              "contracts_2021_2022": "1,938"
+              "cpv_code": "909193",
+              "name": "School cleaning services",
+              "contracts_2021_2022": "995"
             },
             {
-              "cpv_code": "6015",
-              "name": "Passenger transport by animal-drawn vehicles",
+              "cpv_code": "55524",
+              "name": "School catering services",
+              "contracts_2021_2022": "971"
+            },
+            {
+              "cpv_code": "8041",
+              "name": "Various school services",
+              "contracts_2021_2022": "598"
+            },
+            {
+              "cpv_code": "8011",
+              "name": "Pre-school education services",
+              "contracts_2021_2022": "477"
+            },
+            {
+              "cpv_code": "80411",
+              "name": "Driving-school services",
+              "contracts_2021_2022": "146"
+            },
+            {
+              "cpv_code": "80513",
+              "name": "Horse riding school services",
+              "contracts_2021_2022": "9"
+            },
+            {
+              "cpv_code": "80412",
+              "name": "Flying-school services",
               "contracts_2021_2022": "7"
             },
             {
-              "cpv_code": "45234124",
-              "name": "Underground passenger railway transport",
+              "cpv_code": "80413",
+              "name": "Sailing-school services",
               "contracts_2021_2022": "2"
+            }
+          ]
+        }
+      },
+      {
+        "name": "find_cpv_codes",
+        "arguments": {
+          "keywords": "school bus transport"
+        },
+        "result": {
+          "keywords": "school bus transport",
+          "codes": [
+            {
+              "cpv_code": "34121",
+              "name": "Buses and coaches",
+              "contracts_2021_2022": "1,329"
             },
             {
-              "cpv_code": "502242",
-              "name": "Reconditioning services of passenger coaches",
-              "contracts_2021_2022": "26"
+              "cpv_code": "60172",
+              "name": "Hire of buses and coaches with driver",
+              "contracts_2021_2022": "918"
             },
             {
-              "cpv_code": "637215",
-              "name": "Passenger terminal operation services",
-              "contracts_2021_2022": "6"
+              "cpv_code": "341211",
+              "name": "Public-service buses",
+              "contracts_2021_2022": "629"
             },
             {
-              "cpv_code": "631121",
-              "name": "Passenger baggage handling services",
-              "contracts_2021_2022": "5"
+              "cpv_code": "3414491",
+              "name": "Electric buses",
+              "contracts_2021_2022": "256"
             },
             {
-              "cpv_code": "60",
-              "name": "Transport services (excl. Waste transport)",
-              "contracts_2021_2022": "43,477"
+              "cpv_code": "341214",
+              "name": "Low-floor buses",
+              "contracts_2021_2022": "226"
             },
             {
-              "cpv_code": "601",
-              "name": "Road transport services",
-              "contracts_2021_2022": "30,163"
+              "cpv_code": "50113",
+              "name": "Repair and maintenance services of buses",
+              "contracts_2021_2022": "122"
+            },
+            {
+              "cpv_code": "343522",
+              "name": "Tyres for buses",
+              "contracts_2021_2022": "72"
+            },
+            {
+              "cpv_code": "34211",
+              "name": "Bus bodies, ambulance bodies and vehicle bodies for goods vehicles",
+              "contracts_2021_2022": "60"
+            },
+            {
+              "cpv_code": "342111",
+              "name": "Bus bodies",
+              "contracts_2021_2022": "35"
+            },
+            {
+              "cpv_code": "501132",
+              "name": "Bus maintenance services",
+              "contracts_2021_2022": "34"
             }
           ]
         }
@@ -1684,38 +1725,33 @@
         "arguments": {
           "country": "SE",
           "cpv_groups": [
-            "6013",
-            "6014",
-            "6017"
-          ],
-          "max_value": null,
-          "min_value": null
+            "60172",
+            "34121"
+          ]
         },
         "result": {
           "period": "2021-2022",
           "filters": {
             "cpv_codes": [
-              "6013",
-              "6014",
-              "6017"
+              "34121",
+              "60172"
             ],
             "country": "SE",
             "min_value": null,
             "max_value": null
           },
           "cpv_divisions": {
-            "6013": "Transport services (excluding waste transport)",
-            "6014": "Transport services (excluding waste transport)",
-            "6017": "Transport services (excluding waste transport)"
+            "34121": "Transport equipment and auxiliary products to transportation",
+            "60172": "Transport services (excluding waste transport)"
           },
-          "contracts_awarded": "138",
-          "tenders": "68",
-          "buyers": "60",
-          "winning_companies": "73",
-          "typical_award_value": "EUR 492,781",
-          "usual_value_range": "EUR 61,105 to EUR 6,248,460",
-          "single_bid_rate": "9.0%",
-          "share_won_by_smes": "65.9%",
+          "contracts_awarded": "49",
+          "tenders": "19",
+          "buyers": "18",
+          "winning_companies": "24",
+          "typical_award_value": "EUR 463,214",
+          "usual_value_range": "EUR 172,473 to EUR 2,308,185",
+          "single_bid_rate": "2.1%",
+          "share_won_by_smes": "40.8%",
           "top_buyers": [
             {
               "buyer": "Uppsala universitet",
@@ -1724,53 +1760,35 @@
               "typical_value": "EUR 788,449"
             },
             {
-              "buyer": "Falköpings kommun",
+              "buyer": "Karlskoga kommun",
               "country": "SE",
-              "contracts": "9",
-              "typical_value": "EUR 61,105"
+              "contracts": "4",
+              "typical_value": "EUR 172,473"
             },
             {
-              "buyer": "Norrköpings kommun",
+              "buyer": "Kalmar kommun",
               "country": "SE",
-              "contracts": "8",
-              "typical_value": "EUR 254,099"
+              "contracts": "3",
+              "typical_value": "EUR 463,214"
             },
             {
-              "buyer": "LINKÖPINGS KOMMUN",
+              "buyer": "Enköpings kommun",
               "country": "SE",
-              "contracts": "6",
-              "typical_value": "EUR 268"
+              "contracts": "3",
+              "typical_value": "EUR 236,535"
             },
             {
-              "buyer": "Varbergs kommun",
+              "buyer": "Eskilstuna kommun",
               "country": "SE",
-              "contracts": "5",
-              "typical_value": "EUR 551,914"
+              "contracts": "3",
+              "typical_value": "EUR 1,379,786"
             }
           ],
           "top_winners": [
             {
               "company": "Bergkvarabuss Aktiebolag",
               "country": "SE",
-              "contracts": "14",
-              "sme": true
-            },
-            {
-              "company": "Kolmårdens Buss & Transport AB",
-              "country": "SE",
-              "contracts": "8",
-              "sme": true
-            },
-            {
-              "company": "Sparlunds Buss & Taxi i Grästorp AB",
-              "country": "SE",
-              "contracts": "6",
-              "sme": true
-            },
-            {
-              "company": "Axelssons Turisttrafik Aktiebolag",
-              "country": "SE",
-              "contracts": "5",
+              "contracts": "9",
               "sme": true
             },
             {
@@ -1778,6 +1796,24 @@
               "country": "SE",
               "contracts": "5",
               "sme": true
+            },
+            {
+              "company": "Kristian Larsson Busstrafik Ekonomisk Förening",
+              "country": "SE",
+              "contracts": "4",
+              "sme": false
+            },
+            {
+              "company": "Högbergs Bussresor Aktiebolag",
+              "country": "SE",
+              "contracts": "4",
+              "sme": false
+            },
+            {
+              "company": "Bergsbrunna Busstrafik Aktiebolag",
+              "country": "SE",
+              "contracts": "3",
+              "sme": false
             }
           ]
         }
@@ -1787,152 +1823,14 @@
   {
     "id": "architects-nl",
     "question": "Architecture and engineering design studio in the Netherlands, projects from EUR 100k.",
-    "answer": "**Market snapshot for architectural & engineering services in the Netherlands (CPV 712 & 713, 2021‑2022)**  \n\n- **Scope searched:** CPV 712 (architectural services) and CPV 713 (engineering services) for contracts ≥ €100 k, buyer country NL.  \n- **Overall activity:** 747 contracts (354 tenders) awarded to 397 firms.  \n- **Typical deal size:** €500 k average; most awards fall between **€190 083 – €3 530 000**.  \n- **Competition:** only **4.3 %** of contracts were single‑bid.  \n- **SME success:** SMEs captured **74.6 %** of the value.  \n\n**Top Dutch buyers (by number of contracts)**  \n- Gemeente Kampen – 163 contracts (≈ €17 M total)  \n- Provincie Overijssel – 124 contracts (≈ €10 M)  \n- ProRail B.V. – 52 contracts (≈ €632 k)  \n- Rijkswaterstaat (Programma’s, Projecten en Onderhoud) – 25 contracts (≈ €627 k)  \n- Rijkswaterstaat (Grote Projecten en Onderhoud) – 20 contracts (≈ €1 187 k)  \n\n**Leading winning firms**  \n- Arcadis Nederland B.V. – 42 contracts (SME)  \n- HaskoningDHV Nederland B.V. – 29 contracts (SME)  \n- Antea Nederland B.V. – 24 contracts (SME)  \n- Movares Nederland B.V. – 15 contracts (SME)  \n- Sweco Nederland B.V. – 15 contracts (SME)  \n\n**Practical tip**  \nBecause competition is low (single‑bid rate ≈ 4 %) and SMEs win three‑quarters of the value, positioning your studio as an SME‑qualified partner and targeting mid‑size public bodies (e.g., provincial authorities, municipalities) can give you a strong chance to win contracts in the €200 k‑€3 M range. Consider registering on Dutch e‑procurement portals early and highlighting any niche expertise (e.g., sustainable design) to stand out in the relatively open market.",
+    "answer": "**Market snapshot – Architectural & engineering design (CPV 71) in the Netherlands**  \n*EU contract awards 2021‑2022, projects ≥ €100 k*\n\n- **Contracts awarded:** 961 (535 tenders)  \n- **Typical award value:** €471,680 (range €175,065 – €2,784,335)  \n- **Single‑bid rate:** 5.6 % (low risk of only one offer)  \n- **SME win share:** 75 %  \n\n**Top buyers** (by number of contracts)  \n- Gemeente Kampen – €17 M total value  \n- Provincie Overijssel – €10 M  \n- ProRail B.V. – €600 k  \n- Rijksvastgoedbedrijf – €430 k  \n- Rijkswaterstaat Programma’s, Projecten en Onderhoud – €627 k  \n\n**Top winning firms** (most contracts)  \n- Arcadis Nederland B.V. (51 contracts)  \n- HaskoningDHV Nederland B.V. (34)  \n- Antea Nederland B.V. (29)  \n- Movares Nederland B.V. (19)  \n- Sweco Nederland B.V. (17)  \n\n**Practical tip** – Position your studio for the mid‑range segment (€200 k‑€1 M). These contracts dominate the market, have a modest single‑bid risk, and SMEs capture three‑quarters of wins, so competitive pricing and strong local references can give you a solid edge.",
     "tool_calls": [
       {
         "name": "search_market",
         "arguments": {
           "country": "NL",
           "cpv_groups": [
-            "711",
-            "712"
-          ],
-          "max_value": null,
-          "min_value": 100000
-        },
-        "result": {
-          "error": "Unknown CPV codes: ['711']. Use codes that exist in the CPV list."
-        }
-      },
-      {
-        "name": "find_cpv_codes",
-        "arguments": {
-          "keywords": "architectural services"
-        },
-        "result": {
-          "keywords": "architectural services",
-          "codes": [
-            {
-              "cpv_code": "71",
-              "name": "Architectural, construction, engineering and inspection services",
-              "contracts_2021_2022": "81,205"
-            },
-            {
-              "cpv_code": "712",
-              "name": "Architectural and related services",
-              "contracts_2021_2022": "17,571"
-            },
-            {
-              "cpv_code": "7124",
-              "name": "Architectural, engineering and planning services",
-              "contracts_2021_2022": "9,182"
-            },
-            {
-              "cpv_code": "7122",
-              "name": "Architectural design services",
-              "contracts_2021_2022": "2,724"
-            },
-            {
-              "cpv_code": "7125",
-              "name": "Architectural, engineering and surveying services",
-              "contracts_2021_2022": "1,540"
-            },
-            {
-              "cpv_code": "71221",
-              "name": "Architectural services for buildings",
-              "contracts_2021_2022": "1,360"
-            },
-            {
-              "cpv_code": "714",
-              "name": "Urban planning and landscape architectural services",
-              "contracts_2021_2022": "1,074"
-            },
-            {
-              "cpv_code": "71222",
-              "name": "Architectural services for outdoor areas",
-              "contracts_2021_2022": "476"
-            },
-            {
-              "cpv_code": "71251",
-              "name": "Architectural and building-surveying services",
-              "contracts_2021_2022": "353"
-            },
-            {
-              "cpv_code": "7121",
-              "name": "Advisory architectural services",
-              "contracts_2021_2022": "247"
-            }
-          ]
-        }
-      },
-      {
-        "name": "find_cpv_codes",
-        "arguments": {
-          "keywords": "engineering services"
-        },
-        "result": {
-          "keywords": "engineering services",
-          "codes": [
-            {
-              "cpv_code": "71",
-              "name": "Architectural, construction, engineering and inspection services",
-              "contracts_2021_2022": "81,205"
-            },
-            {
-              "cpv_code": "713",
-              "name": "Engineering services",
-              "contracts_2021_2022": "38,132"
-            },
-            {
-              "cpv_code": "7131",
-              "name": "Consultative engineering and construction services",
-              "contracts_2021_2022": "10,847"
-            },
-            {
-              "cpv_code": "7124",
-              "name": "Architectural, engineering and planning services",
-              "contracts_2021_2022": "9,182"
-            },
-            {
-              "cpv_code": "7132",
-              "name": "Engineering design services",
-              "contracts_2021_2022": "8,787"
-            },
-            {
-              "cpv_code": "7135",
-              "name": "Engineering-related scientific and technical services",
-              "contracts_2021_2022": "7,431"
-            },
-            {
-              "cpv_code": "7133",
-              "name": "Miscellaneous engineering services",
-              "contracts_2021_2022": "2,832"
-            },
-            {
-              "cpv_code": "71311",
-              "name": "Civil engineering consultancy services",
-              "contracts_2021_2022": "2,345"
-            },
-            {
-              "cpv_code": "71322",
-              "name": "Engineering design services for the construction of civil engineering works",
-              "contracts_2021_2022": "2,296"
-            },
-            {
-              "cpv_code": "7125",
-              "name": "Architectural, engineering and surveying services",
-              "contracts_2021_2022": "1,540"
-            }
-          ]
-        }
-      },
-      {
-        "name": "search_market",
-        "arguments": {
-          "country": "NL",
-          "cpv_groups": [
-            "712",
-            "713"
+            "71"
           ],
           "max_value": null,
           "min_value": 100000
@@ -1941,25 +1839,23 @@
           "period": "2021-2022",
           "filters": {
             "cpv_codes": [
-              "712",
-              "713"
+              "71"
             ],
             "country": "NL",
             "min_value": 100000,
             "max_value": null
           },
           "cpv_divisions": {
-            "712": "Architectural, construction, engineering and inspection services",
-            "713": "Architectural, construction, engineering and inspection services"
+            "71": "Architectural, construction, engineering and inspection services"
           },
-          "contracts_awarded": "747",
-          "tenders": "354",
-          "buyers": "166",
-          "winning_companies": "397",
-          "typical_award_value": "EUR 500,000",
-          "usual_value_range": "EUR 190,083 to EUR 3,530,000",
-          "single_bid_rate": "4.3%",
-          "share_won_by_smes": "74.6%",
+          "contracts_awarded": "961",
+          "tenders": "535",
+          "buyers": "222",
+          "winning_companies": "512",
+          "typical_award_value": "EUR 471,680",
+          "usual_value_range": "EUR 175,065 to EUR 2,784,335",
+          "single_bid_rate": "5.6%",
+          "share_won_by_smes": "75.0%",
           "top_buyers": [
             {
               "buyer": "Gemeente Kampen",
@@ -1976,51 +1872,51 @@
             {
               "buyer": "ProRail B.V.",
               "country": "NL",
-              "contracts": "52",
-              "typical_value": "EUR 631,745"
+              "contracts": "57",
+              "typical_value": "EUR 600,000"
+            },
+            {
+              "buyer": "Rijksvastgoedbedrijf",
+              "country": "NL",
+              "contracts": "29",
+              "typical_value": "EUR 430,004"
             },
             {
               "buyer": "Rijkswaterstaat Programma's, Projecten en Onderhoud",
               "country": "NL",
-              "contracts": "25",
+              "contracts": "29",
               "typical_value": "EUR 627,180"
-            },
-            {
-              "buyer": "Rijkswaterstaat Grote Projecten en Onderhoud",
-              "country": "NL",
-              "contracts": "20",
-              "typical_value": "EUR 1,187,024"
             }
           ],
           "top_winners": [
             {
               "company": "Arcadis Nederland B.V.",
               "country": "NL",
-              "contracts": "42",
+              "contracts": "51",
               "sme": true
             },
             {
               "company": "HaskoningDHV Nederland B.V.",
               "country": "NL",
-              "contracts": "29",
+              "contracts": "34",
               "sme": true
             },
             {
               "company": "Antea Nederland B.V.",
               "country": "NL",
-              "contracts": "24",
+              "contracts": "29",
               "sme": true
             },
             {
               "company": "Movares Nederland B.V.",
               "country": "NL",
-              "contracts": "15",
+              "contracts": "19",
               "sme": true
             },
             {
               "company": "Sweco Nederland B.V.",
               "country": "NL",
-              "contracts": "15",
+              "contracts": "17",
               "sme": true
             }
           ]
@@ -2031,58 +1927,99 @@
   {
     "id": "training-ie",
     "question": "We provide professional training courses and e-learning in Ireland.",
-    "answer": "**Market snapshot – Education & training services (CPV 80) in Ireland (EU awards 2021‑2022)**  \n\n- **Contracts awarded:** 308 (across 82 tenders)  \n- **Typical award value:** €750,000 (range €122,000 – €908,000)  \n- **Single‑bid rate:** 19.6 % (about 1 in 5 contracts received only one offer)  \n- **SME win share:** 80.1 % of contracts were won by small‑ and medium‑sized firms  \n\n**Top buyers** (by number of contracts)  \n1. Education and Training Boards Ireland – 91 contracts (typical value ≈ €8.0 M)  \n2. University of Limerick – 48 contracts (typical value ≈ €750k)  \n3. Louth & Meath Education & Training Board – 29 contracts (typical value ≈ €350k)  \n4. Inland Fisheries Ireland – 24 contracts (typical value ≈ €52.5k)  \n5. Ervia – 11 contracts (value not available)  \n\n**Top winning companies** (each with 9 contracts, all SMEs)  \n- Klangley Investments Cork Ltd T/A Impact Training  \n- Swilly Group  \n- Irish Manufacturing Research CLG  \n- Chevron College Ltd  \n- Promaritime Ltd T/A The Seamanship Centre  \n\n**Practical tip** – Because the single‑bid rate is under 20 % but still notable, strengthen your bid competitiveness by highlighting any unique e‑learning methodologies, accreditation, or proven cost‑effectiveness. Tailor proposals to the major buyers (ETBs and universities) and consider joint ventures with other SMEs to broaden capacity for larger contracts.",
+    "answer": "**Market snapshot – Professional training & e‑learning (CPV 805 – Training services) in Ireland**  \n*EU contract awards 2021‑2022*\n\n- **87 contracts** (31 tenders) awarded by **22 public buyers**.  \n- **Typical award value:** €137,500 (range €43,000 – €628,048).  \n- **Single‑bid rate:** 29.1 % – about one‑third of awards had only one offer.  \n- **SME win share:** 64 % of contracts went to small‑ and medium‑sized firms.  \n\n**Top buyers** (contracts / typical value)  \n- Inland Fisheries Ireland – 24 / ≈ €52,500  \n- Ervia – 11 / not available  \n- First Polymer Training Skillnet – 10 / ≈ €400,000  \n- Health Service Executive (HSE) – 5 / ≈ €189,297  \n- Irish Prison Service – 5 / ≈ €80,000  \n\n**Top winning companies** (contracts)  \n- SEFtec NMCI Offshore Training (8)  \n- Promaritime Ltd. / The Seamanship Centre (8)  \n- ASL Safety & Training Ltd (8)  \n- Universal Safety Associates Ltd (3) – SME  \n- Atlantic Aviation Group H1 Ltd (3)  \n\n**Practical tip** – Because the single‑bid rate is relatively high (≈ 30 %), consider differentiating your e‑learning offers (e.g., blended learning, modular pricing, strong ESG credentials) and actively market to the main buyers listed above to increase the chance of winning competitive contracts.",
     "tool_calls": [
+      {
+        "name": "find_cpv_codes",
+        "arguments": {
+          "keywords": "professional training"
+        },
+        "result": {
+          "keywords": "professional training",
+          "codes": [
+            {
+              "cpv_code": "761",
+              "name": "Professional services for the gas industry",
+              "contracts_2021_2022": "324"
+            },
+            {
+              "cpv_code": "7259",
+              "name": "Computer-related professional services",
+              "contracts_2021_2022": "227"
+            },
+            {
+              "cpv_code": "9811",
+              "name": "Services furnished by business, professional and specialist organisations",
+              "contracts_2021_2022": "80"
+            },
+            {
+              "cpv_code": "665165",
+              "name": "Professional liability insurance services",
+              "contracts_2021_2022": "63"
+            },
+            {
+              "cpv_code": "762",
+              "name": "Professional services for the oil industry",
+              "contracts_2021_2022": "11"
+            },
+            {
+              "cpv_code": "98112",
+              "name": "Services furnished by professional organisations",
+              "contracts_2021_2022": "2"
+            },
+            {
+              "cpv_code": "80",
+              "name": "Education and training services",
+              "contracts_2021_2022": "27,233"
+            },
+            {
+              "cpv_code": "805",
+              "name": "Training services",
+              "contracts_2021_2022": "12,734"
+            },
+            {
+              "cpv_code": "8053",
+              "name": "Vocational training services",
+              "contracts_2021_2022": "5,963"
+            },
+            {
+              "cpv_code": "8051",
+              "name": "Specialist training services",
+              "contracts_2021_2022": "1,278"
+            }
+          ]
+        }
+      },
       {
         "name": "search_market",
         "arguments": {
           "country": "IE",
           "cpv_groups": [
-            "80"
-          ],
-          "max_value": null,
-          "min_value": null
+            "805"
+          ]
         },
         "result": {
           "period": "2021-2022",
           "filters": {
             "cpv_codes": [
-              "80"
+              "805"
             ],
             "country": "IE",
             "min_value": null,
             "max_value": null
           },
           "cpv_divisions": {
-            "80": "Education and training services"
+            "805": "Education and training services"
           },
-          "contracts_awarded": "308",
-          "tenders": "82",
-          "buyers": "45",
-          "winning_companies": "169",
-          "typical_award_value": "EUR 750,000",
-          "usual_value_range": "EUR 122,000 to EUR 908,000",
-          "single_bid_rate": "19.6%",
-          "share_won_by_smes": "80.1%",
+          "contracts_awarded": "87",
+          "tenders": "31",
+          "buyers": "22",
+          "winning_companies": "55",
+          "typical_award_value": "EUR 137,500",
+          "usual_value_range": "EUR 43,000 to EUR 628,048",
+          "single_bid_rate": "29.1%",
+          "share_won_by_smes": "64.0%",
           "top_buyers": [
-            {
-              "buyer": "Education and Training Boards Ireland",
-              "country": "IE",
-              "contracts": "91",
-              "typical_value": "EUR 8,022,012"
-            },
-            {
-              "buyer": "University of Limerick",
-              "country": "IE",
-              "contracts": "48",
-              "typical_value": "EUR 750,000"
-            },
-            {
-              "buyer": "Louth and Meath Education & Training Board",
-              "country": "IE",
-              "contracts": "29",
-              "typical_value": "EUR 350,000"
-            },
             {
               "buyer": "Inland Fisheries Ireland",
               "country": "IE",
@@ -2094,38 +2031,56 @@
               "country": "IE",
               "contracts": "11",
               "typical_value": "not available"
+            },
+            {
+              "buyer": "First Polymer Training Skillnet",
+              "country": "IE",
+              "contracts": "10",
+              "typical_value": "EUR 400,000"
+            },
+            {
+              "buyer": "Health Service Executive (HSE)",
+              "country": "IE",
+              "contracts": "5",
+              "typical_value": "EUR 189,297"
+            },
+            {
+              "buyer": "Irish Prison Service",
+              "country": "IE",
+              "contracts": "5",
+              "typical_value": "EUR 80,000"
             }
           ],
           "top_winners": [
             {
-              "company": "Klangley Investments Cork Limited T/A Impact Training",
+              "company": "SEFtec NMCI Offshore Training",
               "country": "IE",
-              "contracts": "9",
-              "sme": true
-            },
-            {
-              "company": "Swilly Group",
-              "country": "IE",
-              "contracts": "9",
-              "sme": true
-            },
-            {
-              "company": "Irish Manufacturing Research CLG",
-              "country": "IE",
-              "contracts": "9",
-              "sme": true
-            },
-            {
-              "company": "Chevron College Ltd",
-              "country": "IE",
-              "contracts": "9",
-              "sme": true
+              "contracts": "8",
+              "sme": false
             },
             {
               "company": "Promaritime Ltd. T/A The Seamanship Centre.",
               "country": "IE",
-              "contracts": "9",
+              "contracts": "8",
+              "sme": false
+            },
+            {
+              "company": "ASL Safety & training Limited",
+              "country": "IE",
+              "contracts": "8",
+              "sme": false
+            },
+            {
+              "company": "UNIVERSAL SAFETY ASSOCIATES LTD. T/A USAFETY",
+              "country": "IE",
+              "contracts": "3",
               "sme": true
+            },
+            {
+              "company": "Atlantic Aviation Group H1 Ltd",
+              "country": "IE",
+              "contracts": "3",
+              "sme": false
             }
           ]
         }
@@ -2135,75 +2090,14 @@
   {
     "id": "price-cabling-pl",
     "question": "A hospital in Krakow is tendering network cabling installation works, 2 lots, estimate EUR 200,000. Is an offer of EUR 150,000 reasonable?",
-    "answer": "**Market context (EU 2021‑2022, PL, CPV 453143 – Installation of cable infrastructure)**  \n\n- Expected award value for a €200 k estimate (2 lots): **€201 311**  \n- 80 % price range: **€152 614 – €237 931**  \n- Single‑bid risk: **25.9 %** (vs. 30.9 % average for all tenders)\n\n**Interpretation**  \nYour €150 k offer sits just below the lower bound of the typical 80 % range, but it is still within the range of what has been awarded in similar Polish hospital cable‑installation contracts. The single‑bid risk is modest, indicating a reasonable chance of competition.\n\n**Practical tip**  \nIf you can justify a slightly higher price (e.g., by highlighting quality, warranty, or faster delivery), you’ll stay comfortably inside the market range while still being competitive.",
+    "answer": "**Market snapshot (EU 2021‑2022, PL, CPV 45314 – Telecommunications installation / network cabling)**  \n\n- Expected award value: **EUR 201,311**  \n- 80 % confidence range: **EUR 152,614 – EUR 237,931**  \n- Single‑bid risk: **25.9 %** (vs. 30.9 % average for all tenders)  \n\n**Is EUR 150,000 reasonable?**  \n- The lower bound of the typical award range is **EUR 152,614**, so an offer of **EUR 150,000** is slightly below what the market usually awards for a similar €200 k estimate.  \n- The single‑bid risk is modest, indicating a reasonable chance of competition, but not so high that unusually low offers are common.\n\n**Practical tip**  \n- If you decide to submit the €150 k bid, be prepared to justify any cost savings (e.g., streamlined design, bulk material discounts) to avoid being perceived as under‑priced and potentially challenged. Consider a price a bit closer to the €152‑€160 k band to stay within the typical market range while still being competitive.",
     "tool_calls": [
-      {
-        "name": "find_cpv_codes",
-        "arguments": {
-          "keywords": "network cabling installation"
-        },
-        "result": {
-          "keywords": "network cabling installation",
-          "codes": [
-            {
-              "cpv_code": "32421",
-              "name": "Network cabling",
-              "contracts_2021_2022": "64"
-            },
-            {
-              "cpv_code": "453143",
-              "name": "Installation of cable infrastructure",
-              "contracts_2021_2022": "229"
-            },
-            {
-              "cpv_code": "4531432",
-              "name": "Installation of computer cabling",
-              "contracts_2021_2022": "101"
-            },
-            {
-              "cpv_code": "4531431",
-              "name": "Installation of cable laying",
-              "contracts_2021_2022": "38"
-            },
-            {
-              "cpv_code": "324",
-              "name": "Networks",
-              "contracts_2021_2022": "2,989"
-            },
-            {
-              "cpv_code": "3242",
-              "name": "Network equipment",
-              "contracts_2021_2022": "1,946"
-            },
-            {
-              "cpv_code": "482",
-              "name": "Networking, Internet and intranet software package",
-              "contracts_2021_2022": "655"
-            },
-            {
-              "cpv_code": "4821",
-              "name": "Networking software package",
-              "contracts_2021_2022": "504"
-            },
-            {
-              "cpv_code": "32424",
-              "name": "Network infrastructure",
-              "contracts_2021_2022": "428"
-            },
-            {
-              "cpv_code": "3241",
-              "name": "Local area network",
-              "contracts_2021_2022": "424"
-            }
-          ]
-        }
-      },
       {
         "name": "estimate_price",
         "arguments": {
           "contract_type": "Works",
           "country": "PL",
-          "cpv_group": "453143",
+          "cpv_group": "45314",
           "estimated_value": 200000,
           "lots": 2
         },
@@ -2219,7 +2113,7 @@
         "arguments": {
           "contract_type": "Works",
           "country": "PL",
-          "cpv_group": "453143",
+          "cpv_group": "45314",
           "estimated_value": 200000,
           "lots": 2
         },
@@ -2234,54 +2128,8 @@
   {
     "id": "price-medicines-ro",
     "question": "A Romanian hospital tenders pharmaceutical supplies, 3 lots, estimated at EUR 62,000. What price should we expect and will there be competition?",
-    "answer": "**Market data used** – CPV 336 (Pharmaceutical products), country RO (Romania). EU contract‑award data cover 2021‑2022.\n\n**Price expectation**  \n- Expected award value per lot: **EUR 57,372**  \n- 80 % confidence range per lot: **EUR 6,904 – EUR 67,861**\n\n**Competition risk**  \n- Probability of receiving only one offer (single‑bid risk): **35.6 %** (average for all tenders is 30.9 %).\n\n**Practical tip**  \n- Position your bid near the upper half of the 80 % range (≈ EUR 45‑55 k) and highlight any added value (e.g., faster delivery, extended warranty) to improve chances of winning in a market where roughly one‑third of similar tenders end up with a single bidder.",
+    "answer": "**Summary**  \n- Expected award value per lot: **≈ EUR 57,372** (80 % range ≈ EUR 6,904 – EUR 67,861).  \n- Single‑bid risk: **≈ 35.6 %** (average for all Romanian supplies tenders is 30.9 %).  \n\n**Details**  \n- CPV code used: **336 – Pharmaceutical products** (supplies).  \n- Country: **RO (Romania)**.  \n- Data cover EU contract awards 2021‑2022.  \n\n**Practical tip**  \nBecause the single‑bid risk is above the market average, consider strengthening your bid (e.g., highlighting quality certifications, offering competitive pricing, or partnering with a local distributor) to improve chances of winning in a moderately competitive environment.",
     "tool_calls": [
-      {
-        "name": "find_cpv_codes",
-        "arguments": {
-          "keywords": "pharmaceuticals"
-        },
-        "result": {
-          "keywords": "pharmaceuticals",
-          "codes": [
-            {
-              "cpv_code": "33",
-              "name": "Medical equipments, pharmaceuticals and personal care products",
-              "contracts_2021_2022": "493,201"
-            },
-            {
-              "cpv_code": "336",
-              "name": "Pharmaceutical products",
-              "contracts_2021_2022": "259,663"
-            },
-            {
-              "cpv_code": "3368",
-              "name": "Pharmaceutical articles",
-              "contracts_2021_2022": "1,649"
-            },
-            {
-              "cpv_code": "3379",
-              "name": "Laboratory, hygienic or pharmaceutical glassware",
-              "contracts_2021_2022": "981"
-            },
-            {
-              "cpv_code": "3371154",
-              "name": "Para-pharmaceutical creams or lotions",
-              "contracts_2021_2022": "7"
-            },
-            {
-              "cpv_code": "33792",
-              "name": "Pharmaceutical glassware",
-              "contracts_2021_2022": "0"
-            },
-            {
-              "cpv_code": "452535",
-              "name": "Construction work for pharmaceutical plant",
-              "contracts_2021_2022": "0"
-            }
-          ]
-        }
-      },
       {
         "name": "estimate_price",
         "arguments": {
@@ -2318,7 +2166,7 @@
   {
     "id": "price-software-de",
     "question": "A German ministry plans a software development services contract, single lot, estimate EUR 800,000. What is the expected award value?",
-    "answer": "**Market data used**  \n- CPV group: **72262 – Software development services** (most specific code for the work)  \n- Country: **DE (Germany)**  \n- EU contract‑award data: 2021‑2022  \n\n**Estimated award**  \n- Expected award value: **EUR 782,922**  \n- 80 % confidence range: **EUR 531,955 – EUR 920,045**  \n\n**Practical tip**  \nWhen preparing the tender, budget for a final contract value around **€780 k** (± €150 k) and consider splitting the scope into two lots if you want to reduce the single‑bid risk and attract more bidders.",
+    "answer": "**Market data used**  \n- CPV group: **72262 – Software development services** (most specific code for the scope)  \n- Country: **DE (Germany)**  \n- EU contract awards 2021‑2022  \n\n**Estimated award**  \n- Expected value: **EUR 782,922**  \n- 80 % confidence range: **EUR 531,955 – EUR 920,045**  \n\n**Practical tip**  \n- Budget the contract around **€780 k** and allow for a ± €140 k variation when planning financing and pricing strategy.",
     "tool_calls": [
       {
         "name": "find_cpv_codes",
@@ -2402,7 +2250,7 @@
   {
     "id": "risk-lab-si",
     "question": "How likely is a Slovenian tender for laboratory equipment supplies to get only one bid?",
-    "answer": "**Market searched:** Slovenia (SI), CPV 38 (Laboratory, optical & precision equipment) – the most relevant division for laboratory‑equipment supplies.  \n**Data period:** EU contract awards 2021‑2022.\n\n- **Single‑bid risk:** **82.4 %** of comparable laboratory‑equipment supply tenders in Slovenia received only one offer.  \n- This is far above the EU‑wide average single‑bid rate of **30.9 %** for all tenders.\n\n**Practical tip:** To improve competition, consider splitting the procurement into smaller lots or broadening the scope (e.g., include related consumables) to attract more suppliers.",
+    "answer": "Sorry, I could not finish this request. Please rephrase it.",
     "tool_calls": [
       {
         "name": "find_cpv_codes",
@@ -2466,16 +2314,258 @@
         }
       },
       {
+        "name": "find_cpv_codes",
+        "arguments": {
+          "keywords": "laboratory equipment supplies"
+        },
+        "result": {
+          "keywords": "laboratory equipment supplies",
+          "codes": [
+            {
+              "cpv_code": "38",
+              "name": "Laboratory, optical and precision equipments (excl. glasses)",
+              "contracts_2021_2022": "22,753"
+            },
+            {
+              "cpv_code": "5143",
+              "name": "Installation services of laboratory equipment",
+              "contracts_2021_2022": "12"
+            },
+            {
+              "cpv_code": "30",
+              "name": "Office and computing machinery, equipment and supplies except furniture and software packages",
+              "contracts_2021_2022": "38,706"
+            },
+            {
+              "cpv_code": "302",
+              "name": "Computer equipment and supplies",
+              "contracts_2021_2022": "24,492"
+            },
+            {
+              "cpv_code": "301",
+              "name": "Office machinery, equipment and supplies except computers, printers and furniture",
+              "contracts_2021_2022": "12,456"
+            },
+            {
+              "cpv_code": "3019",
+              "name": "Various office equipment and supplies",
+              "contracts_2021_2022": "7,783"
+            },
+            {
+              "cpv_code": "3922",
+              "name": "Kitchen equipment, household and domestic items and catering supplies",
+              "contracts_2021_2022": "1,709"
+            },
+            {
+              "cpv_code": "325",
+              "name": "Telecommunications equipment and supplies",
+              "contracts_2021_2022": "1,554"
+            },
+            {
+              "cpv_code": "339",
+              "name": "Post-mortem and mortuary equipment and supplies",
+              "contracts_2021_2022": "155"
+            },
+            {
+              "cpv_code": "3395",
+              "name": "Clinical forensics equipment and supplies",
+              "contracts_2021_2022": "72"
+            }
+          ]
+        }
+      },
+      {
+        "name": "find_cpv_codes",
+        "arguments": {
+          "keywords": "lab equipment"
+        },
+        "result": {
+          "keywords": "lab equipment",
+          "codes": [
+            {
+              "cpv_code": "33",
+              "name": "Medical equipments, pharmaceuticals and personal care products",
+              "contracts_2021_2022": "493,201"
+            },
+            {
+              "cpv_code": "331",
+              "name": "Medical equipments",
+              "contracts_2021_2022": "209,386"
+            },
+            {
+              "cpv_code": "34",
+              "name": "Transport equipment and auxiliary products to transportation",
+              "contracts_2021_2022": "45,311"
+            },
+            {
+              "cpv_code": "30",
+              "name": "Office and computing machinery, equipment and supplies except furniture and software packages",
+              "contracts_2021_2022": "38,706"
+            },
+            {
+              "cpv_code": "302",
+              "name": "Computer equipment and supplies",
+              "contracts_2021_2022": "24,492"
+            },
+            {
+              "cpv_code": "38",
+              "name": "Laboratory, optical and precision equipments (excl. glasses)",
+              "contracts_2021_2022": "22,753"
+            },
+            {
+              "cpv_code": "504",
+              "name": "Repair and maintenance services of medical and precision equipment",
+              "contracts_2021_2022": "13,098"
+            },
+            {
+              "cpv_code": "31",
+              "name": "Electrical machinery, apparatus, equipment and consumables; lighting",
+              "contracts_2021_2022": "12,709"
+            },
+            {
+              "cpv_code": "301",
+              "name": "Office machinery, equipment and supplies except computers, printers and furniture",
+              "contracts_2021_2022": "12,456"
+            },
+            {
+              "cpv_code": "35",
+              "name": "Security, fire-fighting, police and defence equipment",
+              "contracts_2021_2022": "10,496"
+            }
+          ]
+        }
+      },
+      {
         "name": "single_bid_risk",
         "arguments": {
           "contract_type": "Supplies",
           "country": "SI",
-          "cpv_group": "38437"
+          "cpv_group": "38"
         },
         "result": {
-          "single_bid_risk": "82.4%",
-          "average_risk_all_tenders": "30.9%",
-          "note": "A risk indicator for the buyer's market, not a judgement on any buyer."
+          "error": "This tool needs a CPV code of at least three digits (e.g. '453'), not a division."
+        }
+      },
+      {
+        "name": "find_cpv_codes",
+        "arguments": {
+          "keywords": "laboratory equipment supplies"
+        },
+        "result": {
+          "keywords": "laboratory equipment supplies",
+          "codes": [
+            {
+              "cpv_code": "38",
+              "name": "Laboratory, optical and precision equipments (excl. glasses)",
+              "contracts_2021_2022": "22,753"
+            },
+            {
+              "cpv_code": "5143",
+              "name": "Installation services of laboratory equipment",
+              "contracts_2021_2022": "12"
+            },
+            {
+              "cpv_code": "30",
+              "name": "Office and computing machinery, equipment and supplies except furniture and software packages",
+              "contracts_2021_2022": "38,706"
+            },
+            {
+              "cpv_code": "302",
+              "name": "Computer equipment and supplies",
+              "contracts_2021_2022": "24,492"
+            },
+            {
+              "cpv_code": "301",
+              "name": "Office machinery, equipment and supplies except computers, printers and furniture",
+              "contracts_2021_2022": "12,456"
+            },
+            {
+              "cpv_code": "3019",
+              "name": "Various office equipment and supplies",
+              "contracts_2021_2022": "7,783"
+            },
+            {
+              "cpv_code": "3922",
+              "name": "Kitchen equipment, household and domestic items and catering supplies",
+              "contracts_2021_2022": "1,709"
+            },
+            {
+              "cpv_code": "325",
+              "name": "Telecommunications equipment and supplies",
+              "contracts_2021_2022": "1,554"
+            },
+            {
+              "cpv_code": "339",
+              "name": "Post-mortem and mortuary equipment and supplies",
+              "contracts_2021_2022": "155"
+            },
+            {
+              "cpv_code": "3395",
+              "name": "Clinical forensics equipment and supplies",
+              "contracts_2021_2022": "72"
+            }
+          ]
+        }
+      },
+      {
+        "name": "find_cpv_codes",
+        "arguments": {
+          "keywords": "laboratory supplies"
+        },
+        "result": {
+          "keywords": "laboratory supplies",
+          "codes": [
+            {
+              "cpv_code": "336965",
+              "name": "Laboratory reagents",
+              "contracts_2021_2022": "23,539"
+            },
+            {
+              "cpv_code": "38",
+              "name": "Laboratory, optical and precision equipments (excl. glasses)",
+              "contracts_2021_2022": "22,753"
+            },
+            {
+              "cpv_code": "3379",
+              "name": "Laboratory, hygienic or pharmaceutical glassware",
+              "contracts_2021_2022": "981"
+            },
+            {
+              "cpv_code": "33793",
+              "name": "Laboratory glassware",
+              "contracts_2021_2022": "746"
+            },
+            {
+              "cpv_code": "719",
+              "name": "Laboratory services",
+              "contracts_2021_2022": "637"
+            },
+            {
+              "cpv_code": "38437",
+              "name": "Laboratory pipettes and accessories",
+              "contracts_2021_2022": "558"
+            },
+            {
+              "cpv_code": "85145",
+              "name": "Services provided by medical laboratories",
+              "contracts_2021_2022": "419"
+            },
+            {
+              "cpv_code": "3918",
+              "name": "Laboratory furniture",
+              "contracts_2021_2022": "351"
+            },
+            {
+              "cpv_code": "423",
+              "name": "Industrial or laboratory furnaces, incinerators and ovens",
+              "contracts_2021_2022": "127"
+            },
+            {
+              "cpv_code": "4521461",
+              "name": "Laboratory building construction work",
+              "contracts_2021_2022": "99"
+            }
+          ]
         }
       }
     ]
@@ -2483,7 +2573,7 @@
   {
     "id": "price-cleaning-fr",
     "question": "A French city tenders office cleaning services with no published estimate. What range should we expect?",
-    "answer": "**Market data used** – CPV 9091 (office cleaning services), country FR (France). EU contract awards 2021‑2022.\n\n- Expected award value: **€246,034**  \n- 80 % confidence range: **€33,051 – €1,008,810**  \n- Single‑bid risk: **18.4 %** (average for all French tenders is 30.9 %).\n\n**Practical tip** – Because the single‑bid risk is relatively low, consider partnering with other local cleaners to submit a joint bid; this can improve your chances of winning while keeping the price competitive within the €33 k‑€1 M range.",
+    "answer": "**Market data used**  \n- CPV 9091 – Office cleaning services  \n- Country: FR (France)  \n- EU contract awards 2021‑2022 (no buyer estimate supplied)\n\n**Estimated award value**  \n- Expected value: **EUR 246,034**  \n- 80 % confidence range: **EUR 33,051 – EUR 1,008,810**\n\n**Single‑bid risk**  \n- Probability of receiving only one offer: **18.4 %** (average for all tenders is 30.9 %).\n\n**Practical tip**  \n- Prepare a competitive bid covering the lower‑mid part of the range (≈ EUR 200‑300 k) and highlight any added‑value services (e.g., green cleaning) to stand out, as the market shows a relatively low single‑bid risk.",
     "tool_calls": [
       {
         "name": "estimate_price",
@@ -2517,7 +2607,7 @@
   {
     "id": "risk-roads-gr",
     "question": "We consider bidding on Greek road construction works around EUR 1 million. Is competition usually low?",
-    "answer": "**Greek road‑construction market (CPV 45233 – “Road works”) – €1 M tender**\n\n- **Single‑bid risk:** 5.3 % (vs. an average of 30.9 % across all EU tenders)  \n- **Interpretation:** A low single‑bid risk means that most comparable contracts attract several offers; competition is generally **not** low.  \n\n**What this tells you**\n\n- In Greece, road‑construction lots around €1 million typically see multiple bidders.  \n- The risk of ending up with only one offer is well below the EU‑wide average, indicating a fairly competitive environment.\n\n**Practical tip**\n\n- Even with modest competition, strengthen your bid by highlighting unique technical solutions, proven delivery timelines, or local subcontractor partnerships to stand out among the several bidders.",
+    "answer": "**Greek road‑construction market (CPV 45233 – “Road works”) – €1 M tender**\n\n- **Single‑bid risk:** 5.3 % (vs. an average of 30.9 % across all EU tenders)  \n- **Interpretation:** A low single‑bid risk means that most similar contracts attract several offers, so competition is generally **not** low.  \n- **Data source:** EU contract awards 2021‑2022, buyer country GR, CPV 45233.\n\n**Practical tip** – Even with modest competition, strengthen your bid by highlighting local experience or partnering with a Greek subcontractor to meet any “local content” preferences and improve your chances of winning.",
     "tool_calls": [
       {
         "name": "single_bid_risk",
