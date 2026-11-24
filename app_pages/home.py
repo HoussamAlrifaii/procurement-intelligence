@@ -50,8 +50,9 @@ def home():
                                                        "bid 2.4 times as often as average (ROC-AUC 0.76)")
     numbers[2].metric("Price model: typical error", "26%", help="Typical error of the expected award value when the buyer "
                                                  "publishes an estimate (2022 test year)")
-    numbers[3].metric("Assistant answers grounded", "18 / 20", help="Hand-written test questions whose answers "
-                                                                   "used only figures from the data and models")
+    numbers[3].metric("Assistant answers grounded", "12 / 12", help="Held-out test questions whose answers used only "
+                                                                   "figures from the data and models, with the right "
+                                                                   "tool, sector and country (single run)")
 
     st.divider()
     st.caption("Data: TED (Tenders Electronic Daily) contract award notices published by the EU. The app searches "

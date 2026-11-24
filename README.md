@@ -3,6 +3,10 @@
 **Turning public procurement data into better competition, faster auditing and
 fairer access for small businesses.**
 
+The results are available in **TenderLens**, a web app with an AI assistant,
+a market explorer, a tender price and risk check and a CPV code lookup
+([how it works](docs/phases/PHASE_7_WEB_APP.md)).
+
 Governments publish every contract they award: who bought what, from whom, at
 what price, and how many companies competed. This project turns that raw data
 into answers:
@@ -13,10 +17,10 @@ into answers:
 | Suspicious patterns are hidden in millions of records | SQL analysis + Power BI dashboard of competition, vendor concentration and unusual prices | Auditors, journalists |
 | Small businesses can't find or price opportunities | AI assistant matching a company to relevant tenders, past winners and prices | Small and medium businesses |
 
-> 🚧 **Status: in development.** Phases 0–6 complete: project setup, a
+> 🚧 **Status: in development.** Phases 0–7 complete: project setup, a
 > reproducible data pipeline, cleaning and exploratory analysis, star schema,
-> SQL analysis, a Power BI dashboard, two machine learning models and an AI
-> assistant.
+> SQL analysis, a Power BI dashboard, two machine learning models, an AI
+> assistant, and a web app with a REST API.
 
 ## Dashboard
 
@@ -58,10 +62,10 @@ with a time-based split (train 2019–2020, validate 2021, test 2022)
 ## AI assistant
 
 A small business describes itself in plain language (any EU language); an LLM
-turns that into CPV sector codes, a country and a value range, and calls three
-tools: a SQL market search over 2021–2022 awards and the two models above. The
-LLM writes the answer; every figure comes from the tools
-([details](docs/phases/PHASE_6_AI_ASSISTANT.md)).
+turns that into CPV sector codes, a country and a value range, and calls four
+tools: a lookup of the official CPV code list, a SQL market search over
+2021–2022 awards and the two models above. The LLM writes the answer; every
+figure comes from the tools ([details](docs/phases/PHASE_6_AI_ASSISTANT.md)).
 
 ```bash
 python -m procurement.assistant "We are a 20-person IT company in Poland installing networks, EUR 50k-500k"
@@ -70,9 +74,29 @@ python -m procurement.assistant "We are a 20-person IT company in Poland install
 > 1,156 awards in your price band · typical value EUR 194,206 · single-bid rate 57.5% ·
 > SMEs won 70.7% · top buyers: Centrum e-Zdrowia, City of Warsaw … · frequent winners: Asseco Poland, Comtegra, Exatel …
 
-On 20 hand-written test cases it chose the right tool, sector and country every
-time; 18 of 20 answers used only figures from the tools, checked automatically
-([evaluation](reports/assistant_evaluation.md)).
+On 12 held-out test questions, written before the last change, it chose the
+right tool, sector and country every time and every answer used only figures
+from the tools, checked automatically
+([evaluation](reports/assistant_evaluation_holdout.md)).
+
+## TenderLens web app
+
+![TenderLens home page](docs/images/app_home.png)
+
+| Page | What it does |
+|---|---|
+| AI assistant | Questions in plain language, answered from the data and the models |
+| Market explorer | Contracts, typical value, single-bid rate, SME share, top buyers and winners by sector and country |
+| Tender check | Expected award value, 80% price range and single-bid risk of a planned tender; checks an offer |
+| CPV lookup | Finds the official procurement codes for a product or service |
+
+The same tools also serve a REST API (`/market`, `/price`, `/risk`). Run locally:
+
+```bash
+python -m procurement.app_bundle             # or let the app download the published bundle
+streamlit run streamlit_app.py               # web app
+uvicorn procurement.api:app                  # API, interactive docs at /docs
+```
 
 ## Highlights so far
 
@@ -89,7 +113,7 @@ From 3.56 million EU contract awards (2019–2022) and 143k World Bank contracts
 
 ## Tech stack
 
-Python · pandas · DuckDB (SQL) · scikit-learn · LightGBM · Power BI · LLM API ·
+Python · pandas · DuckDB (SQL) · scikit-learn · LightGBM · Power BI · LLM API (Groq) ·
 FastAPI · Streamlit · Docker · GitHub Actions
 
 ## Quick start (Python 3.12)
@@ -115,12 +139,14 @@ five dimensions) in `data/marts/` for analysis and Power BI. Details:
 [Phase 3](docs/phases/PHASE_3_SQL_ANALYSIS.md) ·
 [Phase 4](docs/phases/PHASE_4_POWER_BI.md) ·
 [Phase 5](docs/phases/PHASE_5_MACHINE_LEARNING.md) ·
-[Phase 6](docs/phases/PHASE_6_AI_ASSISTANT.md).
+[Phase 6](docs/phases/PHASE_6_AI_ASSISTANT.md) ·
+[Phase 7](docs/phases/PHASE_7_WEB_APP.md).
 
 ## Project structure
 
 ```
-procurement/   Python package (pipeline, models, app code)
+procurement/   Python package (pipeline, models, assistant, API)
+app_pages/     Web app pages (entry point: streamlit_app.py)
 sql/           SQL queries, kept as .sql files
 notebooks/     Exploratory analysis
 reference/     Small lookup tables (e.g. CPV sector names)
