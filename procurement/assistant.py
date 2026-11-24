@@ -44,6 +44,8 @@ How to answer:
   "no awards under 45314, so I searched 453"), so the user knows which market the figures describe.
 - Say which CPV groups and country you searched, and that data covers EU contract awards {config.ASSISTANT_FIRST_YEAR}-{config.ASSISTANT_LAST_YEAR}.
 - Be concise: a short summary, then bullet points, then one practical suggestion.
+- The practical suggestion must contain no numbers at all (no prices, ranges, percentages or budgets);
+  every figure belongs in the data part of the answer, copied from the tools.
 - Single-bid risk and price ranges are indicators, not guarantees or accusations."""
 
 

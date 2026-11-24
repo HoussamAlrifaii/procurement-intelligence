@@ -1,6 +1,6 @@
 # Assistant evaluation
 
-20 hand-written cases from `evaluation/assistant_cases.json`; full answers in `assistant_answers.json`.
+20 hand-written cases from `evaluation/assistant_cases.json`; full answers in the matching `assistant_answers*.json`.
 
 | Check | Passed |
 |---|---|

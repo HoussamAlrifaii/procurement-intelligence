@@ -9,9 +9,15 @@ For each case it checks, from the tool calls and the answer:
 
 Every answer is saved to reports/assistant_answers.json for review.
 
+Two case sets:
+  development  evaluation/assistant_cases.json         20 cases, used while improving the assistant
+  holdout      evaluation/assistant_cases_holdout.json 12 cases, written before the last changes and
+                                                      never used to adjust the assistant: the fair score
+
 Usage:
-    python -m procurement.evaluate_assistant            # run all cases (LLM_API_KEY in .env; ~20 LLM calls)
-    python -m procurement.evaluate_assistant --rescore  # score the saved answers again, without the LLM
+    python -m procurement.evaluate_assistant                      # development set (LLM_API_KEY in .env)
+    python -m procurement.evaluate_assistant --set holdout        # held-out set
+    python -m procurement.evaluate_assistant --rescore            # score saved answers again, no LLM calls
 """
 import argparse
 import json
@@ -87,11 +93,25 @@ def score_case(case, result):
     }
 
 
-def write_report(scores):
+CASE_SETS = {
+    "development": config.ASSISTANT_CASES_PATH,
+    "holdout": config.ASSISTANT_HOLDOUT_CASES_PATH,
+}
+
+
+def output_paths(case_set):
+    """reports/assistant_evaluation.md for the development set, ..._holdout.md for the held-out set."""
+    suffix = "" if case_set == "development" else f"_{case_set}"
+    report = config.REPORTS_DIR / f"assistant_evaluation{suffix}.md"
+    answers = config.REPORTS_DIR / f"assistant_answers{suffix}.json"
+    return report, answers
+
+
+def write_report(scores, report_path, case_file):
     checks = ["tool", "sector", "country", "grounded"]
     lines = ["# Assistant evaluation", "",
-             f"{len(scores)} hand-written cases from `evaluation/assistant_cases.json`; "
-             "full answers in `assistant_answers.json`.", "",
+             f"{len(scores)} hand-written cases from `evaluation/{case_file.name}`; "
+             "full answers in the matching `assistant_answers*.json`.", "",
              "| Check | Passed |", "|---|---|"]
     for check in checks:
         passed = sum(score[check] for score in scores)
@@ -102,12 +122,12 @@ def write_report(scores):
         marks = ["yes" if score[check] else "**no**" for check in checks]
         lines.append(f"| {score['id']} | " + " | ".join(marks) +
                      f" | {', '.join(score['cpv_groups'])} | {', '.join(score['ungrounded'])} |")
-    config.ASSISTANT_EVALUATION_PATH.write_text("\n".join(lines) + "\n", encoding="utf-8")
+    report_path.write_text("\n".join(lines) + "\n", encoding="utf-8")
 
 
-def rescore(cases):
+def rescore(cases, answers_path):
     """Score answers saved by an earlier run, e.g. after a change to the scoring rules."""
-    saved = json.loads(config.ASSISTANT_ANSWERS_PATH.read_text(encoding="utf-8"))
+    saved = json.loads(answers_path.read_text(encoding="utf-8"))
     by_id = {answer["id"]: answer for answer in saved}
     return [score_case(case, by_id[case["id"]]) for case in cases]
 
@@ -119,16 +139,19 @@ def print_score(score):
 
 def main():
     parser = argparse.ArgumentParser(description="Evaluate the assistant on the hand-written cases.")
+    parser.add_argument("--set", choices=sorted(CASE_SETS), default="development", help="which cases to run")
     parser.add_argument("--rescore", action="store_true", help="score the saved answers without calling the LLM")
     arguments = parser.parse_args()
-    cases = json.loads(config.ASSISTANT_CASES_PATH.read_text(encoding="utf-8"))
+    case_file = CASE_SETS[arguments.set]
+    report_path, answers_path = output_paths(arguments.set)
+    cases = json.loads(case_file.read_text(encoding="utf-8"))
 
     if arguments.rescore:
-        scores = rescore(cases)
+        scores = rescore(cases, answers_path)
         for score in scores:
             print_score(score)
-        write_report(scores)
-        print(f"\nSaved {config.ASSISTANT_EVALUATION_PATH.relative_to(config.PROJECT_ROOT)}")
+        write_report(scores, report_path, case_file)
+        print(f"\nSaved {report_path.relative_to(config.PROJECT_ROOT)}")
         return
 
     from procurement.llm import LLM
@@ -144,11 +167,9 @@ def main():
             scores.append(score_case(case, result))
             answers.append({"id": case["id"], "question": case["question"], **result})
             print_score(scores[-1])
-    write_report(scores)
-    config.ASSISTANT_ANSWERS_PATH.write_text(json.dumps(answers, indent=2, ensure_ascii=False, default=str),
-                                             encoding="utf-8")
-    print(f"\nSaved {config.ASSISTANT_EVALUATION_PATH.relative_to(config.PROJECT_ROOT)} and "
-          f"{config.ASSISTANT_ANSWERS_PATH.relative_to(config.PROJECT_ROOT)}")
+    write_report(scores, report_path, case_file)
+    answers_path.write_text(json.dumps(answers, indent=2, ensure_ascii=False, default=str), encoding="utf-8")
+    print(f"\nSaved {report_path.relative_to(config.PROJECT_ROOT)} and {answers_path.relative_to(config.PROJECT_ROOT)}")
 
 
 if __name__ == "__main__":
