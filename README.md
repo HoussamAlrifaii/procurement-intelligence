@@ -3,9 +3,9 @@
 **Turning public procurement data into better competition, faster auditing and
 fairer access for small businesses.**
 
-The results are available in **TenderLens**, a web app with an AI assistant,
-a market explorer, a tender price and risk check and a CPV code lookup
-([how it works](docs/phases/PHASE_7_WEB_APP.md)).
+**▶ Try the live app: [TenderLens](https://tenderlens-eu.streamlit.app)**: an AI
+assistant, a market explorer, a tender price and risk check and a CPV code
+lookup ([how it works](docs/phases/PHASE_7_WEB_APP.md)).
 
 Governments publish every contract they award: who bought what, from whom, at
 what price, and how many companies competed. This project turns that raw data

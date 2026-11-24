@@ -6,6 +6,9 @@ lookup, plus a REST API for programmatic use. The app, the API and the
 assistant all call the same tested functions in `procurement/tools.py`, so a
 figure is computed in one place only.
 
+**Live app: [tenderlens-eu.streamlit.app](https://tenderlens-eu.streamlit.app)** (Streamlit Community
+Cloud, deployed from `main`; the Groq API key is stored in the app's secrets).
+
 ![Home page](../images/app_home.png)
 
 ## 1. How to run
