@@ -25,7 +25,7 @@ OpenAI-compatible API works without code changes.
 | File | Role |
 |---|---|
 | `procurement/assistant.py` | Instructions (system prompt) and the agent loop `ask()` |
-| `procurement/tools.py` | The three tools, input checks and tool descriptions for the LLM |
+| `procurement/tools.py` | The tools, input checks and tool descriptions for the LLM (a fourth tool, `find_cpv_codes`, was added in Phase 7) |
 | `procurement/llm.py` | LLM client; returns either text or tool calls |
 | `sql/assistant/*.sql` | Matching awards, market summary, top buyers, top winners |
 | `procurement/evaluate_assistant.py` | Evaluation: runs the cases, scores them, writes the report |
@@ -139,6 +139,27 @@ was corrected and the **same saved answers** were scored again
 (`--rescore`); the assistant itself was not changed after seeing the results,
 so the cases remain a fair test. Instructions that forbid suggested prices are
 the next improvement and should be measured on new cases.
+
+### Later versions (Phase 7)
+
+| Version | Change | Cases | Tool | Sector | Country | Grounded |
+|---|---|---|---|---|---|---|
+| v1 | Phase 6 assistant | 20 development | 20/20 | 20/20 | 20/20 | 18/20 |
+| v2 | + `find_cpv_codes` tool (official CPV list) | 20 development | 20/20 | 20/20 | 20/20 | 13/20 |
+| v3 | + no figures in the practical tip | 20 development | 20/20 | 20/20 | 20/20 | 20/20 |
+| **v3** | **same assistant** | **12 held-out** | **12/12** | **12/12** | **12/12** | **12/12** |
+
+v2 kept sector accuracy but invented price ranges in the closing tip in 7 of
+20 answers ("tailor your bid to the EUR 80k-350k range"), traced to the
+instruction asking for a practical suggestion. The fix was found on the
+development cases, so its development score is optimistic. The **held-out
+cases** (`evaluation/assistant_cases_holdout.json`, 12 new questions including
+German) were committed before the fix and never used to adjust the assistant;
+they are the fair measure. With the lookup tool the assistant chose precise
+codes such as 349285 (street-lighting equipment) and 349271 (road salt).
+Each row is one run; with 12 cases, 12/12 means no failure was found, not that
+none can occur. Reports: [`assistant_evaluation.md`](../../reports/assistant_evaluation.md),
+[`assistant_evaluation_holdout.md`](../../reports/assistant_evaluation_holdout.md).
 
 ## 5. Limits
 

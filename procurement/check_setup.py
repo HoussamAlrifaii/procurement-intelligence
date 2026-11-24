@@ -27,6 +27,8 @@ REQUIRED_PACKAGES = [
     "sklearn",
     "lightgbm",
     "openai",
+    "streamlit",
+    "fastapi",
 ]
 
 

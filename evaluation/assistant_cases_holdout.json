@@ -1,0 +1,155 @@
+[
+  {
+    "id": "electric-buses-nl",
+    "question": "Dutch manufacturer of electric buses. Which public transport authorities buy buses like ours, and from whom?",
+    "acceptable_cpv_divisions": [
+      "34",
+      "60"
+    ],
+    "country": "NL",
+    "expected_tools": [
+      "search_market"
+    ]
+  },
+  {
+    "id": "lift-maintenance-at",
+    "question": "We maintain and repair lifts and escalators in Austria. Is there public demand for this?",
+    "acceptable_cpv_divisions": [
+      "50",
+      "42",
+      "45"
+    ],
+    "country": "AT",
+    "expected_tools": [
+      "search_market"
+    ]
+  },
+  {
+    "id": "textbooks-pt",
+    "question": "Portuguese publisher of school textbooks. Who buys printed school books in Portugal?",
+    "acceptable_cpv_divisions": [
+      "22"
+    ],
+    "country": "PT",
+    "expected_tools": [
+      "search_market"
+    ]
+  },
+  {
+    "id": "cybersecurity-dk",
+    "question": "Small Danish IT security consultancy doing penetration testing and security audits for public bodies.",
+    "acceptable_cpv_divisions": [
+      "72",
+      "79",
+      "48"
+    ],
+    "country": "DK",
+    "expected_tools": [
+      "search_market"
+    ]
+  },
+  {
+    "id": "snow-removal-fi",
+    "question": "Finnish company offering snow clearing and winter road maintenance for municipalities.",
+    "acceptable_cpv_divisions": [
+      "90",
+      "45",
+      "77",
+      "34",
+      "50"
+    ],
+    "country": "FI",
+    "expected_tools": [
+      "search_market"
+    ]
+  },
+  {
+    "id": "solar-installer-be",
+    "question": "We install solar panels on public buildings in Belgium. Which buyers should we approach?",
+    "acceptable_cpv_divisions": [
+      "45",
+      "09",
+      "31",
+      "51"
+    ],
+    "country": "BE",
+    "expected_tools": [
+      "search_market"
+    ]
+  },
+  {
+    "id": "price-street-lighting-cz",
+    "question": "A Czech municipality tenders LED street lighting replacement works, 1 lot, estimate EUR 400,000. What award value should we expect?",
+    "acceptable_cpv_divisions": [
+      "45",
+      "31",
+      "34",
+      "50"
+    ],
+    "country": "CZ",
+    "expected_tools": [
+      "estimate_price"
+    ]
+  },
+  {
+    "id": "price-hospital-cleaning-it",
+    "question": "An Italian hospital tenders cleaning services in 3 lots with an estimate of EUR 1,200,000. What price range is realistic?",
+    "acceptable_cpv_divisions": [
+      "90"
+    ],
+    "country": "IT",
+    "expected_tools": [
+      "estimate_price"
+    ]
+  },
+  {
+    "id": "risk-printing-hu",
+    "question": "How competitive are public tenders for printing services in Hungary? Will we face many competitors?",
+    "acceptable_cpv_divisions": [
+      "79",
+      "22"
+    ],
+    "country": "HU",
+    "expected_tools": [
+      "single_bid_risk",
+      "search_market"
+    ]
+  },
+  {
+    "id": "translation-at-german",
+    "question": "Wir sind ein kleines Übersetzungsbüro in Österreich. Welche öffentlichen Auftraggeber kaufen Übersetzungen?",
+    "acceptable_cpv_divisions": [
+      "79"
+    ],
+    "country": "AT",
+    "expected_tools": [
+      "search_market"
+    ]
+  },
+  {
+    "id": "price-road-salt-se",
+    "question": "A Swedish region plans to buy road salt for winter, estimate EUR 150,000, one lot. What should we expect to be paid?",
+    "acceptable_cpv_divisions": [
+      "34",
+      "14",
+      "24",
+      "44"
+    ],
+    "country": "SE",
+    "expected_tools": [
+      "estimate_price"
+    ]
+  },
+  {
+    "id": "fresh-produce-lt",
+    "question": "Lithuanian company delivering fresh fruit and vegetables to kindergartens and schools.",
+    "acceptable_cpv_divisions": [
+      "03",
+      "15"
+    ],
+    "country": "LT",
+    "expected_tools": [
+      "search_market"
+    ]
+  }
+]

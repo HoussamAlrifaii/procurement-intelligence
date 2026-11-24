@@ -59,7 +59,7 @@ ML target: `is_single_bid` = 1 if one offer, 0 if two or more (awarded contracts
 | **4. Power BI** ✅ | Four-page dashboard | Dashboard, DAX measures, screenshots, PDF |
 | **5. Machine learning** ✅ | Single-bid risk classifier, fair price model with calibrated ranges and unusual-price flags, SHAP explanations | Evaluated models, model card |
 | **6. AI assistant** ✅ | LLM assistant that searches markets by CPV code and calls both models as tools, with an evaluation set | Assistant + evaluation report |
-| **7. API + app + deployment** | FastAPI, Streamlit, Docker | Live application |
+| **7. API + app + deployment** ✅ | TenderLens Streamlit app, FastAPI, app data bundle, Dockerfile, CPV lookup | Web app + REST API |
 | **8. Automation + polish** | Scheduled refresh, automated red-flag summary, documentation | Production-style workflow |
 
 ## 5. Automation

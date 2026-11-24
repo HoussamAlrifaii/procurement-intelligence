@@ -176,3 +176,28 @@ def test_optional_tool_inputs_accept_null(connection):
     assert "null" in schema["estimate_price"]["estimated_value"]["type"]
     result = tools.run_tool(connection, "search_market", {"cpv_groups": ["453"], "country": None, "min_value": None})
     assert result["contracts_awarded"] == "2"
+
+
+def test_find_cpv_codes_ranks_matching_names_and_counts_awards(connection, tmp_path, monkeypatch):
+    codes = pd.DataFrame({"CODE": ["45314300-4", "45314000-1", "32420000-3", "50118100-6"],
+                          "EN": ["Installation of cable infrastructure", "Installation of telecommunications equipment",
+                                 "Network equipment", "Breakdown services"]})
+    codes.to_csv(tmp_path / "cpv_codes.csv", index=False)
+    monkeypatch.setattr(tools.config, "CPV_CODES_PATH", tmp_path / "cpv_codes.csv")
+    tools.cpv_code_names.cache_clear()
+    try:
+        result = tools.find_cpv_codes(connection, "telecommunications installation")
+        assert result["codes"][0] == {"cpv_code": "45314", "name": "Installation of telecommunications equipment",
+                                      "contracts_2021_2022": "2"}
+        assert [code["cpv_code"] for code in tools.find_cpv_codes(connection, "networks")["codes"]] == ["3242"]
+        assert tools.find_cpv_codes(connection, "bread")["codes"] == []     # 'bread' must not match 'Breakdown'
+        with pytest.raises(tools.ToolError):
+            tools.find_cpv_codes(connection, "123")
+    finally:
+        tools.cpv_code_names.cache_clear()
+
+
+def test_short_keywords_match_whole_words_only():
+    assert tools.keyword_pattern("bus").search("buses and coaches")
+    assert not tools.keyword_pattern("bus").search("business services")
+    assert tools.keyword_pattern("cabling").search("cable laying")

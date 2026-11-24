@@ -28,6 +28,7 @@ ASSISTANT_SQL_DIR = SQL_DIR / "assistant"
 REFERENCE_DIR = PROJECT_ROOT / "reference"      # small lookup tables committed to the repository
 CPV_DIVISIONS_PATH = REFERENCE_DIR / "cpv_divisions.csv"
 COUNTRIES_PATH = REFERENCE_DIR / "countries.csv"
+CPV_CODES_PATH = REFERENCE_DIR / "cpv_codes.csv"   # official CPV 2008 list, English names
 
 MARTS_DIR = DATA_DIR / "marts"          # star-schema tables (Parquet) for Power BI
 ANALYSIS_OUTPUT_DIR = DATA_DIR / "analysis"  # results of the sql/analysis queries (CSV)
@@ -41,11 +42,10 @@ PROFILE_REPORT_PATH = REPORTS_DIR / "data_profile.md"
 FIGURES_DIR = REPORTS_DIR / "figures"
 SINGLE_BID_METRICS_PATH = REPORTS_DIR / "single_bid_metrics.json"
 PRICE_METRICS_PATH = REPORTS_DIR / "price_metrics.json"
-ASSISTANT_EVALUATION_PATH = REPORTS_DIR / "assistant_evaluation.md"
-ASSISTANT_ANSWERS_PATH = REPORTS_DIR / "assistant_answers.json"
 
 EVALUATION_DIR = PROJECT_ROOT / "evaluation"   # hand-written test cases for the assistant
-ASSISTANT_CASES_PATH = EVALUATION_DIR / "assistant_cases.json"
+ASSISTANT_CASES_PATH = EVALUATION_DIR / "assistant_cases.json"            # development set
+ASSISTANT_HOLDOUT_CASES_PATH = EVALUATION_DIR / "assistant_cases_holdout.json"  # held-out set
 
 # Folders that must exist before the pipeline runs.
 REQUIRED_FOLDERS = [RAW_DATA_DIR, PROCESSED_DATA_DIR, SQL_DIR, REPORTS_DIR]
@@ -117,3 +117,16 @@ DEFAULT_LLM_MODEL = "openai/gpt-oss-120b"
 
 # Upper limit on LLM <-> tool round trips for one question.
 ASSISTANT_MAX_STEPS = 6
+
+# --- Web app and API -----------------------------------------------------------
+
+# The deployed app cannot run the pipeline, so it uses a small bundle: 2021-2022
+# awards (only the columns the tools need), buyer names and the trained models.
+# It is built by procurement.app_bundle and published as a GitHub Release asset.
+APP_BUNDLE_DIR = DATA_DIR / "app"
+APP_BUNDLE_NAME = "procurement_app_bundle"
+APP_BUNDLE_URL = ("https://github.com/HoussamAlrifaii/procurement-intelligence/releases/download/"
+                  "app-data-v1/procurement_app_bundle.zip")
+
+# Questions one visitor may ask the AI assistant per session (protects the free LLM quota).
+APP_MAX_QUESTIONS = 10
