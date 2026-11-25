@@ -114,6 +114,7 @@ def write_report(buyers, risky, prices, low_price_count, new_buyers, year, path=
         sector=risky["cpv_division"].astype(str).map(lambda code: f"{code} {divisions.get(code, '')}"[:45]),
         outcome=risky[features.TARGET].map({1: "single bid", 0: "2+ bids"}),
     )
+    flagged_price_count = len(prices)
     prices = prices.head(config.RED_FLAGS_TOP).assign(
         award=prices["award_value_eur"].map("EUR {:,.0f}".format),
         high_end=prices["expected_high_eur"].map("EUR {:,.0f}".format),
@@ -132,8 +133,8 @@ def write_report(buyers, risky, prices, low_price_count, new_buyers, year, path=
         "",
         f"- Buyers to review (2019-2022): **{len(buyers):,}**",
         f"- Awards scored for single-bid risk ({year}): top {len(risky)} listed below",
-        f"- Tenders with an award far above the expected price range ({year}): **{len(prices):,}** "
-        f"(top {min(len(prices), config.RED_FLAGS_TOP)} listed); awards far below it: {low_price_count:,} "
+        f"- Tenders with an award far above the expected price range ({year}): **{flagged_price_count:,}** "
+        f"(top {len(prices)} listed); awards far below it: {low_price_count:,} "
         "(often data-entry errors)",
     ]
     if new_buyers is not None:

@@ -74,3 +74,18 @@ def test_newly_flagged_buyers():
     assert red_flags.compare_with_previous(None, {"flagged_buyers": ["A"]}) is None
     previous = {"flagged_buyers": ["A", "B"]}
     assert red_flags.compare_with_previous(previous, {"flagged_buyers": ["B", "C"]}) == ["C"]
+
+
+def test_report_summary_counts_all_flagged_tenders_not_just_the_listed_ones(tmp_path, monkeypatch):
+    monkeypatch.setattr(red_flags.config, "RED_FLAGS_TOP", 2)
+    buyers = pd.DataFrame({"buyer_name": ["A"], "country": ["SI"], "labelled_awards": [150],
+                           "single_bid_rate": [0.9], "gap_vs_country": [0.3]})
+    risky = pd.DataFrame({"buyer": ["A"], "buyer_country": ["SI"], "cpv_division": ["33"], "single_bid_risk": [0.95],
+                          "main_reasons": ["Country"], "is_single_bid": [1]})
+    prices = pd.DataFrame({"buyer": ["B"] * 5, "buyer_country": ["RO"] * 5, "cpv_group": ["331"] * 5,
+                           "award_value_eur": [1e6] * 5, "expected_high_eur": [1e3] * 5,
+                           "times_above_range": [1000.0] * 5})
+    path = red_flags.write_report(buyers, risky, prices, 7, ["A"], 2022, path=tmp_path / "report.md")
+    text = path.read_text(encoding="utf-8")
+    assert "**5** (top 2 listed)" in text
+    assert "Newly flagged buyers" in text
