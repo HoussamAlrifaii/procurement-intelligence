@@ -60,7 +60,7 @@ ML target: `is_single_bid` = 1 if one offer, 0 if two or more (awarded contracts
 | **5. Machine learning** ✅ | Single-bid risk classifier, fair price model with calibrated ranges and unusual-price flags, SHAP explanations | Evaluated models, model card |
 | **6. AI assistant** ✅ | LLM assistant that searches markets by CPV code and calls both models as tools, with an evaluation set | Assistant + evaluation report |
 | **7. API + app + deployment** ✅ | TenderLens Streamlit app, FastAPI, app data bundle, Dockerfile, CPV lookup | Web app + REST API |
-| **8. Automation + polish** | Scheduled refresh, automated red-flag summary, documentation | Production-style workflow |
+| **8. Automation + polish** ✅ | Monthly refresh command, red-flag report, Windows schedule | Production-style workflow |
 
 ## 5. Automation
 
@@ -69,8 +69,8 @@ ML target: `is_single_bid` = 1 if one offer, 0 if two or more (awarded contracts
 | One-command pipeline (download → clean → load → build tables) | 1–3 ✅ (raw, clean and star-schema layers) |
 | Data quality checks that stop the pipeline on invalid data | 1 ✅ |
 | Automated tests (`python -m pytest`) and a CI workflow definition (`.github/workflows/tests.yml`); Actions is currently disabled for this repository, so tests are run locally | 0 ✅ |
-| Scheduled monthly data refresh (GitHub Actions) | 8 |
-| Automated red-flag summary after each refresh | 8 |
+| Monthly refresh: one command from download to report and app bundle, scheduled with Windows Task Scheduler (`procurement/refresh.py`) | 8 ✅ |
+| Red-flag report after each refresh: buyers to review, riskiest tenders, unusual prices, changes (`procurement/red_flags.py`) | 8 ✅ |
 
 The Power BI report is refreshed from the processed data files in Power BI
 Desktop. Scheduled refresh in the Power BI service requires an organisational

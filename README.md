@@ -17,10 +17,10 @@ into answers:
 | Suspicious patterns are hidden in millions of records | SQL analysis + Power BI dashboard of competition, vendor concentration and unusual prices | Auditors, journalists |
 | Small businesses can't find or price opportunities | AI assistant matching a company to relevant tenders, past winners and prices | Small and medium businesses |
 
-> 🚧 **Status: in development.** Phases 0–7 complete: project setup, a
-> reproducible data pipeline, cleaning and exploratory analysis, star schema,
-> SQL analysis, a Power BI dashboard, two machine learning models, an AI
-> assistant, and a web app with a REST API.
+> ✅ **Status: complete.** Phases 0–8: a reproducible data pipeline, cleaning
+> and exploratory analysis, star schema, SQL analysis, a Power BI dashboard,
+> two machine learning models, an AI assistant, a web app with a REST API, and
+> a monthly automated refresh with a red-flag report.
 
 ## Dashboard
 
@@ -98,6 +98,16 @@ streamlit run streamlit_app.py               # web app
 uvicorn procurement.api:app                  # API, interactive docs at /docs
 ```
 
+## Automation
+
+`python -m procurement.refresh` runs the whole project in one command: download,
+quality checks (it stops if a critical rule fails), clean layer, star schema,
+feature tables, a red-flag report for auditors (buyers to review, riskiest
+tenders with their main reasons, unusual prices, changes since the last run)
+and a new app bundle. Windows Task Scheduler runs it monthly
+(`scripts/schedule_refresh.ps1`); every run is logged
+([details](docs/phases/PHASE_8_AUTOMATION.md)).
+
 ## Highlights so far
 
 From 3.56 million EU contract awards (2019–2022) and 143k World Bank contracts
@@ -140,7 +150,8 @@ five dimensions) in `data/marts/` for analysis and Power BI. Details:
 [Phase 4](docs/phases/PHASE_4_POWER_BI.md) ·
 [Phase 5](docs/phases/PHASE_5_MACHINE_LEARNING.md) ·
 [Phase 6](docs/phases/PHASE_6_AI_ASSISTANT.md) ·
-[Phase 7](docs/phases/PHASE_7_WEB_APP.md).
+[Phase 7](docs/phases/PHASE_7_WEB_APP.md) ·
+[Phase 8](docs/phases/PHASE_8_AUTOMATION.md).
 
 ## Project structure
 
@@ -156,6 +167,7 @@ reports/       Generated reports and figures
 evaluation/    Test cases for the AI assistant
 docs/          Project plan and one explanation file per phase
 tests/         Automated tests
+scripts/       Scheduling (monthly refresh on Windows)
 ```
 
 ## Data sources
