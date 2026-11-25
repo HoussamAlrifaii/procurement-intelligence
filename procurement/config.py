@@ -130,3 +130,15 @@ APP_BUNDLE_URL = ("https://github.com/HoussamAlrifaii/procurement-intelligence/r
 
 # Questions one visitor may ask the AI assistant per session (protects the free LLM quota).
 APP_MAX_QUESTIONS = 10
+
+# --- Automation -----------------------------------------------------------------
+
+# The monthly refresh writes its red-flag report here. It names public buyers, so,
+# like the analysis results, it is kept out of the repository.
+RED_FLAGS_DIR = DATA_DIR / "red_flags"
+RED_FLAGS_REPORT_PATH = RED_FLAGS_DIR / "red_flags.md"
+RED_FLAGS_SNAPSHOT_PATH = RED_FLAGS_DIR / "snapshot.json"   # compared with the next run
+LOGS_DIR = PROJECT_ROOT / "logs"
+RED_FLAGS_TOP = 20                    # rows per table in the report
+BUYER_RATE_THRESHOLD = 0.8            # buyers single-bid in at least 80% of awards...
+BUYER_GAP_THRESHOLD = 0.2             # ...or 20 points above their country

@@ -56,7 +56,7 @@ def test_award_status_and_value_flags(connection):
     assert ted_award(connection, 102)["award_value_quality"] == "too_low"
     assert ted_award(connection, 104)["award_value_quality"] == "too_high"
     assert ted_award(connection, 103)["award_value_quality"] == "missing"
-    assert ted_award(connection, 107)["award_value_quality"] == "placeholder"   # 999,999,999
+    assert ted_award(connection, 107)["award_value_quality"] == "placeholder"   # 999,999,999.99 (decimals too)
 
 
 def test_types_and_labels(connection):
