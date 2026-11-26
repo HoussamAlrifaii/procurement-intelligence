@@ -17,6 +17,10 @@ data/marts/
 data/analysis/
 data/ml/
 data/app/
+data/red_flags/
+
+# Refresh logs
+logs/
 
 # Trained models: re-created by the training scripts
 models/
